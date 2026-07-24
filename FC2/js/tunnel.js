@@ -284,6 +284,22 @@ const scrollAt = (u) => u * FLAT_START / 0.86;
 
 let tokenShown = 0;
 
+// ----------------------------------------------------- camera detour -------
+// Mid-journey the camera swings off the main line and dives into the Backend
+// agent's branch tunnel (past its workers), then banks back onto the path.
+const DETOUR = { start: 0.40, end: 0.55, parentIdx: 5, depth: 0.72 };
+
+function camPosAt(u) {
+  u = clamp01(u);
+  const base = path.getPointAt(u);
+  const b = branchByParent.get(DETOUR.parentIdx);
+  if (!b || u <= DETOUR.start || u >= DETOUR.end) return base;
+  const k = (u - DETOUR.start) / (DETOUR.end - DETOUR.start);
+  const bell = Math.sin(k * Math.PI);
+  const bp = b.curve.getPointAt(clamp01(k * DETOUR.depth));
+  return base.lerp(bp, bell * 0.85);
+}
+
 // ------------------------------------------------------------------ render --
 const clock = new THREE.Clock();
 
@@ -295,8 +311,8 @@ function tick() {
 
   // camera along path — stop travel as we flatten out
   const camT = Math.min(t, FLAT_START) / FLAT_START * 0.86;
-  const camPos = path.getPointAt(clamp01(camT));
-  const lookAt = path.getPointAt(clamp01(camT + 0.035));
+  const camPos = camPosAt(camT);
+  const lookAt = camPosAt(camT + 0.035);
   camera.position.copy(camPos);
   camera.position.x += mouse.x * 0.4;
   camera.position.y += -mouse.y * 0.3;
