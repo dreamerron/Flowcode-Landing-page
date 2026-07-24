@@ -32,15 +32,6 @@
   </style>
 </head>
 <body>
-  <nav class="nav">
-    <a class="nav__logo" href="index.html">FLOW<b>CODE</b></a>
-    <div class="nav__links">
-      <a href="index.html">The Journey</a>
-      <a href="network.html">The Canvas (3D)</a>
-      <a class="nav__cta" href="index.html#get-started">Get early access</a>
-    </div>
-  </nav>
-
   <canvas id="webgl"></canvas>
   <div id="tooltip"></div>
 
@@ -50,6 +41,10 @@
     <div class="hint">Move to tilt · Scroll to zoom · Hover a node</div>
   </div>
 
+  <script type="module">
+    import { mountChrome } from './js/site.js';
+    mountChrome({ immersive: true });
+  </script>
   <script type="module" src="js/network.js"></script>
 </body>
 </html>

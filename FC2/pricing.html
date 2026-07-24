@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FLOWCODE — Pricing · Free to start. Pay when it pays for itself.</title>
+  <meta name="description" content="FLOWCODE pricing: Free local core with your own keys, Pro at $15/month with advanced routing and cloud sync, Team at $25/seat with shared canvases and org controls." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2238%22 fill=%22%232dd4bf%22/></svg>" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+</head>
+<body class="page">
+
+  <header class="section">
+    <div class="eyebrow">Pricing</div>
+    <h1 class="page-title">Free to start. Pay when it pays for itself.</h1>
+
+    <div class="plans">
+      <div class="plan">
+        <h3>Free</h3>
+        <div class="price">$0</div>
+        <p class="blurb">Local core. Runs on your machine with your own API
+        keys. No account required.</p>
+        <ul>
+          <li>Branching canvas</li>
+          <li>Savings meter — tokens & dollars</li>
+          <li>All providers: Anthropic, OpenAI, Gemini, Grok, Ollama</li>
+          <li>Local-first — nothing leaves your machine</li>
+        </ul>
+        <a class="btn btn--ghost" href="features.html#download">Download free</a>
+      </div>
+
+      <div class="plan plan--pro">
+        <span class="plan__badge">Recommended</span>
+        <h3>Pro</h3>
+        <div class="price">$15<small>/month</small></div>
+        <p class="blurb">For people who run serious multi-agent work every day.</p>
+        <ul>
+          <li>Everything in Free</li>
+          <li>Advanced routing</li>
+          <li>Cloud sync</li>
+          <li>Larger multi-agent runs</li>
+          <li>Priority updates</li>
+        </ul>
+        <a class="btn" href="features.html#download">Start with Pro</a>
+      </div>
+
+      <div class="plan">
+        <h3>Team</h3>
+        <div class="price">$25<small>/seat/month</small></div>
+        <p class="blurb">Everything in Pro, for the whole org.</p>
+        <ul>
+          <li>Everything in Pro</li>
+          <li>Shared canvases</li>
+          <li>Org controls</li>
+          <li>Centralized billing</li>
+        </ul>
+        <a class="btn btn--ghost" href="features.html#download">Talk to us</a>
+      </div>
+    </div>
+
+    <div class="roi-callout">
+      FLOWCODE shows its own ROI — the dashboard displays what you saved in
+      API spend each month. <b>When it shows you saved more than $15, Pro
+      pays for itself.</b>
+    </div>
+  </header>
+
+  <section class="section section--tight">
+    <h2 class="section-title">Questions, answered.</h2>
+    <div class="faq">
+      <details>
+        <summary>Do I need an API key?</summary>
+        <p>Yes — your own. Bring keys for Anthropic, OpenAI, Gemini, or Grok,
+        or run a local model via Ollama, which is free.</p>
+      </details>
+      <details>
+        <summary>Does my code leave my machine?</summary>
+        <p>No — FLOWCODE is local-first. The only traffic that leaves your
+        machine is your own provider calls, made with your own keys.</p>
+      </details>
+      <details>
+        <summary>Can I cancel anytime?</summary>
+        <p>Yes. Cancel whenever you like; your local canvases keep working on
+        the Free plan.</p>
+      </details>
+      <details>
+        <summary>What platforms are supported?</summary>
+        <p>Windows, Mac, and Linux.</p>
+      </details>
+    </div>
+  </section>
+
+  <script type="module">
+    import { mountChrome } from './js/site.js';
+    mountChrome({ active: 'Pricing' });
+  </script>
+</body>
+</html>
