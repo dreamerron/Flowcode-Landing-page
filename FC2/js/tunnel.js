@@ -260,6 +260,50 @@ function onScroll() {
 addEventListener('scroll', onScroll, { passive: true });
 onScroll();
 
+// ------------------------------------------------------------- autoplay ----
+// On load the journey plays itself once, slowly, then hands control back to
+// normal scrolling. Any user interaction stops it; the play button replays.
+const AUTOPLAY_MS = 45000;
+const playBtn = document.getElementById('play-btn');
+const playIcon = document.getElementById('play-icon');
+const auto = { active: false, t0: 0 };
+const easeInOutSine = (x) => -(Math.cos(Math.PI * x) - 1) / 2;
+const easeInOutCubic = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+
+function setPlayUI() {
+  playBtn.classList.toggle('is-playing', auto.active);
+  playIcon.textContent = auto.active ? '⏸' : '▶';
+  playBtn.setAttribute('aria-label', auto.active ? 'Pause the journey' : 'Play the journey');
+}
+
+function startAutoplay() {
+  window.scrollTo(0, 0);
+  auto.active = true;
+  auto.t0 = performance.now();
+  setPlayUI();
+}
+
+function stopAutoplay() {
+  if (!auto.active) return;
+  auto.active = false;
+  setPlayUI();
+}
+
+playBtn.addEventListener('click', () => (auto.active ? stopAutoplay() : startAutoplay()));
+
+// hand control back the moment the user tries to drive
+for (const ev of ['wheel', 'touchstart', 'pointerdown']) {
+  addEventListener(ev, (e) => { if (e.target !== playBtn && !playBtn.contains(e.target)) stopAutoplay(); }, { passive: true });
+}
+addEventListener('keydown', (e) => {
+  if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' '].includes(e.key)) stopAutoplay();
+});
+
+// auto-play once on load (skipped for reduced-motion users)
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  setTimeout(() => { if (!auto.active && window.scrollY < 4) startAutoplay(); }, 900);
+}
+
 // mouse parallax
 const mouse = { x: 0, y: 0 };
 addEventListener('pointermove', (e) => {
@@ -306,6 +350,19 @@ const clock = new THREE.Clock();
 function tick() {
   const dt = Math.min(clock.getDelta(), 0.05);
   const et = clock.elapsedTime;
+
+  // autoplay drives the real scroll position, so captions, the flat canvas,
+  // and the phone stage all stay in sync with manual scrolling afterwards
+  if (auto.active) {
+    const k = (performance.now() - auto.t0) / AUTOPLAY_MS;
+    if (k >= 1) {
+      stopAutoplay();
+    } else {
+      const max = scroller.offsetHeight - innerHeight;
+      window.scrollTo(0, Math.round(max * easeInOutSine(k)));
+    }
+  }
+
   smoothT = lerp(smoothT, scrollT, 1 - Math.pow(0.001, dt));
   const t = smoothT;
 
@@ -322,7 +379,8 @@ function tick() {
   // node birth & pulse
   nodes.forEach((n, i) => {
     const s = scrollAt(n.def.t);
-    const born = smoothstep(s - 0.12, s - 0.07, t);
+    // spawn eases in and out (cubic) instead of a plain linear ramp
+    const born = easeInOutCubic(smoothstep(s - 0.12, s - 0.07, t));
     n.born = born;
     const pulse = 1 + Math.sin(et * 3 + i) * 0.08;
     n.group.scale.setScalar(Math.max(0.001, born) * pulse);
