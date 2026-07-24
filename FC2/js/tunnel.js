@@ -83,15 +83,26 @@ scene.add(ringGroup);
 }
 
 // --------------------------------------------------------------- the nodes --
+// A spawning TREE, not a chain: the Project Manager spawns specialist
+// agents, and every agent spawns its own worker nodes (parent → children).
+// `parent` is an index into this list; workers render smaller.
 const NODE_DEFS = [
-  { title: 'Master Prompt', badge: 'You', color: '#e8ecf4', t: 0.06 },
-  { title: 'Project Scaffold Engineer', badge: 'AI', color: CARD_COLORS[4], t: 0.17 },
-  { title: 'UI / Frontend Agent', badge: 'Agent', color: CARD_COLORS[0], t: 0.28 },
-  { title: 'Backend API Agent', badge: 'Agent', color: CARD_COLORS[2], t: 0.39 },
-  { title: 'Database Designer', badge: 'Agent', color: CARD_COLORS[1], t: 0.50 },
-  { title: 'Auth & Security', badge: 'Agent', color: CARD_COLORS[3], t: 0.61 },
-  { title: 'Integrations & APIs', badge: 'Agent', color: CARD_COLORS[6], t: 0.70 },
-  { title: 'QA & Deploy', badge: 'Agent', color: CARD_COLORS[5], t: 0.78 },
+  { title: 'Master Prompt', badge: 'You', color: '#e8ecf4', t: 0.06, parent: null },
+  { title: 'Project Manager', badge: 'AI', color: CARD_COLORS[4], t: 0.16, parent: 0 },
+
+  { title: 'Scaffold Software Engineer', badge: 'Agent', color: CARD_COLORS[0], t: 0.28, parent: 1 },
+  { title: 'Vite + React setup', badge: 'Worker', color: CARD_COLORS[0], t: 0.335, parent: 2, worker: true, spin: 0.9 },
+  { title: 'File writer', badge: 'Worker', color: CARD_COLORS[0], t: 0.355, parent: 2, worker: true, spin: -1.1 },
+
+  { title: 'Backend API Agent', badge: 'Agent', color: CARD_COLORS[2], t: 0.44, parent: 1 },
+  { title: 'API client + interceptors', badge: 'Worker', color: CARD_COLORS[2], t: 0.495, parent: 5, worker: true, spin: 1.2 },
+  { title: 'Service layer', badge: 'Worker', color: CARD_COLORS[2], t: 0.515, parent: 5, worker: true, spin: -0.8 },
+
+  { title: 'Auth Feature Engineer', badge: 'Agent', color: CARD_COLORS[3], t: 0.58, parent: 1 },
+  { title: 'Login / register UI', badge: 'Worker', color: CARD_COLORS[3], t: 0.63, parent: 8, worker: true, spin: 1.0 },
+
+  { title: 'Unit & Integration Tests', badge: 'Agent', color: CARD_COLORS[5], t: 0.70, parent: 1 },
+  { title: 'Vitest runner', badge: 'Worker', color: CARD_COLORS[5], t: 0.745, parent: 10, worker: true, spin: -1.2 },
 ];
 
 const nodes = [];
@@ -101,31 +112,85 @@ scene.add(nodeGroup);
 
 const frames = path.computeFrenetFrames(200, false);
 
+// ------------------------------------------------- branch tunnels ----------
+// When an agent spawns workers, a smaller side-tunnel forks off the main one
+// and the workers live inside it. Rings fade in as the parent agent is born.
+const branchByParent = new Map(); // parentIdx -> { curve, rings, count }
+
+function openBranch(parentIdx) {
+  if (branchByParent.has(parentIdx)) return branchByParent.get(parentIdx);
+  const def = NODE_DEFS[parentIdx];
+  const side = nodes[parentIdx].side;
+  const fi = Math.floor(def.t * 199);
+  const start = path.getPointAt(def.t);
+  const tangent = frames.tangents[fi].clone();
+  const normal = frames.normals[fi].clone();
+  const curve = new THREE.QuadraticBezierCurve3(
+    start,
+    start.clone().add(tangent.clone().multiplyScalar(4)).add(normal.clone().multiplyScalar(side * 3.2)),
+    start.clone().add(tangent.clone().multiplyScalar(9)).add(normal.clone().multiplyScalar(side * 7.2)),
+  );
+  const rings = [];
+  const bFrames = curve.computeFrenetFrames(16, false);
+  const geo = new THREE.TorusGeometry(1, 0.014, 6, 40);
+  for (let i = 1; i <= 16; i++) {
+    const bt = i / 16;
+    const mat = new THREE.MeshBasicMaterial({
+      color: i % 4 === 0 ? def.color : 0x1b2b4a,
+      transparent: true, opacity: 0,
+    });
+    const ring = new THREE.Mesh(geo, mat);
+    ring.position.copy(curve.getPointAt(bt));
+    ring.lookAt(ring.position.clone().add(bFrames.tangents[i - 1]));
+    // branch mouth is wide, tapers toward its end
+    ring.scale.setScalar(2.4 - bt * 1.1);
+    ring.userData.base = i % 4 === 0 ? 0.85 : 0.5;
+    scene.add(ring);
+    rings.push(ring);
+  }
+  const b = { curve, rings, count: 0 };
+  branchByParent.set(parentIdx, b);
+  return b;
+}
+
 NODE_DEFS.forEach((def, i) => {
   const p = path.getPointAt(def.t);
-  // offset off-axis so the camera flies past them
-  const side = i % 2 === 0 ? 1 : -1;
-  const normal = new THREE.Vector3().copy(frames.normals[Math.floor(def.t * 199)]);
-  const pos = p.clone().add(normal.multiplyScalar(side * 2.1));
+  const fi = Math.floor(def.t * 199);
+  const normal = new THREE.Vector3().copy(frames.normals[fi]);
+  const binormal = new THREE.Vector3().copy(frames.binormals[fi]);
+  let pos, side;
+  if (def.worker) {
+    // workers live inside their parent agent's branch tunnel
+    side = nodes[def.parent].side;
+    const branch = openBranch(def.parent);
+    branch.count += 1;
+    const bt = branch.count === 1 ? 0.45 : 0.75;
+    const drift = binormal.clone().multiplyScalar(Math.sin(def.spin) * 0.9);
+    pos = branch.curve.getPointAt(bt).add(drift);
+  } else {
+    // agents alternate sides of the flight line
+    side = i % 2 === 0 ? 1 : -1;
+    pos = p.clone().add(normal.clone().multiplyScalar(side * 2.1));
+  }
 
   const g = new THREE.Group();
   g.position.copy(pos);
 
   const core = new THREE.Mesh(
-    new THREE.IcosahedronGeometry(0.22, 2),
+    new THREE.IcosahedronGeometry(def.worker ? 0.14 : 0.22, 2),
     new THREE.MeshBasicMaterial({ color: def.color }),
   );
-  const glow = makeGlowSprite(def.color, 2.4);
-  const halo = makeGlowSprite(def.color, 6);
+  const glow = makeGlowSprite(def.color, def.worker ? 1.5 : 2.4);
+  const halo = makeGlowSprite(def.color, def.worker ? 3.4 : 6);
   halo.material.opacity = 0.35;
 
-  const card = makeCardSprite({ title: def.title, badge: def.badge, color: def.color }, 2.6);
-  card.position.set(side * 1.7, 0.9, 0);
+  const card = makeCardSprite({ title: def.title, badge: def.badge, color: def.color }, def.worker ? 1.7 : 2.6);
+  card.position.set(side * (def.worker ? 1.1 : 1.7), def.worker ? 0.65 : 0.9, 0);
 
   g.add(core, glow, halo, card);
   g.scale.setScalar(0.001);
   nodeGroup.add(g);
-  nodes.push({ def, group: g, core, glow, halo, card, born: 0 });
+  nodes.push({ def, group: g, core, glow, halo, card, born: 0, side });
 });
 
 // ------------------------------------------------------ branches + flow ----
@@ -163,14 +228,19 @@ function makeLink(a, b, color, midT) {
   return { curve, mesh, totalIndex, flow, fN: FN, offsets: Array.from({ length: FN }, () => Math.random()), grow: 0 };
 }
 
-for (let i = 0; i < nodes.length - 1; i++) {
-  links.push(makeLink(
+// one wire per parent→child edge of the tree
+NODE_DEFS.forEach((def, i) => {
+  if (def.parent === null || def.parent === undefined) return;
+  const L = makeLink(
+    nodes[def.parent].group.position.clone(),
     nodes[i].group.position.clone(),
-    nodes[i + 1].group.position.clone(),
-    NODE_DEFS[i + 1].color,
-    (NODE_DEFS[i].t + NODE_DEFS[i + 1].t) / 2,
-  ));
-}
+    def.color,
+    (NODE_DEFS[def.parent].t + def.t) / 2,
+  );
+  L.tA = NODE_DEFS[def.parent].t;
+  L.tB = def.t;
+  links.push(L);
+});
 
 // ambient master glow at tunnel entrance
 const masterHalo = makeGlowSprite(PALETTE.teal, 14);
@@ -245,10 +315,16 @@ function tick() {
     n.card.material.opacity = smoothstep(s - 0.11, s - 0.06, t);
   });
 
+  // branch tunnels open as their parent agent is born
+  branchByParent.forEach((b, parentIdx) => {
+    const born = nodes[parentIdx].born;
+    for (const r of b.rings) r.material.opacity = born * r.userData.base;
+  });
+
   // branch growth + data flow
   links.forEach((L, i) => {
-    const sA = scrollAt(NODE_DEFS[i].t), sB = scrollAt(NODE_DEFS[i + 1].t);
-    L.grow = smoothstep(sA - 0.07, sB - 0.08, t);
+    const sA = scrollAt(L.tA), sB = scrollAt(L.tB);
+    L.grow = smoothstep(sA - 0.07, Math.max(sB - 0.08, sA - 0.02), t);
     L.mesh.geometry.setDrawRange(0, Math.floor(L.totalIndex * L.grow));
     const attr = L.flow.geometry.attributes.position;
     const active = L.grow > 0.999 ? 1 : L.grow * 0.4;

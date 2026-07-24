@@ -7,17 +7,24 @@ const COLORS = {
   teal: '#2dd4bf', blue: '#60a5fa', red: '#f87171', cyan: '#22d3ee',
 };
 
-// x/y as % of the canvas; side: which port the wire leaves from
+// A parent → child tree, like the real FLOWCODE canvas: the Project Manager
+// spawns specialist agents, and every agent spawns its own workers.
+// x/y as % of the canvas; `parent` is the id the wire connects up to.
 const CARDS = [
-  { id: 'master', title: 'Project Scaffold Software Engineer', badge: 'AI', color: COLORS.blue,
-    x: 50, y: 46, w: 240, master: true },
-  { id: 'ui',    title: 'UI / Frontend Agent',   badge: 'Agent', color: COLORS.purple, x: 16, y: 14, w: 190 },
-  { id: 'api',   title: 'Backend API Agent',    badge: 'Agent', color: COLORS.green,  x: 82, y: 15, w: 190 },
-  { id: 'db',    title: 'Database Designer',    badge: 'Agent', color: COLORS.amber,  x: 13, y: 48, w: 190 },
-  { id: 'auth',  title: 'Auth & Security',      badge: 'Agent', color: COLORS.teal,   x: 85, y: 48, w: 190 },
-  { id: 'integ', title: 'Integrations & APIs',  badge: 'Agent', color: COLORS.cyan,   x: 18, y: 82, w: 190 },
-  { id: 'qa',    title: 'QA & Deploy',          badge: 'Agent', color: COLORS.red,    x: 81, y: 83, w: 190 },
-  { id: 'prompt', title: 'Master Prompt', badge: 'You', color: '#cbd5e1', x: 50, y: 9, w: 180 },
+  { id: 'prompt', title: 'Master Prompt', badge: 'You', color: '#cbd5e1', x: 50, y: 9, w: 180, parent: null },
+  { id: 'master', title: 'Project Manager — AI orchestrator', badge: 'AI', color: COLORS.blue,
+    x: 50, y: 32, w: 240, master: true, parent: 'prompt' },
+
+  { id: 'scaffold', title: 'Scaffold Software Engineer', badge: 'Agent', color: COLORS.purple, x: 13, y: 56, w: 190, parent: 'master' },
+  { id: 'api',      title: 'Backend API Agent',          badge: 'Agent', color: COLORS.green,  x: 37, y: 60, w: 190, parent: 'master' },
+  { id: 'auth',     title: 'Auth Feature Engineer',      badge: 'Agent', color: COLORS.teal,   x: 63, y: 60, w: 190, parent: 'master' },
+  { id: 'tests',    title: 'Unit & Integration Tests',   badge: 'Agent', color: COLORS.red,    x: 87, y: 56, w: 190, parent: 'master' },
+
+  { id: 'scaffold-w1', title: 'Vite + React setup', badge: 'Worker', color: COLORS.purple, x: 7,  y: 84, w: 150, parent: 'scaffold' },
+  { id: 'scaffold-w2', title: 'File writer',        badge: 'Worker', color: COLORS.purple, x: 22, y: 87, w: 150, parent: 'scaffold' },
+  { id: 'api-w1',      title: 'API client',         badge: 'Worker', color: COLORS.green,  x: 37, y: 87, w: 150, parent: 'api' },
+  { id: 'auth-w1',     title: 'Login / register UI', badge: 'Worker', color: COLORS.teal,  x: 63, y: 87, w: 150, parent: 'auth' },
+  { id: 'tests-w1',    title: 'Vitest runner',      badge: 'Worker', color: COLORS.red,    x: 87, y: 85, w: 150, parent: 'tests' },
 ];
 
 export function buildFlatCanvas(root) {
@@ -35,7 +42,7 @@ export function buildFlatCanvas(root) {
 
   for (const c of CARDS) {
     const el = document.createElement('div');
-    el.className = 'fc-card' + (c.master ? ' fc-card--master' : '');
+    el.className = 'fc-card' + (c.master ? ' fc-card--master' : '') + (c.badge === 'Worker' ? ' fc-card--worker' : '');
     el.id = `fc-${c.id}`;
     el.style.setProperty('--c', c.color);
     el.style.left = `${c.x}%`;
@@ -61,17 +68,18 @@ export function buildFlatCanvas(root) {
     const R = root.getBoundingClientRect();
     svg.setAttribute('viewBox', `0 0 ${R.width} ${R.height}`);
     svg.innerHTML = '';
-    const master = root.querySelector('#fc-master').getBoundingClientRect();
-    const mx = master.x - R.x + master.width / 2;
-    const my = master.y - R.y + master.height / 2;
 
     for (const c of CARDS) {
-      if (c.master) continue;
+      if (!c.parent) continue;
+      // wire runs from the parent card's bottom edge to this card's top edge
+      const pEl = root.querySelector(`#fc-${c.parent}`).getBoundingClientRect();
       const el = root.querySelector(`#fc-${c.id}`).getBoundingClientRect();
+      const mx = pEl.x - R.x + pEl.width / 2;
+      const my = pEl.y - R.y + pEl.height;
       const x = el.x - R.x + el.width / 2;
-      const y = el.y - R.y + el.height / 2;
-      const midX = (x + mx) / 2;
-      const d = `M ${x} ${y} C ${midX} ${y}, ${midX} ${my}, ${mx} ${my}`;
+      const y = el.y - R.y;
+      const midY = (y + my) / 2;
+      const d = `M ${mx} ${my} C ${mx} ${midY}, ${x} ${midY}, ${x} ${y}`;
 
       const mk = (cls, extra = '') => {
         const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');

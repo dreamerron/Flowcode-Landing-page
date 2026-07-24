@@ -142,6 +142,8 @@ body {
 }
 .fc-card:nth-child(odd) { animation-delay: -2.5s; }
 @keyframes cardfloat { 50% { transform: translate(-50%, calc(-50% - 5px)); } }
+.fc-card--worker { font-size: 9px; opacity: .92; }
+.fc-card--worker .fc-card__foot { display: none; }
 .fc-card--master {
   box-shadow: 0 0 60px -8px var(--c), 0 12px 30px rgba(0,0,0,.6);
   z-index: 2;

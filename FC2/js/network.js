@@ -46,19 +46,21 @@ scene.add(world);
 }
 
 // ------------------------------------------------------------------ nodes --
+// Parent → child tree, like the real FLOWCODE canvas: the Project Manager
+// (master) spawns specialist agents, and each agent spawns its own workers.
 const DEFS = [
-  { title: 'Project Scaffold Software Engineer', badge: 'AI', color: '#60a5fa', p: [0, 0, 0], master: true },
-  { title: 'Master Prompt', badge: 'You', color: '#e8ecf4', p: [0, 4.6, -1] },
-  { title: 'UI / Frontend Agent', badge: 'Agent', color: '#a78bfa', p: [-7.5, 3.4, -2] },
-  { title: 'Component Library', badge: 'Agent', color: '#a78bfa', p: [-10.5, 0.6, -4] },
-  { title: 'Backend API Agent', badge: 'Agent', color: '#4ade80', p: [7.6, 3.2, -2.5] },
-  { title: 'Service Layer', badge: 'Agent', color: '#4ade80', p: [10.6, 0.4, -4.5] },
-  { title: 'Database Designer', badge: 'Agent', color: '#fbbf24', p: [-8.2, -2.8, -1.5] },
-  { title: 'Data Migrations', badge: 'Agent', color: '#fbbf24', p: [-5.4, -5.2, -3.5] },
-  { title: 'Auth & Security', badge: 'Agent', color: '#2dd4bf', p: [8.4, -2.9, -2] },
-  { title: 'Integrations & APIs', badge: 'Agent', color: '#22d3ee', p: [5.2, -5.4, -4] },
-  { title: 'QA & Test Runner', badge: 'Agent', color: '#f87171', p: [-2.6, 5.8, -4] },
-  { title: 'Deploy Pipeline', badge: 'Agent', color: '#f87171', p: [2.8, 6.0, -4.5] },
+  { title: 'Project Manager — AI orchestrator', badge: 'AI', color: '#60a5fa', p: [0, 0, 0], master: true, parent: null },
+  { title: 'Master Prompt', badge: 'You', color: '#e8ecf4', p: [0, 4.6, -1], parent: 0 },
+  { title: 'UI / Frontend Agent', badge: 'Agent', color: '#a78bfa', p: [-7.5, 3.4, -2], parent: 0 },
+  { title: 'Component Library', badge: 'Worker', color: '#a78bfa', p: [-10.5, 0.6, -4], parent: 2 },
+  { title: 'Backend API Agent', badge: 'Agent', color: '#4ade80', p: [7.6, 3.2, -2.5], parent: 0 },
+  { title: 'Service Layer', badge: 'Worker', color: '#4ade80', p: [10.6, 0.4, -4.5], parent: 4 },
+  { title: 'Database Designer', badge: 'Agent', color: '#fbbf24', p: [-8.2, -2.8, -1.5], parent: 0 },
+  { title: 'Data Migrations', badge: 'Worker', color: '#fbbf24', p: [-5.4, -5.2, -3.5], parent: 6 },
+  { title: 'Auth & Security', badge: 'Agent', color: '#2dd4bf', p: [8.4, -2.9, -2], parent: 0 },
+  { title: 'Login / register UI', badge: 'Worker', color: '#2dd4bf', p: [5.2, -5.4, -4], parent: 8 },
+  { title: 'QA & Test Runner', badge: 'Agent', color: '#f87171', p: [-2.6, 5.8, -4], parent: 0 },
+  { title: 'Vitest worker', badge: 'Worker', color: '#f87171', p: [2.8, 6.0, -4.5], parent: 10 },
 ];
 
 const nodes = [];
@@ -66,9 +68,9 @@ DEFS.forEach((d) => {
   const g = new THREE.Group();
   g.position.set(...d.p);
 
-  const scale = d.master ? 4.4 : 3.0;
+  const scale = d.master ? 4.4 : (d.badge === 'Worker' ? 2.1 : 3.0);
   const card = makeCardSprite({ title: d.title, badge: d.badge, color: d.color }, scale);
-  const glow = makeGlowSprite(d.color, d.master ? 7 : 3.6);
+  const glow = makeGlowSprite(d.color, d.master ? 7 : (d.badge === 'Worker' ? 2.4 : 3.6));
   glow.material.opacity = d.master ? 0.5 : 0.3;
   const core = makeGlowSprite('#ffffff', 0.7);
 
@@ -105,9 +107,8 @@ function wire(fromIdx, toIdx, color) {
   wires.push({ curve, pts, FN, mat, off: Array.from({ length: FN }, () => Math.random()), speed: 0.1 + Math.random() * 0.12 });
 }
 
-// every satellite connects to master (index 0); a few sibling links
-for (let i = 1; i < DEFS.length; i++) wire(i, 0, DEFS[i].color);
-wire(2, 3, '#a78bfa'); wire(4, 5, '#4ade80'); wire(6, 7, '#fbbf24'); wire(8, 9, '#22d3ee');
+// one wire per parent→child edge of the tree
+DEFS.forEach((d, i) => { if (d.parent !== null) wire(i, d.parent, d.color); });
 
 // ------------------------------------------------------------ interaction --
 const raycaster = new THREE.Raycaster();
