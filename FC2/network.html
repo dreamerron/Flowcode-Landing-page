@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FLOWCODE — The Living Canvas</title>
+  <meta name="description" content="FLOWCODE's AI agent orchestration canvas — live, in 3D. Hover the nodes, watch the data flow." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2238%22 fill=%22%232dd4bf%22/></svg>" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body { overflow: hidden; }
+    .canvas-copy {
+      position: fixed; left: 50%; bottom: 7vh; transform: translateX(-50%);
+      z-index: 20; text-align: center; pointer-events: none; padding: 0 20px;
+    }
+    .canvas-copy h1 {
+      font-size: clamp(26px, 4.4vw, 46px); font-weight: 800;
+      text-shadow: 0 2px 40px rgba(0,0,0,.9);
+    }
+    .canvas-copy h1 em { font-style: normal; color: var(--amber); }
+    .canvas-copy p { margin-top: 10px; color: var(--dim); font-size: 15px; }
+    .canvas-copy .hint {
+      margin-top: 16px; font-size: 12px; letter-spacing: .18em;
+      text-transform: uppercase; color: rgba(139,150,173,.7);
+    }
+    #tooltip {
+      position: fixed; z-index: 60; pointer-events: none; opacity: 0;
+      background: rgba(10,14,24,.95); border: 1px solid rgba(120,140,180,.35);
+      border-radius: 8px; padding: 7px 12px; font-size: 12px;
+      transition: opacity .18s; white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a class="nav__logo" href="index.html">FLOW<b>CODE</b></a>
+    <div class="nav__links">
+      <a href="index.html">The Journey</a>
+      <a href="network.html">The Canvas (3D)</a>
+      <a class="nav__cta" href="index.html#get-started">Get early access</a>
+    </div>
+  </nav>
+
+  <canvas id="webgl"></canvas>
+  <div id="tooltip"></div>
+
+  <div class="canvas-copy">
+    <h1>Summary AI <em>orchestration</em>, live on the canvas.</h1>
+    <p>One master engineer. A swarm of specialist agents. Your app, assembling in real time.</p>
+    <div class="hint">Move to tilt · Scroll to zoom · Hover a node</div>
+  </div>
+
+  <script type="module" src="js/network.js"></script>
+</body>
+</html>
