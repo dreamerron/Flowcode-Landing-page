@@ -1,5 +1,5 @@
-// FLOWCODE — shared helpers: palette, canvas-generated textures (node cards,
-// glow sprites), math utils. Matches the visual language of the FLOWCODE app:
+// FORKSCAPE — shared helpers: palette, canvas-generated textures (node cards,
+// glow sprites), math utils. Matches the visual language of the FORKSCAPE app:
 // dark canvas, colored agent cards, glowing bezier wires.
 
 import * as THREE from '../vendor/three.module.js';
@@ -54,7 +54,7 @@ export function makeGlowSprite(color, scale = 1) {
 }
 
 // ------------------------------------------------------------- node card tex
-// Draws a FLOWCODE-style agent card (rounded rect, colored border, header
+// Draws a FORKSCAPE-style agent card (rounded rect, colored border, header
 // chip row, body lines, footer buttons) onto a canvas texture.
 export function cardTexture({ title, color, badge = 'Agent', lines = 3, w = 512, h = 320 }) {
   const c = document.createElement('canvas');

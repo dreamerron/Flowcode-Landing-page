@@ -1,4 +1,4 @@
-// FLOWCODE — shared site chrome: one nav + one footer used by every page.
+// FORKSCAPE — shared site chrome: one nav + one footer used by every page.
 // mountChrome({ active, immersive }) prepends the nav; content pages also
 // get the footer (immersive WebGL pages skip it).
 
@@ -13,7 +13,7 @@ export function mountChrome({ active = '', immersive = false } = {}) {
   const nav = document.createElement('nav');
   nav.className = 'nav' + (immersive ? '' : ' nav--solid');
   nav.innerHTML = `
-    <a class="nav__logo" href="index.html">FLOW<b>CODE</b></a>
+    <a class="nav__logo" href="index.html">FORK<b>SCAPE</b></a>
     <div class="nav__links">
       ${LINKS.map((l) => `<a href="${l.href}"${l.label === active ? ' aria-current="page" class="is-active"' : ''}>${l.label}</a>`).join('')}
       <a class="nav__cta" href="features.html#download">Download</a>
@@ -27,7 +27,7 @@ export function mountChrome({ active = '', immersive = false } = {}) {
   footer.innerHTML = `
     <div class="footer__inner">
       <div class="footer__brand">
-        <a class="nav__logo" href="index.html">FLOW<b>CODE</b></a>
+        <a class="nav__logo" href="index.html">FORK<b>SCAPE</b></a>
         <p>AI work that branches on an infinite canvas — local-first,
         measured, and honest about what it saves you.</p>
       </div>
@@ -50,7 +50,7 @@ export function mountChrome({ active = '', immersive = false } = {}) {
       </div>
     </div>
     <div class="footer__legal">
-      © 2026 FLOWCODE · Savings vary by workload — the in-app dashboard shows
+      © 2026 FORKSCAPE · Savings vary by workload — the in-app dashboard shows
       your real numbers, tokens and dollars, cache-aware.
     </div>`;
   document.body.append(footer);

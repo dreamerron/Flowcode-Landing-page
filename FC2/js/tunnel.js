@@ -1,7 +1,7 @@
-// FLOWCODE — Option B "The Journey": scroll-driven 3D tunnel.
+// FORKSCAPE — Option B "The Journey": scroll-driven 3D tunnel.
 // Camera flies down a glowing tunnel; on each scroll stage a node is born,
 // glows, branches to the next, and data particles flow along the wires.
-// The journey ends by flattening into the 2D FLOWCODE canvas, then a phone
+// The journey ends by flattening into the 2D FORKSCAPE canvas, then a phone
 // rises showing the generated app — built with up to 90% fewer tokens.
 
 import * as THREE from '../vendor/three.module.js';
