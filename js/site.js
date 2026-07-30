@@ -16,7 +16,8 @@ export function mountChrome({ active = '', immersive = false } = {}) {
     <a class="nav__logo" href="index.html">FORK<b>SCAPE</b></a>
     <div class="nav__links">
       ${LINKS.map((l) => `<a href="${l.href}"${l.label === active ? ' aria-current="page" class="is-active"' : ''}>${l.label}</a>`).join('')}
-      <a class="nav__cta" href="features.html#download">Download</a>
+      <a href="https://try.forkscape.com">Try in browser</a>
+      <a class="nav__cta" href="download.html"${active === 'Download' ? ' aria-current="page"' : ''}>Download</a>
     </div>`;
   document.body.prepend(nav);
 
@@ -35,7 +36,8 @@ export function mountChrome({ active = '', immersive = false } = {}) {
         <h4>Product</h4>
         <a href="features.html">Features</a>
         <a href="pricing.html">Pricing</a>
-        <a href="features.html#download">Download</a>
+        <a href="download.html">Download</a>
+        <a href="https://try.forkscape.com">Try in browser</a>
       </div>
       <div class="footer__col">
         <h4>Research</h4>

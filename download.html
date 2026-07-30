@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FORKSCAPE — Download · Windows, Mac, Linux — or try it in your browser</title>
+  <meta name="description" content="Download FORKSCAPE free for Windows, Mac, and Linux — or try the browser playground first, no install and no account." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2238%22 fill=%22%232dd4bf%22/></svg>" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+</head>
+<body class="page">
+
+  <header class="section">
+    <div class="eyebrow">Download</div>
+    <h1 class="page-title">Your machine. Your keys. Your canvas.</h1>
+    <p class="page-lede">
+      FORKSCAPE is a local-first desktop app — it runs on your computer, talks
+      to the providers with your own keys, and nothing else ever leaves your
+      machine. Free, no account required.
+    </p>
+  </header>
+
+  <!-- Desktop downloads -->
+  <section class="section section--tight" id="desktop">
+    <div class="cta-strip">
+      <h2>Get the desktop app — free.</h2>
+      <div class="row">
+        <a class="btn" href="https://github.com/dreamerron/Flowcode-TS/releases/latest">⬇ Windows (.exe)</a>
+        <a class="btn" href="https://github.com/dreamerron/Flowcode-TS/releases/latest">⬇ Mac (.dmg)</a>
+        <a class="btn" href="https://github.com/dreamerron/Flowcode-TS/releases/latest">⬇ Linux (.AppImage)</a>
+      </div>
+      <p class="after">All builds ship from the same source —
+      <a href="pricing.html">the Free plan is the full local core</a>, not a trial.</p>
+    </div>
+  </section>
+
+  <!-- Browser playground -->
+  <section class="section section--tight" id="try">
+    <div class="cta-strip" style="border-color: rgba(45,212,191,.35)">
+      <h2>Not ready to install? <b style="color:var(--teal)">Try it in your browser.</b></h2>
+      <p class="section-sub" style="margin: 0 auto 22px; text-align: center">
+        The playground is the real app running in your browser — chat, branch,
+        run Research Mode, orchestrate agents — with a free capped model
+        pre-configured. No install, no key, no account.
+      </p>
+      <div class="row">
+        <a class="btn" href="https://try.forkscape.com">▶ Open the playground</a>
+      </div>
+      <p class="after">Building real files, running your app, MCP servers, and
+      local models need the desktop app — the playground will point you back
+      here when you hit those.</p>
+    </div>
+  </section>
+
+  <!-- What runs where -->
+  <section class="section">
+    <h2 class="section-title">What runs where</h2>
+    <div class="grid">
+      <div class="feature-card" style="--c:var(--teal)">
+        <h3>In the browser playground</h3>
+        <p>Branching canvas &amp; thread view · chat with the free playground
+        model or your own API keys · Research Mode · multi-agent orchestration
+        · templates · the savings dashboard.</p>
+      </div>
+      <div class="feature-card" style="--c:var(--purple)">
+        <h3>Desktop only</h3>
+        <p>Building real apps (files on disk, run &amp; preview) · CLI agents
+        (Claude Code, Codex) · MCP servers · local models (Ollama, llama.cpp)
+        · your editor &amp; git · Obsidian vault · offline voice dictation.</p>
+      </div>
+    </div>
+  </section>
+
+  <script type="module">
+    import { mountChrome } from './js/site.js';
+    mountChrome({ active: 'Download' });
+  </script>
+</body>
+</html>

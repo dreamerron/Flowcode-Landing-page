@@ -309,6 +309,10 @@ body {
   transition: transform .25s;
 }
 .savings__cta:hover { transform: translateY(-3px) scale(1.03); }
+.savings__cta--try {
+  background: none; color: var(--teal); box-shadow: none;
+  border: 1px solid rgba(45,212,191,.5);
+}
 
 @media (max-width: 860px) {
   #phone-stage { flex-direction: column; padding-top: 70px; gap: 26px; }
