@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ForkScape Help Center</title>
 <style>
   :root {
@@ -310,6 +313,17 @@
     <a href="#settings-plan">Plan tab (Free / Pro / Enterprise)</a>
     <a href="#workspace-trust">Workspace Trust</a>
     <a href="#project-file">The project file</a>
+  </div>
+  <div class="grp">
+    <div class="grp-label">Tutorials</div>
+    <a href="#tut-auto-app">Build an app automatically</a>
+    <a href="#tut-manual-app">Build an app manually</a>
+    <a href="#tut-design-studio">Design Studio walkthrough</a>
+    <a href="#tut-research">Run a research panel</a>
+    <a href="#tut-automations">Set up an automation</a>
+    <a href="#tut-memory">Memory that compounds</a>
+    <a href="#tut-voice">Dictation &amp; your AI voice</a>
+    <a href="#tut-avatar">Avatar persona videos</a>
   </div>
   <div class="grp">
     <div class="grp-label">Troubleshooting</div>
@@ -781,6 +795,107 @@
       <li>If a folder's project file exists but can't be read as a canvas (corrupted, hand-edited, or from another tool), ForkScape asks before doing anything — <strong>never</strong> silently overwrites it. Decline, and that file is protected from autosave for the rest of the session.</li>
     </ul>
     <div class="callout tip"><span class="ic">✓</span><p>Agents are explicitly instructed never to read or edit this file — it's ForkScape's own bookkeeping, not source code.</p></div>
+  </article>
+</section>
+
+<!-- ================= TROUBLESHOOTING ================= -->
+<section class="grpblock" id="tutorials">
+  <div class="grp-title"><h2>Tutorials</h2></div>
+
+  <article class="topic" id="tut-auto-app">
+    <h3>Tutorial: build an app automatically</h3>
+    <p class="dek">One description in, a running app out — the fully-orchestrated path.</p>
+    <ol>
+      <li>Click <strong>✨ Create App</strong> in the top bar and describe what you want in plain words — "a habit tracker with streaks and a weekly chart". The Enhance button tightens a rough description for you.</li>
+      <li><strong>Pick a folder.</strong> The native dialog both selects and creates folders; ForkScape asks you to trust it (that's Workspace Trust — agents can only write inside trusted folders). If files are already there, it builds into the existing project; if empty, it scaffolds fresh.</li>
+      <li><strong>Review the plan.</strong> The Project Manager decomposes your description into concrete tasks and shows them for approval — this is where you control scope (and cost). Remove anything you don't want built, then approve.</li>
+      <li><strong>Watch the build.</strong> The PM fans out into worker agents on the canvas — each takes one task with only the context it needs. Live logs stream into the Terminal (Ctrl+J). If a worker needs something only you have (an API key, a decision), the run pauses and asks — secrets go straight into <code>.env</code>, never into the transcript.</li>
+      <li><strong>It launches itself.</strong> After typecheck + tests pass, the app starts and the App Viewer opens on the live URL. Use <strong>Run</strong> in the viewer any time after; annotate elements in the preview to request changes.</li>
+    </ol>
+    <div class="callout tip"><span class="ic">✓</span><p>Every build step lands as nodes you can re-run individually. Fix one task by re-running its node — lineage replay means unchanged steps come from cache and cost ~0 tokens.</p></div>
+  </article>
+
+  <article class="topic" id="tut-manual-app">
+    <h3>Tutorial: build an app manually (canvas-driven)</h3>
+    <p class="dek">Same power, your pacing — you place every agent yourself.</p>
+    <ol>
+      <li>Open a project folder first: <strong>Files → Open folder…</strong> (Ctrl+E), and trust it.</li>
+      <li>Double-click an empty spot on the canvas to create a node. Type a focused task — "set up a Vite + Svelte project with a router".</li>
+      <li>On the node, pick how it runs: <strong>▶</strong> runs it as a single agent with tools; the <strong>⚡ Auto</strong> split-button routes it through the planner first (plan → your approval → build). For a big goal, type it into one node and choose the <strong>/pm</strong> skill — it will spawn its own workers.</li>
+      <li>Branch instead of piling on: want to try two approaches? Create two child nodes off the same parent — each carries only its own context, and the savings meter shows what that avoids re-sending.</li>
+      <li>Iterate tightly: <strong>🧩 Open in VS Code</strong> from the Project panel to hand-edit, then re-run just the node that needs redoing. Use the GIT tab to init/commit/publish when it's worth keeping.</li>
+    </ol>
+    <div class="callout note"><span class="ic">◆</span><p>Manual mode is the best way to <em>learn</em> what the automatic path does — it's the same agents, minus the orchestration layer deciding for you.</p></div>
+  </article>
+
+  <article class="topic" id="tut-design-studio">
+    <h3>Tutorial: Design Studio, idea → screens → build</h3>
+    <p class="dek">Design the whole UI before a single line of app code exists.</p>
+    <ol>
+      <li>Open <strong>🎨 Design Studio</strong>. Describe the app once in the whole-app prompt — it plans the screens and generates every page in parallel, each as a real, rendered HTML mockup.</li>
+      <li>Refine per page: switch pages with the tabs, generate variations, and use <strong>annotate</strong> to click any element and say what to change — "make this header sticky", "warmer color here".</li>
+      <li>Lock the look: import a color palette, or attach a reference design image — ForkScape copies its design <em>language</em> (spacing, tone, type), not the pixels. You can also import existing HTML files as pages.</li>
+      <li>Keep it: <strong>💾 Save page / Save all pages</strong> writes <code>design/*.html</code> into your project (in the browser playground the same buttons download the files).</li>
+      <li>Make it real: <strong>🚀 Build this app</strong> hands every page + the design system to the Project Manager as references — the built app matches what you approved on screen.</li>
+    </ol>
+  </article>
+
+  <article class="topic" id="tut-research">
+    <h3>Tutorial: run a research panel</h3>
+    <p class="dek">Ask once, hear from every model you have — then get one honest synthesis.</p>
+    <ol>
+      <li>Create a node with your question — the kind with no single right answer: "What pricing model fits a prosumer AI tool?"</li>
+      <li>Open the node's run-mode menu and pick <strong>🔬 Research</strong>. Tick the models to include — the roster spans every provider you've connected (API, local Ollama, CLIs). Two models on Free; unlimited on Pro.</li>
+      <li>Optionally enable <strong>Web research</strong> — a shared web search+fetch pass grounds every model with the same fresh sources, which makes even small local models useful on current topics.</li>
+      <li>Run it. Each model answers in its own branch, in parallel — then a debate round has them critique each other, and a synthesis node merges the strongest points with disagreements kept visible.</li>
+      <li>Export: any research result can become a polished HTML or PDF report from the node's export buttons.</li>
+    </ol>
+  </article>
+
+  <article class="topic" id="tut-automations">
+    <h3>Tutorial: set up an automation</h3>
+    <p class="dek">An agent that runs on a schedule — with you in the approval loop. (Pro)</p>
+    <ol>
+      <li>Open <strong>⚡ Automate</strong> in the left rail. Start from a template (they encode working prompts) or click <strong>New automation</strong>.</li>
+      <li>Write the prompt as a complete standing instruction — "every morning, summarize yesterday's commits and draft a standup note". Pick the trigger: manual, interval, daily schedule, or file-watch.</li>
+      <li>If it touches an external service, store the token once in <strong>Secrets</strong> and reference it as <code>{{NAME}}</code> — the agent can use it but never sees it.</li>
+      <li>Choose the <strong>approval mode</strong>: anything that posts or sends shows you the exact content first — approve in-app, or from your phone via the Telegram gateway (reply 1 to approve, 2 to reject; silence = rejected, saved as draft).</li>
+      <li>Test with ▶ before scheduling — each run lands as a node on the canvas, so the full history of what your automation actually did is always inspectable.</li>
+    </ol>
+  </article>
+
+  <article class="topic" id="tut-memory">
+    <h3>Tutorial: memory that compounds</h3>
+    <p class="dek">Make month three smarter than week one — three layers, all inspectable.</p>
+    <ol>
+      <li><strong>Memory Palace</strong> (left rail) is cross-session memory. Agents save durable facts with <em>remember</em> and retrieve them with <em>recall</em>; with auto-memory on, the important ones are distilled for you. Prune it like a garden — memory you didn't write is memory you should read.</li>
+      <li><strong>Project knowledge</strong> lives in <code>FORKSCAPE.md</code> in each project — standing instructions plus a maintained block of what the project is and how it's built. Agents read it on every run; corrections you make become rules that are enforced, not just remembered.</li>
+      <li><strong>The Vault</strong> mirrors everything to plain markdown — Memory Palace, every canvas as a readable transcript — at <code>Documents/ForkScape Vault</code>, Obsidian-compatible. Already use Obsidian? Connect your own vault; ForkScape keeps to a <code>ForkScape/</code> subfolder and never touches your notes.</li>
+    </ol>
+    <div class="callout tip"><span class="ic">✓</span><p>Import old Claude Code / Codex CLI sessions (Session Browser) and their knowledge joins the same pool — your history, restructured into branches.</p></div>
+  </article>
+
+  <article class="topic" id="tut-voice">
+    <h3>Tutorial: dictation &amp; your AI voice clone</h3>
+    <p class="dek">Talk instead of type — and let agents speak in <em>your</em> voice. (Voice tools: Pro)</p>
+    <ol>
+      <li><strong>Dictate into any node:</strong> click the 🎤 on the node toolbar, talk, click again to stop. On desktop this is whisper.cpp running locally — install once via Settings → Plugins → whisper.cpp → <em>Install for me</em>; audio never leaves your machine. Dictation appends, never overwrites.</li>
+      <li><strong>Clone your voice</strong> (once, at ElevenLabs): create an account → Voices → Instant Voice Clone → read the sample prompts. Copy your <em>voice id</em> and an API key.</li>
+      <li><strong>Wire it into ForkScape:</strong> store both as secrets — <code>ELEVENLABS_API_KEY</code> and <code>ELEVENLABS_VOICE_ID</code>. Done: any agent can now use the <em>generate_voice</em> tool.</li>
+      <li><strong>Use it:</strong> ask an agent "read this summary as audio" or chain it in an automation ("draft my daily brief and voice it"). MP3s land in the project's <code>output/</code> folder and on the canvas.</li>
+    </ol>
+  </article>
+
+  <article class="topic" id="tut-avatar">
+    <h3>Tutorial: an AI avatar persona for videos</h3>
+    <p class="dek">A talking-head video of your persona, from a script — no camera. (Pro)</p>
+    <ol>
+      <li><strong>Create the persona</strong> (once, at HeyGen): make an avatar from your footage or pick a stock one; note the <em>avatar id</em> and a HeyGen <em>voice id</em> (pair it with your ElevenLabs clone for full consistency).</li>
+      <li><strong>Store the secrets:</strong> <code>HEYGEN_API_KEY</code>, <code>HEYGEN_AVATAR_ID</code>, <code>HEYGEN_VOICE_ID</code>. If anything's missing at run time the agent pauses and asks — it will never invent ids.</li>
+      <li><strong>Generate:</strong> ask an agent — "make a 30-second launch announcement video of my avatar reading this script". Rendering takes a few minutes; the MP4 lands in <code>output/</code> and on the canvas. Need b-roll? The <em>generate_video</em> tool (Veo, needs a Gemini key) creates short scene clips from text.</li>
+      <li><strong>Assemble:</strong> ForkScape generates the pieces — script, voiceover, avatar clip, b-roll — honest scope: it is not a video <em>editor</em>. Drop the clips into CapCut/Resolve/Premiere for cuts and captions, or ask an agent to write the edit plan (timings, order, captions) to follow.</li>
+    </ol>
+    <div class="callout note"><span class="ic">◆</span><p>Pipeline idea: one automation that drafts the day's post → voices it → renders the avatar clip → sends everything to your phone via Telegram for approval. Every asset in that chain comes from tools in this tutorial.</p></div>
   </article>
 </section>
 
