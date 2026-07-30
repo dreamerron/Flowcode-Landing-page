@@ -38,6 +38,7 @@ export function mountChrome({ active = '', immersive = false } = {}) {
         <a href="pricing.html">Pricing</a>
         <a href="download.html">Download</a>
         <a href="https://try.forkscape.com">Try in browser</a>
+        <a href="help.html">Help Center</a>
       </div>
       <div class="footer__col">
         <h4>Research</h4>

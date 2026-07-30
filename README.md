@@ -35,6 +35,7 @@ features.html   feature grid + live canvas demo + download CTA
 science.html    the research receipts
 pricing.html    Free / Pro $15 / Enterprise — mirrors the app's in-app plan matrix
 download.html   platform downloads + "try it in your browser" playground CTA
+help.html       the full Help Center (generated in the app repo: docs/help-center/build.py — copy the output here on doc updates)
 network.html    the 3D living-canvas scene
 ```
 
