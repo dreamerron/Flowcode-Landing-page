@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FORKSCAPE — Features · Everything branches. Everything is measured.</title>
+  <meta name="description" content="Branching canvas, live token & dollar savings dashboard, per-task model routing, PM fan-out, quality control, lineage replay, and session import — FORKSCAPE's features." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2238%22 fill=%22%232dd4bf%22/></svg>" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+</head>
+<body class="page">
+
+  <!-- 1 · HERO — branching canvas -->
+  <header class="section">
+    <div class="eyebrow">Features</div>
+    <h1 class="page-title">Everything branches. Everything is measured.</h1>
+    <p class="page-lede">
+      AI work branches on an infinite canvas instead of piling up in one
+      endless chat. Each branch carries only its own context — so no agent
+      ever drags the whole conversation behind it.
+    </p>
+    <div class="canvas-frame" id="canvas-demo" aria-label="FORKSCAPE branching canvas preview"></div>
+  </header>
+
+  <!-- 2 · THE METER -->
+  <section class="section section--tight">
+    <div class="eyebrow" style="color:var(--amber)">The Meter</div>
+    <h2 class="section-title">A live savings dashboard, per canvas.</h2>
+    <p class="section-sub">
+      FORKSCAPE measures how much context you saved versus running the same
+      work as one linear session — both token volume <em>and</em> dollars,
+      cache-aware.
+    </p>
+    <div class="meter-panel">
+      <div class="meter-card" style="--c:var(--teal)">
+        <strong>~90%</strong>
+        <span>up to ~90% less context re-sent on heavily-branched work —
+        each branch carries only what it needs.</span>
+        <div class="meter-bars">
+          <div class="meter-bar"><span>Linear chat</span><i style="--c:var(--red); --w:96%"></i><span>2.4M tok</span></div>
+          <div class="meter-bar"><span>FORKSCAPE</span><i style="--c:var(--teal); --w:12%"></i><span>0.26M tok</span></div>
+        </div>
+      </div>
+      <div class="meter-card" style="--c:var(--green)">
+        <strong>$ saved</strong>
+        <span>dollar savings are smaller than token savings — re-sent
+        context bills as a cheap cache read, and the dashboard prices that
+        honestly.</span>
+        <div class="meter-bars">
+          <div class="meter-bar"><span>Linear chat</span><i style="--c:var(--red); --w:70%"></i><span>$18.20</span></div>
+          <div class="meter-bar"><span>FORKSCAPE</span><i style="--c:var(--green); --w:38%"></i><span>$9.85</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="honest-note">
+      <b>Honest numbers, always.</b> Up to ~90% less context re-sent applies to
+      heavily-branched work; dollar savings are smaller because re-sent context
+      bills as a cheap cache read. The dashboard shows both — measured on your
+      real runs, not a marketing average.
+    </div>
+  </section>
+
+  <!-- 3 · FEATURE GRID -->
+  <section class="section">
+    <h2 class="section-title">Built to orchestrate, not to chat.</h2>
+    <div class="grid">
+      <div class="feature-card" style="--c:var(--blue)">
+        <h3>Per-task model routing</h3>
+        <p>Every task is classified — coding, planning, thinking, web, image,
+        or general — and routed to the right model for the job, automatically.</p>
+      </div>
+      <div class="feature-card" style="--c:var(--purple)">
+        <h3>PM fan-out</h3>
+        <p>One goal decomposes into parallel specialist agents that never
+        fight over context. Parent → child → worker, each with its own lane.</p>
+      </div>
+      <div class="feature-card" style="--c:var(--teal)">
+        <h3>Local-first, any model</h3>
+        <p>Anthropic, OpenAI, Gemini, Grok, Ollama, and local CLIs. Your keys,
+        your machine, no lock-in.</p>
+      </div>
+      <div class="feature-card" style="--c:var(--amber)">
+        <h3>Quality control</h3>
+        <p>A judge scores every deliverable 1–4; builds are verified with
+        typecheck and tests, then visually reviewed after launch.</p>
+      </div>
+      <div class="feature-card" style="--c:var(--green)">
+        <h3>Lineage replay</h3>
+        <p>Unchanged re-runs cost 0 tokens. FORKSCAPE replays the lineage from
+        cache instead of paying for the same work twice.</p>
+      </div>
+      <div class="feature-card" style="--c:var(--red)">
+        <h3>Session import</h3>
+        <p>Import Claude Code or Codex CLI transcripts and rebuild them as an
+        optimized branching canvas — your history, restructured.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · CTA -->
+  <section class="section" id="download">
+    <div class="cta-strip">
+      <h2>Put your AI work on a canvas.</h2>
+      <div class="row">
+        <a class="btn" href="#download">Download for Windows</a>
+        <a class="btn" href="#download">Download for Mac</a>
+        <a class="btn" href="#download">Download for Linux</a>
+      </div>
+      <p class="after">Want the receipts first? <a href="science.html">Read the research behind FORKSCAPE →</a></p>
+    </div>
+  </section>
+
+  <script type="module">
+    import { mountChrome } from './js/site.js';
+    import { buildFlatCanvas } from './js/flatcanvas.js';
+    mountChrome({ active: 'Features' });
+    buildFlatCanvas(document.getElementById('canvas-demo'));
+  </script>
+</body>
+</html>

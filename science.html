@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FORKSCAPE — Science · Not vibes — implemented papers.</title>
+  <meta name="description" content="FORKSCAPE's design follows published research: multi-turn degradation, context branching, CodeAct, parsimonious delegation, lineage replay, ACE, TRACE, and SETS — every card links to the paper." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2238%22 fill=%22%232dd4bf%22/></svg>" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+</head>
+<body class="page">
+
+  <header class="section">
+    <div class="eyebrow">Science</div>
+    <h1 class="page-title">Not vibes — implemented papers.</h1>
+    <p class="page-lede">
+      FORKSCAPE's design follows published research. Every card links to the paper.
+    </p>
+
+    <div class="cite-hero">
+      <a class="cite-card" style="--c:var(--red)" href="https://arxiv.org/abs/2505.06120" target="_blank" rel="noopener">
+        <span class="tag">The problem.</span>
+        <strong>−39%</strong>
+        <h3>LLMs Get Lost in Multi-Turn Conversation</h3>
+        <p>Model quality drops 39% on average as a linear chat grows. The
+        longer the thread, the worse every answer gets.</p>
+        <span class="src"><b>Microsoft Research</b> · arxiv.org/abs/2505.06120 ↗</span>
+      </a>
+      <a class="cite-card" style="--c:var(--green)" href="https://arxiv.org/abs/2512.13914" target="_blank" rel="noopener">
+        <span class="tag">The fix — FORKSCAPE is this, productized.</span>
+        <strong>−58%</strong>
+        <h3>Context Branching for LLM Conversations</h3>
+        <p>Branching cuts context size 58.1% and improves response quality.
+        Isolated branches beat one growing transcript.</p>
+        <span class="src"><b>arXiv</b> · arxiv.org/abs/2512.13914 ↗</span>
+      </a>
+    </div>
+  </header>
+
+  <section class="section section--tight">
+    <h2 class="section-title">Six papers, shipped as features.</h2>
+    <div class="grid">
+      <a class="paper-card" style="--c:var(--blue)" href="https://arxiv.org/abs/2402.01030" target="_blank" rel="noopener">
+        <h3><em>CodeAct</em> — executable code actions</h3>
+        <p>Agents act by writing and running code instead of emitting brittle
+        tool schemas. Shipped as our Code Agent mode.</p>
+        <span class="link">arxiv.org/abs/2402.01030 ↗</span>
+      </a>
+      <a class="paper-card" style="--c:var(--purple)" href="https://arxiv.org/abs/2605.05007" target="_blank" rel="noopener">
+        <h3><em>Parsimonious delegation</em> — Uno-Orchestra</h3>
+        <p>Cost-aware triage before any fan-out: wasteful multi-agent runs are
+        refused up front, not billed and regretted.</p>
+        <span class="link">arxiv.org/abs/2605.05007 ↗</span>
+      </a>
+      <a class="paper-card" style="--c:var(--green)" href="https://arxiv.org/abs/2605.06365" target="_blank" rel="noopener">
+        <h3><em>Lineage replay</em></h3>
+        <p>Unchanged re-runs replay from cache and cost 0 tokens. Only edited
+        nodes — and what depends on them — run live.</p>
+        <span class="link">arxiv.org/abs/2605.06365 ↗</span>
+      </a>
+      <a class="paper-card" style="--c:var(--teal)" href="https://arxiv.org/abs/2510.04618" target="_blank" rel="noopener">
+        <h3><em>ACE</em> — agentic context engineering</h3>
+        <p>Build insights are distilled into durable project knowledge, so
+        every canvas starts smarter than the last.</p>
+        <span class="link">arxiv.org/abs/2510.04618 ↗</span>
+      </a>
+      <a class="paper-card" style="--c:var(--amber)" href="https://arxiv.org/abs/2606.13174" target="_blank" rel="noopener">
+        <h3><em>TRACE</em> — correction distillation</h3>
+        <p>Your corrections become enforced rules. Fix an agent once and the
+        fix persists across future runs.</p>
+        <span class="link">arxiv.org/abs/2606.13174 ↗</span>
+      </a>
+      <a class="paper-card" style="--c:var(--red)" href="https://arxiv.org/abs/2501.19306" target="_blank" rel="noopener">
+        <h3><em>SETS</em> — rubric verification</h3>
+        <p>A post-run judge scores deliverables against a rubric, with one
+        bounded revision round — quality without infinite loops.</p>
+        <span class="link">arxiv.org/abs/2501.19306 ↗</span>
+      </a>
+    </div>
+  </section>
+
+  <script type="module">
+    import { mountChrome } from './js/site.js';
+    mountChrome({ active: 'Science' });
+  </script>
+</body>
+</html>
