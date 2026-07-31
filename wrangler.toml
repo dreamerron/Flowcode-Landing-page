@@ -1,0 +1,9 @@
+# Cloudflare Workers static-assets config — serves this repo as the landing
+# site via the dashboard's Git flow (Build command: empty, Deploy command:
+# npx wrangler deploy). /help, /pricing etc. resolve to their .html files
+# automatically (default html_handling).
+name = "flowcode-landing-page"
+compatibility_date = "2026-07-01"
+
+[assets]
+directory = "."
