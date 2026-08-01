@@ -459,6 +459,7 @@
       <li><strong>Agents and research panels</strong> — an agent whose starting chain is over its model's window warns before the loop begins, and a multi-model research run names exactly which panel members can't fit the shared chain.</li>
     </ul>
     <p>Two practical notes: local models can be capped even lower than their native window by Ollama's <code>num_ctx</code> setting (4,096 by default — raise it in your Ollama config for long chains), and the ✂ <strong>Compress History</strong> action is the universal fix — it summarizes a deep chain into one node and re-roots the branch, shrinking any over-window chain to a fraction of its size.</p>
+    <p><strong>The flip side — more context than the model has.</strong> Because every call sends only its own branch, a canvas can hold far more total working context than the model's window: eight 8k-token research branches on a 32k model is ~64k tokens of live, organized context — 2× the window — and no single call ever comes near the limit. When your active canvas genuinely crosses that line (and the deepest branch still fits), the <a href="#dashboard">dashboard</a> shows it as a "🪟 N× the model's context window" card. A linear chat physically cannot do this: it must fit <em>everything</em> in one window or start forgetting.</p>
   </article>
 
   <article class="topic" id="templates">
