@@ -242,3 +242,23 @@ body.page {
 @media (max-width: 560px) {
   .footer__inner { grid-template-columns: 1fr; }
 }
+
+/* ------------------------------------------------ per-platform downloads --- */
+/* One button per OS; the visitor's own platform is promoted to the filled
+   style and moved first by download.html's script. Sizes and direct asset
+   links are filled from the GitHub API at load. */
+.dl-row { margin-bottom: 4px; }
+.dl-btn .dl-size {
+  font-style: normal; font-weight: 600; font-size: 13px; opacity: 0.72;
+}
+.dl-alt {
+  margin-top: 16px; font-size: 13.5px; color: var(--dim);
+}
+.dl-alt a {
+  color: var(--dim); text-decoration: none;
+  border-bottom: 1px solid rgba(139, 150, 173, 0.35);
+}
+.dl-alt a:hover { color: var(--ink); border-bottom-color: var(--ink); }
+.dl-alt .sep { opacity: 0.4; margin: 0 7px; }
+.dl-ver { color: var(--teal); font-weight: 700; }
+.dl-ico { width: 17px; height: 17px; flex: none; }
