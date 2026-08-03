@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FORKSCAPE — Thank you</title>
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+</head>
+<body class="page">
+  <main class="wrap" style="max-width:640px;margin:0 auto;padding:80px 24px;text-align:center">
+    <h1>Thank you! 🎉</h1>
+    <p id="status">Fetching your license key…</p>
+    <div id="keybox" style="display:none">
+      <code id="key" style="display:block;word-break:break-all;background:rgba(45,212,191,.08);border:1px solid rgba(45,212,191,.4);border-radius:10px;padding:18px;margin:18px 0;text-align:left"></code>
+      <button id="copy" class="btn">Copy key</button>
+      <p style="margin-top:22px">Open ForkScape → <b>Settings → Plan</b> → paste the key.
+         It activates instantly — no account, no internet required.
+         A receipt is in your email; keep the key with it.</p>
+    </div>
+  </main>
+  <script>
+    // The fulfillment worker (import workers/license as its own Worker app,
+    // custom domain below). Paddle checkout success URL must be:
+    //   https://forkscape.com/thanks?txn={transaction_id}
+    const WORKER = 'https://license.forkscape.com';
+    const txn = new URLSearchParams(location.search).get('txn');
+    const status = document.getElementById('status');
+    async function poll(tries = 0) {
+      if (!txn) { status.textContent = 'Missing transaction reference — reply to your receipt email and we will send your key.'; return; }
+      try {
+        const r = await fetch(`${WORKER}/license?txn=${encodeURIComponent(txn)}`);
+        if (r.status === 200) {
+          const { key, error } = await r.json();
+          if (error) { status.textContent = 'Almost there — we could not read your email from the checkout. Reply to your receipt and we will send the key.'; return; }
+          status.textContent = 'Your Pro license key:';
+          document.getElementById('key').textContent = key;
+          document.getElementById('keybox').style.display = 'block';
+          return;
+        }
+      } catch { /* worker not reachable yet — keep polling */ }
+      if (tries < 20) setTimeout(() => poll(tries + 1), 3000);
+      else status.textContent = 'Payment received — the key is taking longer than usual. Refresh in a minute, or reply to your receipt email.';
+    }
+    poll();
+    document.getElementById('copy').onclick = () => navigator.clipboard.writeText(document.getElementById('key').textContent);
+  </script>
+</body>
+</html>

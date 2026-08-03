@@ -1,0 +1,15 @@
+# License fulfillment worker. Import as its OWN Worker app (same dashboard Git
+# flow you used for try.forkscape.com), root directory: workers/license.
+# Then: attach the custom domain license.forkscape.com, create the KV binding,
+# and set the secrets — see README.md next to this file.
+name = "forkscape-license"
+main = "worker.js"
+compatibility_date = "2026-07-01"
+
+[[kv_namespaces]]
+binding = "LICENSES"
+id = "" # create in dashboard: Storage & Databases → KV → "forkscape-licenses"
+
+[vars]
+LICENSE_DAYS = "365"
+# PLAN_BY_PRICE = '{"pri_xxxxxxxx":"pro"}'   # set once Paddle prices exist
