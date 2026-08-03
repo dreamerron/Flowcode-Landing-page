@@ -58,23 +58,34 @@ for (let i = 0; i <= 12; i++) {
 }
 const path = new THREE.CatmullRomCurve3(pathPts);
 
-// tunnel rings
+// tunnel rings — pink palette (Rouge, Raspberry Glacé, Turkish Rose, Puce)
+// with fake depth-of-field: each ring is three stacked tori (sharp / mid /
+// wide tube). Per frame, their opacities blend by camera distance, so far
+// rings look defocused and nearby ones stay crisp.
+const PINKS = [0xa94064, 0x915f6d, 0xb57281, 0xcc8899];
 const ringGroup = new THREE.Group();
+const ringData = [];
 scene.add(ringGroup);
 {
-  const ringGeo = new THREE.TorusGeometry(5.2, 0.015, 8, 64);
+  const geoSharp = new THREE.TorusGeometry(5.2, 0.015, 8, 64);
+  const geoMid = new THREE.TorusGeometry(5.2, 0.07, 8, 64);
+  const geoWide = new THREE.TorusGeometry(5.2, 0.17, 8, 64);
   const frames = path.computeFrenetFrames(140, false);
   for (let i = 0; i < 140; i++) {
     const t = i / 139;
-    const mat = new THREE.MeshBasicMaterial({
-      color: i % 7 === 0 ? 0x2dd4bf : (LIGHT ? 0xb9c8e0 : 0x1b2b4a),
-      transparent: true,
-      opacity: i % 7 === 0 ? 0.9 : (LIGHT ? 0.8 : 0.55),
+    const accent = i % 7 === 0;
+    const color = accent ? PINKS[0] : PINKS[1 + (i % 3)];
+    const base = accent ? 0.9 : (LIGHT ? 0.7 : 0.55);
+    const g = new THREE.Group();
+    const mats = [geoSharp, geoMid, geoWide].map((geo) => {
+      const mat = new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0, depthWrite: false });
+      g.add(new THREE.Mesh(geo, mat));
+      return mat;
     });
-    const ring = new THREE.Mesh(ringGeo, mat);
-    ring.position.copy(path.getPointAt(t));
-    ring.lookAt(ring.position.clone().add(frames.tangents[i * Math.floor(139 / 139)] ?? frames.tangents[i]));
-    ringGroup.add(ring);
+    g.position.copy(path.getPointAt(t));
+    g.lookAt(g.position.clone().add(frames.tangents[i]));
+    ringGroup.add(g);
+    ringData.push({ group: g, mats, base });
   }
 }
 
@@ -426,6 +437,17 @@ function tick() {
   camera.position.y += -mouse.y * 0.3;
   camera.lookAt(lookAt);
   camera.rotation.z += Math.sin(et * 0.3) * 0.02 + mouse.x * 0.03;
+
+  // depth-of-field on the tunnel rings: crisp in the focus band around the
+  // camera, progressively blurred (wider, fainter tori) with distance
+  for (const r of ringData) {
+    const d = camera.position.distanceTo(r.group.position);
+    const blur = smoothstep(9, 34, d) + (1 - smoothstep(1.5, 5, d));
+    const b = Math.min(blur, 1);
+    r.mats[0].opacity = r.base * (1 - b);
+    r.mats[1].opacity = r.base * b * (1 - b) * 1.6;
+    r.mats[2].opacity = r.base * b * b * 0.55;
+  }
 
   // node birth & pulse
   nodes.forEach((n, i) => {
