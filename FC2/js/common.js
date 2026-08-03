@@ -56,20 +56,23 @@ export function makeGlowSprite(color, scale = 1) {
 // ------------------------------------------------------------- node card tex
 // Draws a FORKSCAPE-style agent card (rounded rect, colored border, header
 // chip row, body lines, footer buttons) onto a canvas texture.
-export function cardTexture({ title, color, badge = 'Agent', lines = 3, w = 512, h = 320 }) {
+export function cardTexture({ title, color, badge = 'Agent', lines = 3, w = 512, h = 320, light = false }) {
   const c = document.createElement('canvas');
   c.width = w; c.height = h;
   const g = c.getContext('2d');
   const r = 26;
+  const ink = light ? '#1b2540' : '#f1f5fd';
+  const lineCol = light ? 'rgba(30,45,80,0.20)' : 'rgba(200,212,235,0.32)';
+  const btnCol = light ? 'rgba(90,106,134,0.22)' : 'rgba(120,140,180,0.22)';
 
   const rr = (x, y, ww, hh, rad) => {
     g.beginPath();
     g.roundRect(x, y, ww, hh, rad);
   };
 
-  // card body
+  // card body — frosted white glass in light theme
   rr(6, 6, w - 12, h - 12, r);
-  g.fillStyle = 'rgba(10,14,24,0.92)';
+  g.fillStyle = light ? 'rgba(255,255,255,0.82)' : 'rgba(10,14,24,0.92)';
   g.fill();
   g.lineWidth = 5;
   g.strokeStyle = color;
@@ -84,20 +87,20 @@ export function cardTexture({ title, color, badge = 'Agent', lines = 3, w = 512,
 
   // badge chip
   rr(26, 20, 108, 36, 10);
-  g.fillStyle = hexToRgba(color, 0.35);
+  g.fillStyle = hexToRgba(color, light ? 0.55 : 0.35);
   g.fill();
-  g.fillStyle = '#eef2ff';
+  g.fillStyle = light ? '#10203c' : '#eef2ff';
   g.font = '600 22px "Segoe UI", system-ui, sans-serif';
   g.textBaseline = 'middle';
   g.fillText(badge, 42, 39);
 
   // title
-  g.fillStyle = '#f1f5fd';
+  g.fillStyle = ink;
   g.font = '700 26px "Segoe UI", system-ui, sans-serif';
   g.fillText(truncate(g, title, w - 190), 150, 39);
 
   // body placeholder lines
-  g.fillStyle = 'rgba(200,212,235,0.32)';
+  g.fillStyle = lineCol;
   for (let i = 0; i < lines; i++) {
     const ly = 100 + i * 34;
     const lw = (w - 60) * (i === lines - 1 ? 0.55 : 0.88);
@@ -107,12 +110,12 @@ export function cardTexture({ title, color, badge = 'Agent', lines = 3, w = 512,
 
   // footer buttons
   rr(30, h - 66, 118, 40, 10);
-  g.fillStyle = hexToRgba(color, 0.5);
+  g.fillStyle = hexToRgba(color, light ? 0.7 : 0.5);
   g.fill();
   rr(160, h - 66, 118, 40, 10);
-  g.fillStyle = 'rgba(120,140,180,0.22)';
+  g.fillStyle = btnCol;
   g.fill();
-  g.fillStyle = '#eef2ff';
+  g.fillStyle = light ? '#10203c' : '#eef2ff';
   g.font = '600 20px "Segoe UI", system-ui, sans-serif';
   g.fillText('Run', 72, h - 45);
   g.fillText('Adjust', 188, h - 45);

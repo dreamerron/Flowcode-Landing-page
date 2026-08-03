@@ -16,9 +16,14 @@ const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.setSize(innerWidth, innerHeight);
 
+// white "glassmorphism" theme: light scene, normal blending (additive glows
+// wash out on white), frosted glass cards
+const LIGHT = document.body.classList.contains('light');
+const BG = LIGHT ? 0xeef1f6 : PALETTE.bg;
+
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(PALETTE.bg);
-scene.fog = new THREE.FogExp2(PALETTE.bg, 0.038);
+scene.background = new THREE.Color(BG);
+scene.fog = new THREE.FogExp2(BG, 0.038);
 
 const camera = new THREE.PerspectiveCamera(62, innerWidth / innerHeight, 0.1, 200);
 
@@ -44,9 +49,9 @@ scene.add(ringGroup);
   for (let i = 0; i < 140; i++) {
     const t = i / 139;
     const mat = new THREE.MeshBasicMaterial({
-      color: i % 7 === 0 ? 0x2dd4bf : 0x1b2b4a,
+      color: i % 7 === 0 ? 0x2dd4bf : (LIGHT ? 0xb9c8e0 : 0x1b2b4a),
       transparent: true,
-      opacity: i % 7 === 0 ? 0.9 : 0.55,
+      opacity: i % 7 === 0 ? 0.9 : (LIGHT ? 0.8 : 0.55),
     });
     const ring = new THREE.Mesh(ringGeo, mat);
     ring.position.copy(path.getPointAt(t));
@@ -76,8 +81,10 @@ scene.add(ringGroup);
   geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
   geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
   const mat = new THREE.PointsMaterial({
-    size: 0.05, vertexColors: true, transparent: true, opacity: 0.75,
-    blending: THREE.AdditiveBlending, depthWrite: false,
+    size: 0.05, vertexColors: true, transparent: true,
+    opacity: LIGHT ? 0.6 : 0.75,
+    blending: LIGHT ? THREE.NormalBlending : THREE.AdditiveBlending,
+    depthWrite: false,
   });
   scene.add(new THREE.Points(geo, mat));
 }
@@ -87,7 +94,7 @@ scene.add(ringGroup);
 // agents, and every agent spawns its own worker nodes (parent → children).
 // `parent` is an index into this list; workers render smaller.
 const NODE_DEFS = [
-  { title: 'Master Prompt', badge: 'You', color: '#e8ecf4', t: 0.06, parent: null },
+  { title: 'Master Prompt', badge: 'You', color: LIGHT ? '#7c8db0' : '#e8ecf4', t: 0.06, parent: null },
   { title: 'Project Manager', badge: 'AI', color: CARD_COLORS[4], t: 0.16, parent: 0 },
 
   { title: 'Scaffold Software Engineer', badge: 'Agent', color: CARD_COLORS[0], t: 0.28, parent: 1 },
@@ -136,7 +143,7 @@ function openBranch(parentIdx) {
   for (let i = 1; i <= 16; i++) {
     const bt = i / 16;
     const mat = new THREE.MeshBasicMaterial({
-      color: i % 4 === 0 ? def.color : 0x1b2b4a,
+      color: i % 4 === 0 ? def.color : (LIGHT ? 0xb9c8e0 : 0x1b2b4a),
       transparent: true, opacity: 0,
     });
     const ring = new THREE.Mesh(geo, mat);
@@ -183,8 +190,12 @@ NODE_DEFS.forEach((def, i) => {
   const glow = makeGlowSprite(def.color, def.worker ? 1.5 : 2.4);
   const halo = makeGlowSprite(def.color, def.worker ? 3.4 : 6);
   halo.material.opacity = 0.35;
+  if (LIGHT) {
+    glow.material.blending = THREE.NormalBlending;
+    halo.material.blending = THREE.NormalBlending;
+  }
 
-  const card = makeCardSprite({ title: def.title, badge: def.badge, color: def.color }, def.worker ? 1.7 : 2.6);
+  const card = makeCardSprite({ title: def.title, badge: def.badge, color: def.color, light: LIGHT }, def.worker ? 1.7 : 2.6);
   card.position.set(side * (def.worker ? 1.1 : 1.7), def.worker ? 0.65 : 0.9, 0);
 
   g.add(core, glow, halo, card);
@@ -207,7 +218,8 @@ function makeLink(a, b, color, midT) {
   const geo = new THREE.TubeGeometry(curve, SEG, 0.022, 6, false);
   const mat = new THREE.MeshBasicMaterial({
     color, transparent: true, opacity: 0.85,
-    blending: THREE.AdditiveBlending, depthWrite: false,
+    blending: LIGHT ? THREE.NormalBlending : THREE.AdditiveBlending,
+    depthWrite: false,
   });
   const mesh = new THREE.Mesh(geo, mat);
   const totalIndex = geo.index.count;
@@ -220,7 +232,8 @@ function makeLink(a, b, color, midT) {
   fGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(FN * 3), 3));
   const fMat = new THREE.PointsMaterial({
     color, size: 0.14, transparent: true, opacity: 0,
-    blending: THREE.AdditiveBlending, depthWrite: false, map: null,
+    blending: LIGHT ? THREE.NormalBlending : THREE.AdditiveBlending,
+    depthWrite: false, map: null,
   });
   const flow = new THREE.Points(fGeo, fMat);
   scene.add(flow);
@@ -246,6 +259,7 @@ NODE_DEFS.forEach((def, i) => {
 const masterHalo = makeGlowSprite(PALETTE.teal, 14);
 masterHalo.position.copy(nodes[0].group.position);
 masterHalo.material.opacity = 0.28;
+if (LIGHT) masterHalo.material.blending = THREE.NormalBlending;
 scene.add(masterHalo);
 
 // ------------------------------------------------------------- scroll state -

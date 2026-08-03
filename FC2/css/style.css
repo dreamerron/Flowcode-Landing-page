@@ -315,3 +315,74 @@ body {
   .phone { width: min(200px, 50vw); }
   .nav__links a:not(.nav__cta) { display: none; }
 }
+
+/* ==================================================== light glass theme ===
+   Scoped to body.light (the main 3D journey page). Frosted-glass panels on
+   a soft white background — other pages keep the dark theme. */
+body.light {
+  --bg: #eef1f6;
+  --ink: #16233c;
+  --dim: #5a6a86;
+  background: var(--bg);
+}
+body.light .nav {
+  background: linear-gradient(to bottom, rgba(238, 241, 246, 0.9), transparent);
+}
+body.light .progress-track { background: rgba(22, 35, 60, 0.08); }
+
+body.light .hero__title {
+  background: linear-gradient(120deg, #16233c 15%, var(--teal) 58%, var(--blue) 92%);
+  -webkit-background-clip: text; background-clip: text;
+  text-shadow: 0 0 70px rgba(96, 165, 250, 0.3);
+}
+body.light .hero__sub {
+  color: #2a3a58; text-shadow: none;
+  background: rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-left: 2px solid var(--teal);
+  border-radius: 14px;
+  padding: 16px 18px;
+  box-shadow: 0 10px 34px rgba(30, 60, 120, 0.12);
+}
+
+body.light .caption {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 18px;
+  padding: 20px 28px;
+  box-shadow: 0 12px 38px rgba(30, 60, 120, 0.13);
+}
+body.light .caption h2 { text-shadow: none; }
+
+/* flat 2D canvas — white glass */
+body.light .fc-grid {
+  background:
+    linear-gradient(rgba(96, 165, 250, 0.1) 1px, transparent 1px) 0 0 / 44px 44px,
+    linear-gradient(90deg, rgba(96, 165, 250, 0.1) 1px, transparent 1px) 0 0 / 44px 44px,
+    radial-gradient(ellipse at center, #f6f8fc 0%, var(--bg) 75%);
+}
+body.light .fc-card {
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 0 22px -8px var(--c), 0 14px 30px rgba(30, 60, 120, 0.14);
+}
+body.light .fc-badge { color: #10203c; }
+body.light .fc-line { background: rgba(30, 45, 80, 0.16); }
+body.light .fc-btn { background: rgba(90, 106, 134, 0.16); color: #16233c; }
+body.light .fc-chip {
+  background: rgba(255, 255, 255, 0.72);
+  border-color: rgba(30, 45, 80, 0.14);
+  backdrop-filter: blur(10px);
+}
+
+/* phone stage */
+body.light #phone-stage {
+  background:
+    radial-gradient(ellipse at 50% 120%, rgba(96, 165, 250, 0.16), transparent 60%),
+    rgba(238, 241, 246, 0.62);
+}
+body.light .savings__meter strong { text-shadow: 0 0 34px rgba(74, 222, 128, 0.4); }
+/* the phone itself stays a dark device — restore light text inside it */
+body.light .phone__screen { --ink: #e8ecf4; --dim: #8b96ad; color: var(--ink); }
