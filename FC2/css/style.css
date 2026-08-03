@@ -389,5 +389,5 @@ body.light .phone__screen { --ink: #e8ecf4; --dim: #8b96ad; color: var(--ink); }
 /* vignette — darkened cool edges pull the eye into the tunnel */
 body.light::after {
   content: ''; position: fixed; inset: 0; z-index: 5; pointer-events: none;
-  background: radial-gradient(ellipse at 50% 45%, transparent 52%, rgba(40, 70, 130, 0.14) 100%);
+  background: radial-gradient(ellipse at 50% 45%, transparent 42%, rgba(40, 70, 130, 0.13) 74%, rgba(28, 50, 98, 0.30) 100%);
 }

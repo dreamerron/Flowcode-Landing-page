@@ -110,24 +110,20 @@ scene.add(ringGroup);
 // depth layers — big soft out-of-focus pastel spheres floating around the
 // path (light theme only); they parallax with the camera and sell depth
 if (LIGHT) {
-  const SPHERES = [
-    { c: '#aecbfa', s: 16, o: 0.5 }, { c: '#c4d7fb', s: 9, o: 0.55 },
-    { c: '#9db9f0', s: 22, o: 0.4 }, { c: '#bcd2fa', s: 7, o: 0.6 },
-    { c: '#a9c6f7', s: 13, o: 0.45 }, { c: '#cfdefc', s: 18, o: 0.38 },
-    { c: '#93b4ee', s: 6, o: 0.65 }, { c: '#b6cdf9', s: 11, o: 0.5 },
-    { c: '#a2c0f4', s: 20, o: 0.35 }, { c: '#c9daf9', s: 8, o: 0.55 },
-  ];
-  SPHERES.forEach((sp, i) => {
-    const t = (i + 0.5) / SPHERES.length;
+  const TINTS = ['#aecbfa', '#c4d7fb', '#9db9f0', '#bcd2fa', '#a9c6f7', '#cfdefc', '#93b4ee', '#b6cdf9', '#a2c0f4', '#c9daf9'];
+  const COUNT = 26;
+  for (let i = 0; i < COUNT; i++) {
+    const t = (i + 0.5) / COUNT;
     const p = path.getPointAt(t);
     const a = i * 2.4;
-    const r = 7 + (i % 3) * 4;
-    const s = makeGlowSprite(sp.c, sp.s);
+    const r = 6 + (i % 4) * 3.5;
+    const size = 5 + ((i * 7) % 18);
+    const s = makeGlowSprite(TINTS[i % TINTS.length], size);
     s.material.blending = THREE.NormalBlending;
-    s.material.opacity = sp.o;
-    s.position.set(p.x + Math.cos(a) * r, p.y + Math.sin(a) * r, p.z + (i % 2 ? 4 : -6));
+    s.material.opacity = 0.34 + ((i * 13) % 10) * 0.032; // 0.34–0.63
+    s.position.set(p.x + Math.cos(a) * r, p.y + Math.sin(a) * r, p.z + ((i % 3) - 1) * 5);
     scene.add(s);
-  });
+  }
 }
 
 // --------------------------------------------------------------- the nodes --
