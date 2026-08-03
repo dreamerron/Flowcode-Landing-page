@@ -386,3 +386,8 @@ body.light #phone-stage {
 body.light .savings__meter strong { text-shadow: 0 0 34px rgba(74, 222, 128, 0.4); }
 /* the phone itself stays a dark device — restore light text inside it */
 body.light .phone__screen { --ink: #e8ecf4; --dim: #8b96ad; color: var(--ink); }
+/* vignette — darkened cool edges pull the eye into the tunnel */
+body.light::after {
+  content: ''; position: fixed; inset: 0; z-index: 5; pointer-events: none;
+  background: radial-gradient(ellipse at 50% 45%, transparent 52%, rgba(40, 70, 130, 0.14) 100%);
+}

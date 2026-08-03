@@ -22,8 +22,26 @@ const LIGHT = document.body.classList.contains('light');
 const BG = LIGHT ? 0xeef1f6 : PALETTE.bg;
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(BG);
-scene.fog = new THREE.FogExp2(BG, 0.038);
+if (LIGHT) {
+  // gradient backdrop: bright warm center fading to cool blue-gray edges,
+  // plus denser blue fog — aerial perspective makes the tunnel recede
+  const c = document.createElement('canvas');
+  c.width = 16; c.height = 512;
+  const g = c.getContext('2d');
+  const grad = g.createLinearGradient(0, 0, 0, 512);
+  grad.addColorStop(0, '#f9fbfe');
+  grad.addColorStop(0.45, '#eef1f6');
+  grad.addColorStop(1, '#d9e2ef');
+  g.fillStyle = grad;
+  g.fillRect(0, 0, 16, 512);
+  const bgTex = new THREE.CanvasTexture(c);
+  bgTex.colorSpace = THREE.SRGBColorSpace;
+  scene.background = bgTex;
+  scene.fog = new THREE.FogExp2(0xd7dfee, 0.052);
+} else {
+  scene.background = new THREE.Color(BG);
+  scene.fog = new THREE.FogExp2(BG, 0.038);
+}
 
 const camera = new THREE.PerspectiveCamera(62, innerWidth / innerHeight, 0.1, 200);
 
@@ -87,6 +105,29 @@ scene.add(ringGroup);
     depthWrite: false,
   });
   scene.add(new THREE.Points(geo, mat));
+}
+
+// depth layers — big soft out-of-focus pastel spheres floating around the
+// path (light theme only); they parallax with the camera and sell depth
+if (LIGHT) {
+  const SPHERES = [
+    { c: '#aecbfa', s: 16, o: 0.5 }, { c: '#c4d7fb', s: 9, o: 0.55 },
+    { c: '#9db9f0', s: 22, o: 0.4 }, { c: '#bcd2fa', s: 7, o: 0.6 },
+    { c: '#a9c6f7', s: 13, o: 0.45 }, { c: '#cfdefc', s: 18, o: 0.38 },
+    { c: '#93b4ee', s: 6, o: 0.65 }, { c: '#b6cdf9', s: 11, o: 0.5 },
+    { c: '#a2c0f4', s: 20, o: 0.35 }, { c: '#c9daf9', s: 8, o: 0.55 },
+  ];
+  SPHERES.forEach((sp, i) => {
+    const t = (i + 0.5) / SPHERES.length;
+    const p = path.getPointAt(t);
+    const a = i * 2.4;
+    const r = 7 + (i % 3) * 4;
+    const s = makeGlowSprite(sp.c, sp.s);
+    s.material.blending = THREE.NormalBlending;
+    s.material.opacity = sp.o;
+    s.position.set(p.x + Math.cos(a) * r, p.y + Math.sin(a) * r, p.z + (i % 2 ? 4 : -6));
+    scene.add(s);
+  });
 }
 
 // --------------------------------------------------------------- the nodes --
