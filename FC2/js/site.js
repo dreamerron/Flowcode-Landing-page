@@ -1,4 +1,4 @@
-// FORKSCAPE — shared site chrome: one nav + one footer used by every page.
+// ForkScape — shared site chrome: one nav + one footer used by every page.
 // mountChrome({ active, immersive }) prepends the nav; content pages also
 // get the footer (immersive WebGL pages skip it).
 
@@ -9,13 +9,20 @@ const LINKS = [
   { href: 'pricing.html', label: 'Pricing' },
 ];
 
+const LOGO = `
+  <a class="nav__logo" href="index.html" aria-label="ForkScape home">
+    <img src="assets/logo.svg" alt="" width="30" height="30" />
+    <span>ForkScape</span>
+  </a>`;
+
 export function mountChrome({ active = '', immersive = false } = {}) {
   const nav = document.createElement('nav');
   nav.className = 'nav' + (immersive ? '' : ' nav--solid');
   nav.innerHTML = `
-    <a class="nav__logo" href="index.html">FORK<b>SCAPE</b></a>
+    ${LOGO}
     <div class="nav__links">
       ${LINKS.map((l) => `<a href="${l.href}"${l.label === active ? ' aria-current="page" class="is-active"' : ''}>${l.label}</a>`).join('')}
+      <a class="nav__cta nav__cta--ghost" href="https://try.forkscape.com" target="_blank" rel="noopener">Try ForkScape</a>
       <a class="nav__cta" href="features.html#download">Download</a>
     </div>`;
   document.body.prepend(nav);
@@ -27,7 +34,7 @@ export function mountChrome({ active = '', immersive = false } = {}) {
   footer.innerHTML = `
     <div class="footer__inner">
       <div class="footer__brand">
-        <a class="nav__logo" href="index.html">FORK<b>SCAPE</b></a>
+        ${LOGO}
         <p>AI work that branches on an infinite canvas — local-first,
         measured, and honest about what it saves you.</p>
       </div>
@@ -35,6 +42,7 @@ export function mountChrome({ active = '', immersive = false } = {}) {
         <h4>Product</h4>
         <a href="features.html">Features</a>
         <a href="pricing.html">Pricing</a>
+        <a href="https://try.forkscape.com" target="_blank" rel="noopener">Try in browser</a>
         <a href="features.html#download">Download</a>
       </div>
       <div class="footer__col">
@@ -50,7 +58,7 @@ export function mountChrome({ active = '', immersive = false } = {}) {
       </div>
     </div>
     <div class="footer__legal">
-      © 2026 FORKSCAPE · Savings vary by workload — the in-app dashboard shows
+      © 2026 ForkScape · Savings vary by workload — the in-app dashboard shows
       your real numbers, tokens and dollars, cache-aware.
     </div>`;
   document.body.append(footer);

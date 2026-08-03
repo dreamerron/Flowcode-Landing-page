@@ -1,4 +1,4 @@
-/* FORKSCAPE — content-page components (features / science / pricing).
+/* ForkScape — content-page components (features / science / pricing).
    Builds strictly on the design tokens in style.css. */
 
 body.page {
@@ -242,3 +242,68 @@ body.page {
 @media (max-width: 560px) {
   .footer__inner { grid-template-columns: 1fr; }
 }
+
+/* ------------------------------------------------------ display font ----- */
+.page-title, .section-title, .cite-card strong, .plan .price, .cta-strip h2 {
+  font-family: var(--font-display);
+}
+
+/* ================================================= light theme (site-wide) =
+   White glassmorphism for the content pages, scoped to body.light so the
+   dark 3D canvas demo page keeps its original theme. */
+body.page.light {
+  background:
+    radial-gradient(ellipse 90% 40% at 50% -5%, rgba(45, 212, 191, 0.14), transparent 70%),
+    linear-gradient(180deg, #f9fbfe 0%, #eef1f6 55%, #e4eaf4 100%);
+}
+body.light .nav--solid {
+  background: rgba(255, 255, 255, 0.72);
+  border-bottom: 1px solid rgba(30, 45, 80, 0.08);
+}
+body.light .page-title {
+  background: linear-gradient(120deg, #16233c 20%, #0ea5a0 62%, #3b82f6 95%);
+  -webkit-background-clip: text; background-clip: text;
+}
+body.light .meter-card,
+body.light .feature-card,
+body.light .cite-card,
+body.light .paper-card,
+body.light .plan,
+body.light .faq details {
+  background: rgba(255, 255, 255, 0.66);
+  backdrop-filter: blur(14px);
+}
+body.light .feature-card,
+body.light .paper-card,
+body.light .faq details,
+body.light .plan { border-color: rgba(30, 45, 80, 0.12); }
+body.light .feature-card { border-top-color: var(--c, var(--teal)); }
+body.light .paper-card { border-left-color: var(--c, var(--teal)); }
+body.light .plan--pro { border-color: var(--teal); }
+body.light .cta-strip {
+  background:
+    radial-gradient(ellipse at 50% 120%, rgba(45, 212, 191, 0.18), transparent 65%),
+    rgba(255, 255, 255, 0.66);
+  backdrop-filter: blur(14px);
+  border-color: rgba(14, 165, 160, 0.3);
+}
+body.light .btn--ghost {
+  background: rgba(255, 255, 255, 0.7);
+  border-color: rgba(30, 45, 80, 0.2);
+}
+body.light .honest-note { background: rgba(251, 191, 36, 0.12); color: #6b5a2a; }
+body.light .honest-note b { color: #a16207; }
+body.light .roi-callout { background: rgba(74, 222, 128, 0.12); border-color: rgba(22, 130, 60, 0.3); }
+body.light .roi-callout b { color: #15803d; }
+body.light .canvas-frame {
+  border-color: rgba(30, 45, 80, 0.14);
+  box-shadow: 0 0 70px -24px rgba(59, 130, 246, 0.45), 0 24px 50px rgba(30, 60, 120, 0.16);
+}
+body.light .footer {
+  background: rgba(255, 255, 255, 0.6);
+  border-top: 1px solid rgba(30, 45, 80, 0.08);
+}
+body.light .meter-card strong { text-shadow: none; }
+body.light .cite-card strong { text-shadow: none; }
+body.light .cite-card[style*="--c:var(--red)"] strong { color: #d43f57; }
+body.light .cite-card[style*="--c:var(--green)"] strong { color: #16a34a; }

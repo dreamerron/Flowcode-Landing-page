@@ -1,5 +1,5 @@
-// FORKSCAPE — shared helpers: palette, canvas-generated textures (node cards,
-// glow sprites), math utils. Matches the visual language of the FORKSCAPE app:
+// ForkScape — shared helpers: palette, canvas-generated textures (node cards,
+// glow sprites), math utils. Matches the visual language of the ForkScape app:
 // dark canvas, colored agent cards, glowing bezier wires.
 
 import * as THREE from '../vendor/three.module.js';
@@ -54,7 +54,7 @@ export function makeGlowSprite(color, scale = 1) {
 }
 
 // ------------------------------------------------------------- node card tex
-// Draws a FORKSCAPE-style agent card (rounded rect, colored border, header
+// Draws a ForkScape-style agent card (rounded rect, colored border, header
 // chip row, body lines, footer buttons) onto a canvas texture.
 export function cardTexture({ title, color, badge = 'Agent', lines = 3, w = 512, h = 320, light = false }) {
   const c = document.createElement('canvas');
@@ -90,13 +90,13 @@ export function cardTexture({ title, color, badge = 'Agent', lines = 3, w = 512,
   g.fillStyle = hexToRgba(color, light ? 0.55 : 0.35);
   g.fill();
   g.fillStyle = light ? '#10203c' : '#eef2ff';
-  g.font = '600 22px "Segoe UI", system-ui, sans-serif';
+  g.font = '600 22px "Inter", "Segoe UI", system-ui, sans-serif';
   g.textBaseline = 'middle';
   g.fillText(badge, 42, 39);
 
   // title
   g.fillStyle = ink;
-  g.font = '700 26px "Segoe UI", system-ui, sans-serif';
+  g.font = '700 26px "Inter", "Segoe UI", system-ui, sans-serif';
   g.fillText(truncate(g, title, w - 190), 150, 39);
 
   // body placeholder lines
@@ -116,7 +116,7 @@ export function cardTexture({ title, color, badge = 'Agent', lines = 3, w = 512,
   g.fillStyle = btnCol;
   g.fill();
   g.fillStyle = light ? '#10203c' : '#eef2ff';
-  g.font = '600 20px "Segoe UI", system-ui, sans-serif';
+  g.font = '600 20px "Inter", "Segoe UI", system-ui, sans-serif';
   g.fillText('Run', 72, h - 45);
   g.fillText('Adjust', 188, h - 45);
 

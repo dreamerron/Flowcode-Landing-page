@@ -1,4 +1,4 @@
-// FORKSCAPE — Option A "The Canvas": the product video rebuilt as a live,
+// ForkScape — Option A "The Canvas": the product video rebuilt as a live,
 // interactive 3D scene. A constellation of agent cards orbits the central
 // Project Scaffold Engineer; glowing wires carry data pulses; the whole
 // canvas drifts, tilts with the mouse, and nodes light up on hover.
@@ -46,7 +46,7 @@ scene.add(world);
 }
 
 // ------------------------------------------------------------------ nodes --
-// Parent → child tree, like the real FORKSCAPE canvas: the Project Manager
+// Parent → child tree, like the real ForkScape canvas: the Project Manager
 // (master) spawns specialist agents, and each agent spawns its own workers.
 const DEFS = [
   { title: 'Project Manager — AI orchestrator', badge: 'AI', color: '#60a5fa', p: [0, 0, 0], master: true, parent: null },

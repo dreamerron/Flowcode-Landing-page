@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="fs" x1="0%" y1="30%" x2="100%" y2="70%">
+      <stop offset="0%" stop-color="#14d8b4"/>
+      <stop offset="55%" stop-color="#19b8d8"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </linearGradient>
+  </defs>
+  <g stroke="url(#fs)" stroke-width="34" fill="none">
+    <line x1="510" y1="510" x2="855" y2="510" stroke-width="46"/>
+    <line x1="510" y1="510" x2="325" y2="320"/>
+    <line x1="510" y1="510" x2="325" y2="690"/>
+    <line x1="520" y1="225" x2="685" y2="380"/>
+    <line x1="685" y1="380" x2="855" y2="510"/>
+    <line x1="515" y1="795" x2="685" y2="645"/>
+    <line x1="685" y1="645" x2="855" y2="510"/>
+  </g>
+  <g fill="url(#fs)">
+    <circle cx="510" cy="510" r="96"/>
+    <circle cx="855" cy="510" r="60"/>
+    <circle cx="190" cy="512" r="66"/>
+    <circle cx="325" cy="320" r="62"/>
+    <circle cx="520" cy="225" r="70"/>
+    <circle cx="685" cy="380" r="56"/>
+    <circle cx="325" cy="690" r="62"/>
+    <circle cx="515" cy="795" r="70"/>
+    <circle cx="685" cy="645" r="56"/>
+  </g>
+</svg>

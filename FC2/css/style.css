@@ -1,4 +1,4 @@
-/* FORKSCAPE FC2 landing — shared styles */
+/* ForkScape FC2 landing — shared styles */
 :root {
   --bg: #05070d;
   --ink: #e8ecf4;
@@ -391,3 +391,34 @@ body.light::after {
   content: ''; position: fixed; inset: 0; z-index: 5; pointer-events: none;
   background: radial-gradient(ellipse at 50% 45%, transparent 42%, rgba(40, 70, 130, 0.13) 74%, rgba(28, 50, 98, 0.30) 100%);
 }
+
+/* ===================================================== brand & typography ==
+   Real ForkScape branding: Exo 2 for display/logo (matches the wordmark),
+   Inter for UI/body text, gradient node-fork logo mark. */
+:root {
+  --font: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-display: 'Exo 2', 'Inter', system-ui, sans-serif;
+}
+.nav__logo {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--font-display);
+  font-size: 20px; font-weight: 700; letter-spacing: 0.01em;
+}
+.nav__logo img { width: 30px; height: 30px; display: block; }
+.nav__logo span {
+  background: linear-gradient(120deg, #14d8b4, #3b82f6);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.nav__cta--ghost {
+  background: rgba(120, 140, 180, 0.16);
+  color: var(--ink) !important;
+  border: 1px solid rgba(120, 140, 180, 0.35);
+}
+body.light .nav__cta--ghost {
+  background: rgba(255, 255, 255, 0.6);
+  color: #16233c !important;
+  border-color: rgba(30, 45, 80, 0.2);
+  backdrop-filter: blur(8px);
+}
+.hero__title { font-family: var(--font-display); letter-spacing: 0.02em; }
+.caption h2, .savings h2 { font-family: var(--font-display); }

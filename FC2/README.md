@@ -1,6 +1,6 @@
-# FORKSCAPE — FC2 Landing Page
+# ForkScape — FC2 Landing Page
 
-A 3D interactive Three.js landing experience for the FORKSCAPE app, in two options:
+A 3D interactive Three.js landing experience for the ForkScape app, in two options:
 
 ## Option 1 — `network.html` · "The Living Canvas"
 The product video rebuilt as a live, interactive 3D scene: the central
@@ -16,7 +16,7 @@ with data pulses flowing along them.
 A scroll-driven cinematic: the camera flies into a glowing tunnel starting
 from one **master node**. As you scroll, agent nodes are born one by one —
 glow, branch, and stream data to each other — until the tunnel opens and
-everything settles onto the flat 2D FORKSCAPE canvas. On the final scroll, a
+everything settles onto the flat 2D ForkScape canvas. On the final scroll, a
 phone rises showing the generated app with an animated counter:
 **up to 90% fewer tokens**.
 

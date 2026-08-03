@@ -1,4 +1,4 @@
-// FORKSCAPE — flat 2D canvas replica of the app (final stage of the journey).
+// ForkScape — flat 2D canvas replica of the app (final stage of the journey).
 // DOM node cards + an SVG layer of glowing bezier wires with flowing pulses,
 // converging on the central "Project Scaffold Software Engineer" master card.
 
@@ -7,7 +7,7 @@ const COLORS = {
   teal: '#2dd4bf', blue: '#60a5fa', red: '#f87171', cyan: '#22d3ee',
 };
 
-// A parent → child tree, like the real FORKSCAPE canvas: the Project Manager
+// A parent → child tree, like the real ForkScape canvas: the Project Manager
 // spawns specialist agents, and every agent spawns its own workers.
 // x/y as % of the canvas; `parent` is the id the wire connects up to.
 const CARDS = [
@@ -33,7 +33,7 @@ export function buildFlatCanvas(root) {
     <svg class="fc-wires" preserveAspectRatio="none"></svg>
     <div class="fc-cards"></div>
     <div class="fc-toolbar">
-      <span class="fc-chip">⌘ FORKSCAPE Canvas</span>
+      <span class="fc-chip">⌘ ForkScape Canvas</span>
       <span class="fc-chip fc-chip--accent">▶ Orchestrating…</span>
     </div>`;
 
