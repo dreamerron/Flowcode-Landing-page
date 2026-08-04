@@ -67,6 +67,27 @@
     border-radius: 5px; padding: .1em .45em; color: var(--ink);
   }
 
+
+  /* ── video gallery ── */
+  .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin-top: 18px; }
+  .vid {
+    display: flex; flex-direction: column; gap: 6px; padding: 14px 16px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    box-shadow: var(--shadow); color: var(--ink); text-decoration: none;
+    transition: border-color .15s, transform .15s;
+  }
+  a.vid:hover { border-color: var(--vio); transform: translateY(-2px); text-decoration: none; }
+  .vid .play { font-size: 12.5px; font-weight: 700; color: var(--vio); letter-spacing: .02em; }
+  .vid.soon .play { color: var(--faint); }
+  .vid h4 { margin: 0; font-size: 14.5px; line-height: 1.4; font-weight: 650; }
+  .vid .dur { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12px; color: var(--mut); }
+  .vid.soon { opacity: .62; }
+  .yt-btn {
+    display: inline-block; margin-top: 14px; padding: 9px 18px; border-radius: 999px;
+    background: var(--vio); color: #fff !important; font-weight: 650; font-size: 14px; text-decoration: none;
+  }
+  .yt-btn:hover { text-decoration: none; filter: brightness(1.08); }
+
   /* ── top bar ── */
   .topbar {
     position: sticky; top: 0; z-index: 30; height: 56px;
@@ -250,6 +271,10 @@
 <div class="shell">
 <nav class="side" id="side">
   <div class="grp">
+    <div class="grp-label">Video tutorials</div>
+    <a href="#videos">Watch the series</a>
+  </div>
+  <div class="grp">
     <div class="grp-label">Getting started</div>
     <a href="#what-is-forkscape">What ForkScape is</a>
     <a href="#install-launch">Install &amp; first launch</a>
@@ -355,6 +380,39 @@
 </div>
 
 <!-- ================= GETTING STARTED ================= -->
+<section class="grpblock" id="videos">
+  <div class="grp-title"><h2>Video tutorials</h2></div>
+  <article class="topic">
+    <p class="dek">Every feature, shown for real — screen captures of the actual desktop app, one to four minutes each. Subtitles are available on every video.</p>
+    <div class="video-grid">
+    <a class="vid" href="https://www.youtube.com/watch?v=DbXgHJASaq0" target="_blank" rel="noopener"><span class="play">▶ Watch</span><h4>The Complete Tour of ForkScape</h4><span class="dur">3:18</span></a>
+    <a class="vid" href="https://www.youtube.com/watch?v=KaC2FVXnjuM" target="_blank" rel="noopener"><span class="play">▶ Watch</span><h4>Build a Real Multipage App From One Sentence</h4><span class="dur">3:58</span></a>
+    <a class="vid" href="https://www.youtube.com/watch?v=-gRw0cc1634" target="_blank" rel="noopener"><span class="play">▶ Watch</span><h4>Branching: Stop Losing Good Answers in a Scroll</h4><span class="dur">0:46</span></a>
+    <a class="vid" href="https://www.youtube.com/watch?v=JbOfOcfeark" target="_blank" rel="noopener"><span class="play">▶ Watch</span><h4>Import a ChatGPT or Claude Export</h4><span class="dur">1:09</span></a>
+    <a class="vid" href="https://www.youtube.com/watch?v=IuNHhoCbkWg" target="_blank" rel="noopener"><span class="play">▶ Watch</span><h4>Research Mode: Ask Five Models at Once</h4><span class="dur">2:16</span></a>
+    <span class="vid soon"><span class="play">Coming soon</span><h4>Design Studio: Mock Your App Before You Build It</h4><span class="dur">2:26</span></span>
+    <span class="vid soon"><span class="play">Coming soon</span><h4>Templates: Multi-Agent Workflows, Prebuilt</h4><span class="dur">0:40</span></span>
+    <a class="vid" href="https://www.youtube.com/watch?v=n8iaVdqjoPI" target="_blank" rel="noopener"><span class="play">▶ Watch</span><h4>Conversations: Every Canvas, Searchable</h4><span class="dur">0:32</span></a>
+    <a class="vid" href="https://www.youtube.com/watch?v=xEqRQAnscKE" target="_blank" rel="noopener"><span class="play">▶ Watch</span><h4>The Memory Palace: What the AI Remembers About You</h4><span class="dur">0:34</span></a>
+    <a class="vid" href="https://www.youtube.com/watch?v=GVLlknp4cAk" target="_blank" rel="noopener"><span class="play">▶ Watch</span><h4>The Dashboard: Real Token Cost, Per Model</h4><span class="dur">0:34</span></a>
+    <a class="vid" href="https://www.youtube.com/watch?v=qzprQOPdDSQ" target="_blank" rel="noopener"><span class="play">▶ Watch</span><h4>Automations &amp; Telegram: Builds That Run Without You</h4><span class="dur">0:37</span></a>
+    <a class="vid" href="https://www.youtube.com/watch?v=aagwQ5qDfmc" target="_blank" rel="noopener"><span class="play">▶ Watch</span><h4>Smart Routing &amp; Context Limits</h4><span class="dur">0:41</span></a>
+    <a class="vid" href="https://www.youtube.com/watch?v=OI3Hhg9nKhI" target="_blank" rel="noopener"><span class="play">▶ Watch</span><h4>Bring Your Claude Code and Codex Sessions</h4><span class="dur">0:32</span></a>
+    <a class="vid" href="https://www.youtube.com/watch?v=aV4sGZb3WrI" target="_blank" rel="noopener"><span class="play">▶ Watch</span><h4>Agents That Work in Your Real Codebase</h4><span class="dur">1:25</span></a>
+    <a class="vid" href="https://www.youtube.com/watch?v=Jc60VUkPTzo" target="_blank" rel="noopener"><span class="play">▶ Watch</span><h4>Skills &amp; Enhance: Better Prompts, Automatically</h4><span class="dur">0:46</span></a>
+    <a class="vid" href="https://www.youtube.com/watch?v=Z5KseCVqtrE" target="_blank" rel="noopener"><span class="play">▶ Watch</span><h4>The Context Toolbox: Compress and Summarise</h4><span class="dur">1:51</span></a>
+    <a class="vid" href="https://www.youtube.com/watch?v=FruXTeSXpvw" target="_blank" rel="noopener"><span class="play">▶ Watch</span><h4>A/B Benchmark: Pick Models on Evidence</h4><span class="dur">0:30</span></a>
+    <span class="vid soon"><span class="play">Coming soon</span><h4>The Vault: Your Work as Plain Markdown</h4><span class="dur">0:35</span></span>
+    <a class="vid" href="https://www.youtube.com/watch?v=Xs6efBKvgQo" target="_blank" rel="noopener"><span class="play">▶ Watch</span><h4>Power Tour: Drive the Canvas Like an Editor</h4><span class="dur">0:40</span></a>
+    <a class="vid" href="https://www.youtube.com/watch?v=66dw1gwarLw" target="_blank" rel="noopener"><span class="play">▶ Watch</span><h4>The Knowledge Base: Ground Models in Your Docs</h4><span class="dur">0:37</span></a>
+    <a class="vid" href="https://www.youtube.com/watch?v=XKuIHzuSp8s" target="_blank" rel="noopener"><span class="play">▶ Watch</span><h4>You Stay in the Loop: Three Brakes on Autonomy</h4><span class="dur">0:52</span></a>
+    <a class="vid" href="https://www.youtube.com/watch?v=G7l3r58J9uo" target="_blank" rel="noopener"><span class="play">▶ Watch</span><h4>Labs: What We Are Building in the Open</h4><span class="dur">0:28</span></a>
+    <a class="vid" href="https://www.youtube.com/watch?v=JboGvjHU9Po" target="_blank" rel="noopener"><span class="play">▶ Watch</span><h4>Git, GitHub and Your Team</h4><span class="dur">1:24</span></a>
+    </div>
+    <a class="yt-btn" href="https://www.youtube.com/@Forkscape-Illusion_media" target="_blank" rel="noopener">▶ Watch all on the ForkScape channel</a>
+  </article>
+</section>
+
 <section class="grpblock" id="getting-started">
   <div class="grp-title"><h2>Getting started</h2></div>
 
