@@ -5,7 +5,7 @@
 const LINKS = [
   { href: 'index.html', label: 'Home' },
   { href: 'features.html', label: 'Features' },
-  { href: 'science.html', label: 'Science' },
+  { href: 'research.html', label: 'Research' },
   { href: 'pricing.html', label: 'Pricing' },
 ];
 
@@ -42,7 +42,7 @@ export function mountChrome({ active = '', immersive = false } = {}) {
       </div>
       <div class="footer__col">
         <h4>Research</h4>
-        <a href="science.html">Science</a>
+        <a href="research.html">Research</a>
         <a href="https://arxiv.org/abs/2505.06120" target="_blank" rel="noopener">Lost in Multi-Turn</a>
         <a href="https://arxiv.org/abs/2512.13914" target="_blank" rel="noopener">Context Branching</a>
       </div>
