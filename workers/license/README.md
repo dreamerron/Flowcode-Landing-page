@@ -45,3 +45,15 @@ compatibility locally any time.
 Renewals: Paddle re-bills yearly and fires transaction.completed again → a
 fresh key is minted; the receipt links the thanks page. (Automatic in-app
 renewal is a later feature — the app is offline by design.)
+
+## 5. Launch discount (50%)
+Paddle → Catalog → Discounts → New:
+- Type: percentage, 50% · Code: LAUNCH50 · Restrict to the Pro price
+- Duration: **one billing period** (first year only) or **forever**
+  (founder pricing) — decide before launch; forever cannot be walked back
+  for existing subscribers without breaking your word.
+- Optional: expiry date and max redemptions make the urgency honest.
+Auto-apply at checkout: append `?discount=LAUNCH50` to the payment link on
+pricing.html, and uncomment the LAUNCH50 price block there (marker comment).
+The license worker needs NO changes — it mints on payment completion
+regardless of the amount paid.
