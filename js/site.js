@@ -13,7 +13,7 @@ export function mountChrome({ active = '', immersive = false } = {}) {
   const nav = document.createElement('nav');
   nav.className = 'nav' + (immersive ? '' : ' nav--solid');
   nav.innerHTML = `
-    <a class="nav__logo" href="index.html">FORK<b>SCAPE</b></a>
+    <a class="nav__logo" href="index.html"><svg viewBox="0 0 420 420" aria-hidden="true"><g transform="translate(-45 2)" fill="#00D1B2" stroke="#00D1B2" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"><path d="M178 130L231 180"/><path d="M178 287L231 236"/><path d="M260 85L332 149"/><path d="M332 149L370 187"/><path d="M301.5 208H362.5"/><path d="M260 333L332 267"/><path d="M332 267L370 229"/><g stroke="none"><circle cx="260" cy="208" r="41"/><circle cx="125" cy="208" r="29"/><circle cx="178" cy="130" r="28"/><circle cx="178" cy="287" r="29"/><circle cx="260" cy="85" r="29"/><circle cx="332" cy="149" r="29"/><circle cx="391" cy="208" r="29"/><circle cx="332" cy="267" r="29"/><circle cx="260" cy="333" r="29"/></g></g></svg><span>Fork<b>Scape</b></span></a>
     <div class="nav__links">
       ${LINKS.map((l) => `<a href="${l.href}"${l.label === active ? ' aria-current="page" class="is-active"' : ''}>${l.label}</a>`).join('')}
       <a href="https://try.forkscape.com">Try in browser</a>
@@ -28,7 +28,7 @@ export function mountChrome({ active = '', immersive = false } = {}) {
   footer.innerHTML = `
     <div class="footer__inner">
       <div class="footer__brand">
-        <a class="nav__logo" href="index.html">FORK<b>SCAPE</b></a>
+        <a class="nav__logo" href="index.html"><svg viewBox="0 0 420 420" aria-hidden="true"><g transform="translate(-45 2)" fill="#00D1B2" stroke="#00D1B2" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"><path d="M178 130L231 180"/><path d="M178 287L231 236"/><path d="M260 85L332 149"/><path d="M332 149L370 187"/><path d="M301.5 208H362.5"/><path d="M260 333L332 267"/><path d="M332 267L370 229"/><g stroke="none"><circle cx="260" cy="208" r="41"/><circle cx="125" cy="208" r="29"/><circle cx="178" cy="130" r="28"/><circle cx="178" cy="287" r="29"/><circle cx="260" cy="85" r="29"/><circle cx="332" cy="149" r="29"/><circle cx="391" cy="208" r="29"/><circle cx="332" cy="267" r="29"/><circle cx="260" cy="333" r="29"/></g></g></svg><span>Fork<b>Scape</b></span></a>
         <p>AI work that branches on an infinite canvas — local-first,
         measured, and honest about what it saves you.</p>
       </div>
