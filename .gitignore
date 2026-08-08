@@ -1,0 +1,17 @@
+# Secrets — NEVER commit. The license signing key mints Pro keys; a leak means
+# anyone can issue themselves a licence.
+*.pem
+*.key
+business-docs/
+.dev.vars
+.env
+.env.*
+
+# Cloudflare / wrangler
+.wrangler/
+node_modules/
+
+# OS noise
+.DS_Store
+desktop.ini
+Thumbs.db
