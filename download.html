@@ -45,6 +45,9 @@
           <span>Linux<em class="dl-size"></em></span>
         </a>
       </div>
+      <!-- Only shown when the current release is missing an installer for some
+           platform, i.e. that runner is still building. Filled by the script. -->
+      <p class="dl-pending-note" hidden></p>
       <p class="dl-alt">
         <span class="dl-ver"></span>
         Other formats:
@@ -107,16 +110,20 @@
     // would break on every release — we resolve them at page load instead and
     // leave the release-page fallback in place if anything goes wrong.
     const REPO = 'dreamerron/forkscape-releases';
+    const RELEASES = `https://github.com/${REPO}/releases`;
     const mb = (bytes) => `${Math.round(bytes / 1e6)} MB`;
 
-    // Promote the visitor's own platform to the primary (filled) button.
     const ua = navigator.userAgent;
     const here = /Win/i.test(ua) ? 'windows' : /Mac/i.test(ua) ? 'mac' : /Linux|X11|Android/i.test(ua) ? 'linux' : null;
-    const mine = here && document.querySelector(`.dl-btn[data-os="${here}"]`);
-    if (mine) {
-      mine.classList.remove('btn--ghost');
-      mine.parentElement.prepend(mine); // the one you want, first
-    }
+    const promote = (btn) => {
+      if (!btn) return;
+      btn.classList.remove('btn--ghost');
+      btn.parentElement.prepend(btn); // the one you want, first
+    };
+    // Promote the visitor's own platform straight away, so the page looks right
+    // without waiting on the network. The fetch below can still demote it, if
+    // that platform turns out to have no installer in the current release.
+    promote(here && document.querySelector(`.dl-btn[data-os="${here}"]`));
 
     try {
       const res = await fetch(`https://api.github.com/repos/${REPO}/releases/latest`);
@@ -124,18 +131,57 @@
       const rel = await res.json();
       const find = (ext) => rel.assets.find((a) => a.name.toLowerCase().endsWith(ext));
 
+      // Each OS builds on its own runner, and whichever finishes first creates
+      // the release — the others attach their installers as they land. So
+      // `latest` is briefly real but incomplete (Windows takes ~3x longer than
+      // Linux from a cold Rust cache). Say so plainly, rather than handing
+      // someone a button that leads to a release with nothing for their machine.
+      const pending = [];
       for (const el of document.querySelectorAll('[data-ext]')) {
         const asset = find(el.dataset.ext);
-        if (!asset) continue;
-        el.href = asset.browser_download_url;
-        const size = el.querySelector('.dl-size');
-        if (size) size.textContent = ` · ${mb(asset.size)}`;
+        const label = el.querySelector('.dl-size');
+        if (asset) {
+          el.href = asset.browser_download_url;
+          if (label) label.textContent = ` · ${mb(asset.size)}`;
+          continue;
+        }
+        el.href = RELEASES;
+        el.classList.add('dl-pending');
+        if (label) label.textContent = ' · building…';
+        el.title = 'This installer is still building for the current release — it usually lands within the hour. Earlier releases have every platform.';
+        if (el.dataset.os) pending.push(el.dataset.os);
       }
+
+      // Never leave an unbuilt platform as the hero button — promote one the
+      // visitor can actually download right now.
+      if (here && pending.includes(here)) {
+        document.querySelector(`.dl-btn[data-os="${here}"]`)?.classList.add('btn--ghost');
+        promote(document.querySelector('.dl-btn:not(.dl-pending)'));
+      }
+
       // The v1.0.0 tag was cut as "1.0.0"; normalize so the label reads the
       // same whichever form a future tag uses.
       const ver = document.querySelector('.dl-ver');
       const tag = rel.tag_name.startsWith('v') ? rel.tag_name : `v${rel.tag_name}`;
-      if (ver) ver.textContent = `${tag} — `;
+      const when = rel.published_at
+        ? new Date(rel.published_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })
+        : '';
+      if (ver) ver.textContent = when ? `${tag} · ${when} — ` : `${tag} — `;
+
+      const note = document.querySelector('.dl-pending-note');
+      if (note && pending.length) {
+        const names = { windows: 'Windows', mac: 'macOS', linux: 'Linux' };
+        const list = [...new Set(pending)].map((p) => names[p] ?? p);
+        const plural = list.length > 1;
+        note.textContent =
+          `⏳ The ${list.join(' and ')} installer${plural ? 's' : ''} for ${tag} ` +
+          `${plural ? 'are' : 'is'} still building — usually done within the hour. `;
+        const a = document.createElement('a');
+        a.href = RELEASES;
+        a.textContent = 'Earlier releases';
+        note.append(a, document.createTextNode(' have every platform.'));
+        note.hidden = false;
+      }
     } catch {
       // Rate-limited or offline: the buttons still open the release page.
     }

@@ -262,3 +262,35 @@ body.page {
 .dl-alt .sep { opacity: 0.4; margin: 0 7px; }
 .dl-ver { color: var(--teal); font-weight: 700; }
 .dl-ico { width: 17px; height: 17px; flex: none; }
+
+/* A release is created by whichever OS runner finishes first, so for a while
+   `latest` can be real but missing a platform. Those buttons read "building…"
+   and recede — still clickable through to the releases list, but visibly not
+   the thing to click. Amber, not red: nothing is broken, it just isn't here
+   yet. */
+.dl-btn.dl-pending {
+  opacity: 0.62;
+  border-color: rgba(251, 191, 36, 0.4);
+}
+.dl-btn.dl-pending:hover { opacity: 0.85; }
+.dl-btn.dl-pending .dl-size { color: var(--amber); opacity: 0.9; }
+/* Same story for the MSI/DEB/RPM text links. */
+.dl-alt a.dl-pending {
+  color: var(--amber);
+  opacity: 0.75;
+  border-bottom-style: dashed;
+  border-bottom-color: rgba(251, 191, 36, 0.45);
+}
+.dl-pending-note {
+  margin: 14px auto 0;
+  max-width: 54ch;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--amber);
+}
+.dl-pending-note a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(251, 191, 36, 0.45);
+}
+.dl-pending-note a:hover { border-bottom-color: var(--amber); }
