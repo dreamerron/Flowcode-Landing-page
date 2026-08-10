@@ -51,6 +51,13 @@ export function mountChrome({ active = '', immersive = false } = {}) {
         <a href="index.html">The Journey</a>
         <a href="network.html">The Canvas (3D)</a>
       </div>
+      <div class="footer__col">
+        <h4>Company</h4>
+        <a href="mailto:support@forkscape.com">Contact — support@forkscape.com</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="refunds.html">Refunds &amp; Cancellation</a>
+      </div>
     </div>
     <div class="footer__legal">
       © 2026 FORKSCAPE · Savings vary by workload — the in-app dashboard shows
