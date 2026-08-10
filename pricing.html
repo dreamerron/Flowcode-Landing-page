@@ -16,7 +16,7 @@
     <h1 class="page-title">Free to start. Pay when it pays for itself.</h1>
 
     <div class="plans">
-      <div class="plan">
+      <div class="plan plan--free">
         <h3>Free</h3>
         <div class="price">$0</div>
         <p class="blurb">The local core. Runs on your machine with your own API
@@ -33,6 +33,25 @@
         <a class="btn btn--ghost" href="download.html">Download free</a>
       </div>
 
+      <div class="plan plan--enterprise">
+        <h3>Enterprise</h3>
+        <div class="price">Let's talk</div>
+        <p class="blurb">Everything in Pro, plus team features that run entirely
+        on <b>your own infrastructure</b>.</p>
+        <ul>
+          <li>Everything in Pro</li>
+          <li>Team collaboration on your own self-hosted server</li>
+          <li>Presence, shared queue &amp; canvas sync — inside your network</li>
+          <li>5 levels of parallel sub-agents</li>
+          <li>Volume licensing &amp; priority support</li>
+        </ul>
+        <a class="btn btn--ghost" href="mailto:sales@forkscape.com?subject=ForkScape%20Enterprise">Contact sales</a>
+      </div>
+
+      <!-- Pro and Lifetime deliberately land on their own row together (see
+           the 2-column grid below): they're the two ways to buy the SAME
+           feature set, so a visitor comparing subscribe-vs-buy-once should
+           never see one without the other in view. -->
       <div class="plan plan--pro">
         <span class="plan__badge">Recommended</span>
         <h3>Pro</h3>
@@ -73,21 +92,6 @@
           <li>Every future Pro feature, included automatically</li>
         </ul>
         <button type="button" class="btn" id="lifetime-cta">Get Lifetime</button>
-      </div>
-
-      <div class="plan">
-        <h3>Enterprise</h3>
-        <div class="price">Let's talk</div>
-        <p class="blurb">Everything in Pro, plus team features that run entirely
-        on <b>your own infrastructure</b>.</p>
-        <ul>
-          <li>Everything in Pro</li>
-          <li>Team collaboration on your own self-hosted server</li>
-          <li>Presence, shared queue &amp; canvas sync — inside your network</li>
-          <li>5 levels of parallel sub-agents</li>
-          <li>Volume licensing &amp; priority support</li>
-        </ul>
-        <a class="btn btn--ghost" href="mailto:sales@forkscape.com?subject=ForkScape%20Enterprise">Contact sales</a>
       </div>
     </div>
 

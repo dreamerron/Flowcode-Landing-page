@@ -270,6 +270,15 @@ body.page {
 @media (max-width: 560px) {
   .footer__inner { grid-template-columns: 1fr; }
   .plans { grid-template-columns: 1fr; }
+  /* Desktop groups Free+Enterprise / Pro+Lifetime into rows, which needs
+     Enterprise's markup to sit second in the DOM. Stacked on one column
+     that reading order is wrong — a phone visitor would hit "Let's talk"
+     before ever seeing what Pro or Lifetime cost. Re-order for the stack
+     only: the two purchase options first, Enterprise last. */
+  .plan--free { order: 1; }
+  .plan--pro { order: 2; }
+  .plan--lifetime { order: 3; }
+  .plan--enterprise { order: 4; }
 }
 
 /* ------------------------------------------------ per-platform downloads --- */
