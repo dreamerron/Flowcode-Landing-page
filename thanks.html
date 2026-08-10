@@ -25,7 +25,12 @@
     // custom domain below). Paddle checkout success URL must be:
     //   https://forkscape.com/thanks?txn={transaction_id}
     const WORKER = 'https://license.forkscape.com';
-    const txn = new URLSearchParams(location.search).get('txn');
+    // Query first; sessionStorage as the redirect-proof fallback. pricing.html
+    // stashes the id there because some static hosts' clean-URL redirects
+    // strip the query string (npx serve does — that redirect once showed
+    // "missing transaction reference" to a tester who had just paid).
+    let txn = new URLSearchParams(location.search).get('txn');
+    try { txn = txn || sessionStorage.getItem('fsk_txn'); } catch { /* private mode */ }
     const status = document.getElementById('status');
     async function poll(tries = 0) {
       if (!txn) { status.textContent = 'Missing transaction reference — reply to your receipt email and we will send your key.'; return; }
