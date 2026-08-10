@@ -178,6 +178,14 @@
     window.Paddle.Initialize({
       token: CLIENT_TOKEN,
       eventCallback(event) {
+        // TEMPORARY — diagnosing a real sandbox test where transaction_id
+        // came through empty despite Paddle's own docs listing it as a
+        // top-level field. Logging every event (not just checkout.completed)
+        // in case an earlier event fires first without it populated yet, or
+        // the field lives somewhere the docs didn't show. Remove once the
+        // real shape is confirmed and the redirect logic below is fixed to
+        // match it — do not ship this console.log.
+        console.log('[paddle event]', event.name, JSON.parse(JSON.stringify(event.data ?? null)));
         // The buyer's key is fetched by transaction id on thanks.html — the
         // fulfillment worker's webhook and this redirect are how it gets
         // there. See web/fulfillment-worker.js (GET /license?txn=).
