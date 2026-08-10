@@ -36,16 +36,17 @@
       <div class="plan plan--pro">
         <span class="plan__badge">Recommended</span>
         <h3>Pro</h3>
-        <div class="price">$12<small>/month</small></div>
-        <p class="blurb" style="margin-top:-8px">or <b>$120/year</b> — two months free.</p>
+        <div class="plan__toggle" data-toggle="pro">
+          <button type="button" class="plan__toggle-btn is-active" data-period="monthly">Monthly</button>
+          <button type="button" class="plan__toggle-btn" data-period="yearly">Yearly <span class="plan__save">2 mo. free</span></button>
+        </div>
+        <div class="price" id="pro-price">$12<small>/month</small></div>
+        <p class="blurb" style="margin-top:-8px" id="pro-blurb">Billed monthly — cancel anytime.</p>
         <!-- LAUNCH50 — decision locked: 50% off the FIRST YEAR ONLY, renewing at
-             $120/yr. Uncomment this block (and delete the two lines above) ONLY
-             after a Paddle SANDBOX purchase has minted a key the app accepts,
-             end to end. Advertising a code that errors at checkout is worse than
-             having no launch offer at all. Keep the renewal price visible — a
-             hidden renewal turns year-two into refund requests.
-        <div class="price"><s style="opacity:.45;font-size:.55em">$120</s> $60<small>/first year</small></div>
-        <p class="blurb" style="color:#2dd4bf"><b>Launch offer:</b> 50% off your first year with code <code>LAUNCH50</code> — renews at $120/yr.</p>
+             $120/yr. Wire this in as a real discount code applied at Paddle
+             Checkout.open({ discountId: … }) ONLY after a Paddle SANDBOX
+             purchase has minted a key the app accepts, end to end. Advertising
+             a code that errors at checkout is worse than no launch offer.
         -->
         <p class="blurb">For people who run serious multi-agent work every day.</p>
         <ul>
@@ -56,7 +57,22 @@
           <li>Telegram remote control</li>
           <li>Voice &amp; avatar generation tools</li>
         </ul>
-        <a class="btn" href="mailto:sales@forkscape.com?subject=ForkScape%20Pro">Get Pro</a>
+        <button type="button" class="btn" id="pro-cta" data-price="monthly">Get Pro</button>
+      </div>
+
+      <div class="plan plan--lifetime">
+        <span class="plan__badge plan__badge--amber">Launch offer</span>
+        <h3>Lifetime</h3>
+        <div class="price">$199<small>/once</small></div>
+        <p class="blurb" style="margin-top:-8px">Pay once. Yours forever — no subscription.</p>
+        <p class="blurb">Available for the first few months only, then this plan retires
+        for good — everyone already on it keeps it forever regardless.</p>
+        <ul>
+          <li>Everything in Pro</li>
+          <li>No renewal, ever — one payment, done</li>
+          <li>Every future Pro feature, included automatically</li>
+        </ul>
+        <button type="button" class="btn" id="lifetime-cta">Get Lifetime</button>
       </div>
 
       <div class="plan">
@@ -112,6 +128,14 @@
         retroactively.</p>
       </details>
       <details>
+        <summary>What's the difference between Pro and Lifetime?</summary>
+        <p>Same features — the only difference is billing. Pro is a
+        subscription (monthly or yearly); Lifetime is one payment, no renewal,
+        ever. Lifetime is a launch-only offer for the first few months; once it
+        retires, new buyers choose Pro monthly or yearly instead — but anyone
+        who already bought Lifetime keeps it, unaffected.</p>
+      </details>
+      <details>
         <summary>What platforms are supported?</summary>
         <p>Windows, Mac, and Linux — plus a
         <a href="download.html">browser playground</a> to try the canvas
@@ -123,6 +147,65 @@
   <script type="module">
     import { mountChrome } from './js/site.js';
     mountChrome({ active: 'Pricing' });
+  </script>
+
+  <!-- Paddle checkout — SANDBOX. Do not treat this block as "live" just
+       because it's in the deployed file; it only becomes real once:
+         1. Paddle.Environment.set('sandbox') below is DELETED (live is default)
+         2. CLIENT_TOKEN is swapped for the live client-side token
+         3. PRICES below are swapped for the LIVE catalog's price ids
+       — exactly the migration the owner's own step-01 prompt walks through.
+       Until then, real cards do not work here; only Paddle's sandbox test
+       cards do. -->
+  <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+  <script type="module">
+    const CLIENT_TOKEN = 'test_8188d9ed629019ed5820770c427';
+    const PRICES = {
+      monthly: 'pri_01kzmtkg4tybawd2e5gq2hnnw7',   // $12/mo
+      yearly: 'pri_01kzmtv9cx9f6tpd2ry5zex2ka',    // $120/yr
+      lifetime: 'pri_01kzmvcm7vj4evv9xkvngp7475',  // $199 one-time
+    };
+    const PERIOD_COPY = {
+      monthly: { price: '$12', unit: '/month', blurb: 'Billed monthly — cancel anytime.' },
+      yearly: { price: '$120', unit: '/year', blurb: 'Billed yearly — two months free vs. monthly.' },
+    };
+
+    window.Paddle.Environment.set('sandbox');
+    window.Paddle.Initialize({
+      token: CLIENT_TOKEN,
+      eventCallback(event) {
+        // The buyer's key is fetched by transaction id on thanks.html — the
+        // fulfillment worker's webhook and this redirect are how it gets
+        // there. See web/fulfillment-worker.js (GET /license?txn=).
+        if (event.name === 'checkout.completed') {
+          const txn = event.data?.transaction_id;
+          location.href = txn ? `thanks.html?txn=${encodeURIComponent(txn)}` : 'thanks.html';
+        }
+      },
+    });
+
+    function openCheckout(priceId) {
+      window.Paddle.Checkout.open({ items: [{ priceId, quantity: 1 }] });
+    }
+
+    // Pro card: Monthly/Yearly toggle swaps the displayed price and which
+    // price id the CTA checks out with.
+    const proToggle = document.querySelector('[data-toggle="pro"]');
+    const proPriceEl = document.getElementById('pro-price');
+    const proBlurbEl = document.getElementById('pro-blurb');
+    const proCta = document.getElementById('pro-cta');
+    proToggle?.addEventListener('click', (e) => {
+      const btn = e.target.closest('.plan__toggle-btn');
+      if (!btn) return;
+      const period = btn.dataset.period;
+      for (const b of proToggle.querySelectorAll('.plan__toggle-btn')) b.classList.toggle('is-active', b === btn);
+      const copy = PERIOD_COPY[period];
+      proPriceEl.innerHTML = `${copy.price}<small>${copy.unit}</small>`;
+      proBlurbEl.textContent = copy.blurb;
+      proCta.dataset.price = period;
+    });
+    proCta?.addEventListener('click', () => openCheckout(PRICES[proCta.dataset.price]));
+    document.getElementById('lifetime-cta')?.addEventListener('click', () => openCheckout(PRICES.lifetime));
   </script>
 </body>
 </html>
