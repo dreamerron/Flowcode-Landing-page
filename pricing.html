@@ -178,21 +178,30 @@
     window.Paddle.Initialize({
       token: CLIENT_TOKEN,
       eventCallback(event) {
-        // TEMPORARY — diagnosing a real sandbox test where transaction_id
-        // came through empty despite Paddle's own docs listing it as a
-        // top-level field. Logging every event (not just checkout.completed)
-        // in case an earlier event fires first without it populated yet, or
-        // the field lives somewhere the docs didn't show. Remove once the
-        // real shape is confirmed and the redirect logic below is fixed to
-        // match it — do not ship this console.log.
-        console.log('[paddle event]', event.name, JSON.parse(JSON.stringify(event.data ?? null)));
+        console.log('[paddle event]', event.name, event.data ?? null);
         // The buyer's key is fetched by transaction id on thanks.html — the
         // fulfillment worker's webhook and this redirect are how it gets
         // there. See web/fulfillment-worker.js (GET /license?txn=).
-        if (event.name === 'checkout.completed') {
-          const txn = event.data?.transaction_id;
-          location.href = txn ? `thanks.html?txn=${encodeURIComponent(txn)}` : 'thanks.html';
-        }
+        if (event.name !== 'checkout.completed') return;
+        const d = event.data ?? {};
+        // A real sandbox purchase landed on thanks.html with no id, even
+        // though Paddle's docs list transaction_id as top-level here. Rather
+        // than trust one field name, try the plausible spellings in order;
+        // the worker validates the ^txn_ format anyway, so a wrong guess
+        // fails visibly instead of minting against a bogus reference.
+        const txn = d.transaction_id ?? d.transactionId ?? d.transaction?.id ?? d.id;
+        // TEMPORARY diagnostics — a console.log alone does not survive the
+        // navigation below (DevTools clears on page load unless "Preserve
+        // log" is ticked), which is exactly why the first attempt at this
+        // came back empty. sessionStorage persists across the redirect, and
+        // the key list rides along in the URL so it is visible without
+        // opening DevTools at all. Strip both once the field is confirmed.
+        try {
+          sessionStorage.setItem('__paddle_debug', JSON.stringify({ keys: Object.keys(d), data: d }));
+        } catch { /* non-serializable payload — the URL fallback still works */ }
+        location.href = txn
+          ? `thanks.html?txn=${encodeURIComponent(txn)}`
+          : `thanks.html?__debug_keys=${encodeURIComponent(Object.keys(d).join(',') || 'EMPTY')}`;
       },
     });
 
