@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FORKSCAPE — Get started · Every tutorial, in the order that teaches</title>
+  <meta name="description" content="Start here: 20 short video tutorials that take you from your first branching canvas to agents, research fan-outs, imports and automations — most under a minute." />
+  <link rel="canonical" href="https://forkscape.com/get-started" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Get started with ForkScape" />
+  <meta property="og:description" content="20 short videos, first canvas to full agent orchestration. Most are under a minute." />
+  <meta property="og:url" content="https://forkscape.com/get-started" />
+  <meta property="og:image" content="https://i.ytimg.com/vi/DbXgHJASaq0/hqdefault.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+  <style>
+    /* Video hub — same card language as .feature-card, plus a thumbnail. */
+    .vid-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+      margin-top: 28px;
+    }
+    .vid-card {
+      display: block;
+      background: rgba(10, 14, 24, 0.92);
+      border: 1px solid rgba(120, 140, 180, 0.16);
+      border-top: 2px solid var(--c, var(--teal));
+      border-radius: 14px;
+      overflow: hidden;
+      color: inherit;
+      text-decoration: none;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .vid-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 44px -16px var(--c, var(--teal));
+    }
+    .vid-thumb {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background: #060910;
+    }
+    .vid-thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 0.92;
+    }
+    .vid-thumb::after {
+      /* Play affordance — pure CSS so nothing extra loads. */
+      content: '▶';
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 30px; color: #fff;
+      background: radial-gradient(ellipse at center, rgba(0,0,0,0.28), rgba(0,0,0,0) 70%);
+      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.8);
+    }
+    .vid-time {
+      position: absolute; right: 8px; bottom: 8px;
+      background: rgba(0, 0, 0, 0.78);
+      color: #fff; font-size: 12px; font-weight: 700;
+      padding: 2px 7px; border-radius: 5px;
+    }
+    .vid-body { padding: 15px 17px 17px; }
+    .vid-body h3 { font-size: 15.5px; margin: 0 0 7px; line-height: 1.35; }
+    .vid-body p { font-size: 13.5px; color: var(--dim); line-height: 1.55; margin: 0; }
+    .chapter-note { color: var(--dim); max-width: 660px; line-height: 1.65; }
+    .watch-all {
+      display: inline-block; margin-top: 14px;
+      font-size: 14px; font-weight: 700;
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Get started with ForkScape \u2014 video tutorials",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "item": {
+        "@type": "VideoObject",
+        "name": "The Complete Tour of ForkScape",
+        "url": "https://www.youtube.com/watch?v=DbXgHJASaq0",
+        "thumbnailUrl": "https://i.ytimg.com/vi/DbXgHJASaq0/hqdefault.jpg",
+        "duration": "PT3M18S"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "item": {
+        "@type": "VideoObject",
+        "name": "Branching: Stop Losing Good Answers in a Scroll",
+        "url": "https://www.youtube.com/watch?v=-gRw0cc1634",
+        "thumbnailUrl": "https://i.ytimg.com/vi/-gRw0cc1634/hqdefault.jpg",
+        "duration": "PT0M46S"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "item": {
+        "@type": "VideoObject",
+        "name": "Power Tour: Drive the Canvas Like an Editor",
+        "url": "https://www.youtube.com/watch?v=Xs6efBKvgQo",
+        "thumbnailUrl": "https://i.ytimg.com/vi/Xs6efBKvgQo/hqdefault.jpg",
+        "duration": "PT0M40S"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "item": {
+        "@type": "VideoObject",
+        "name": "Build a Real Multipage App From One Sentence",
+        "url": "https://www.youtube.com/watch?v=KaC2FVXnjuM",
+        "thumbnailUrl": "https://i.ytimg.com/vi/KaC2FVXnjuM/hqdefault.jpg",
+        "duration": "PT3M58S"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 5,
+      "item": {
+        "@type": "VideoObject",
+        "name": "Agents That Work in Your Real Codebase",
+        "url": "https://www.youtube.com/watch?v=aV4sGZb3WrI",
+        "thumbnailUrl": "https://i.ytimg.com/vi/aV4sGZb3WrI/hqdefault.jpg",
+        "duration": "PT1M25S"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 6,
+      "item": {
+        "@type": "VideoObject",
+        "name": "You Stay in the Loop: Three Brakes on Autonomy",
+        "url": "https://www.youtube.com/watch?v=XKuIHzuSp8s",
+        "thumbnailUrl": "https://i.ytimg.com/vi/XKuIHzuSp8s/hqdefault.jpg",
+        "duration": "PT0M52S"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 7,
+      "item": {
+        "@type": "VideoObject",
+        "name": "Git, GitHub and Your Team",
+        "url": "https://www.youtube.com/watch?v=JboGvjHU9Po",
+        "thumbnailUrl": "https://i.ytimg.com/vi/JboGvjHU9Po/hqdefault.jpg",
+        "duration": "PT1M24S"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 8,
+      "item": {
+        "@type": "VideoObject",
+        "name": "Research Mode: Ask Five Models at Once",
+        "url": "https://www.youtube.com/watch?v=IuNHhoCbkWg",
+        "thumbnailUrl": "https://i.ytimg.com/vi/IuNHhoCbkWg/hqdefault.jpg",
+        "duration": "PT2M16S"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 9,
+      "item": {
+        "@type": "VideoObject",
+        "name": "A/B Benchmark: Pick Models on Evidence",
+        "url": "https://www.youtube.com/watch?v=FruXTeSXpvw",
+        "thumbnailUrl": "https://i.ytimg.com/vi/FruXTeSXpvw/hqdefault.jpg",
+        "duration": "PT0M30S"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 10,
+      "item": {
+        "@type": "VideoObject",
+        "name": "Smart Routing & Context Limits",
+        "url": "https://www.youtube.com/watch?v=aagwQ5qDfmc",
+        "thumbnailUrl": "https://i.ytimg.com/vi/aagwQ5qDfmc/hqdefault.jpg",
+        "duration": "PT0M41S"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 11,
+      "item": {
+        "@type": "VideoObject",
+        "name": "The Dashboard: Real Token Cost, Per Model",
+        "url": "https://www.youtube.com/watch?v=GVLlknp4cAk",
+        "thumbnailUrl": "https://i.ytimg.com/vi/GVLlknp4cAk/hqdefault.jpg",
+        "duration": "PT0M34S"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 12,
+      "item": {
+        "@type": "VideoObject",
+        "name": "Import a ChatGPT or Claude Export",
+        "url": "https://www.youtube.com/watch?v=JbOfOcfeark",
+        "thumbnailUrl": "https://i.ytimg.com/vi/JbOfOcfeark/hqdefault.jpg",
+        "duration": "PT1M9S"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 13,
+      "item": {
+        "@type": "VideoObject",
+        "name": "Bring Your Claude Code and Codex Sessions",
+        "url": "https://www.youtube.com/watch?v=OI3Hhg9nKhI",
+        "thumbnailUrl": "https://i.ytimg.com/vi/OI3Hhg9nKhI/hqdefault.jpg",
+        "duration": "PT0M32S"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 14,
+      "item": {
+        "@type": "VideoObject",
+        "name": "Conversations: Every Canvas, Searchable",
+        "url": "https://www.youtube.com/watch?v=n8iaVdqjoPI",
+        "thumbnailUrl": "https://i.ytimg.com/vi/n8iaVdqjoPI/hqdefault.jpg",
+        "duration": "PT0M32S"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 15,
+      "item": {
+        "@type": "VideoObject",
+        "name": "The Knowledge Base: Ground Models in Your Docs",
+        "url": "https://www.youtube.com/watch?v=66dw1gwarLw",
+        "thumbnailUrl": "https://i.ytimg.com/vi/66dw1gwarLw/hqdefault.jpg",
+        "duration": "PT0M37S"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 16,
+      "item": {
+        "@type": "VideoObject",
+        "name": "The Memory Palace: What the AI Remembers About You",
+        "url": "https://www.youtube.com/watch?v=xEqRQAnscKE",
+        "thumbnailUrl": "https://i.ytimg.com/vi/xEqRQAnscKE/hqdefault.jpg",
+        "duration": "PT0M34S"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 17,
+      "item": {
+        "@type": "VideoObject",
+        "name": "Skills & Enhance: Better Prompts, Automatically",
+        "url": "https://www.youtube.com/watch?v=Jc60VUkPTzo",
+        "thumbnailUrl": "https://i.ytimg.com/vi/Jc60VUkPTzo/hqdefault.jpg",
+        "duration": "PT0M46S"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 18,
+      "item": {
+        "@type": "VideoObject",
+        "name": "The Context Toolbox: Compress and Summarise",
+        "url": "https://www.youtube.com/watch?v=Z5KseCVqtrE",
+        "thumbnailUrl": "https://i.ytimg.com/vi/Z5KseCVqtrE/hqdefault.jpg",
+        "duration": "PT1M51S"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 19,
+      "item": {
+        "@type": "VideoObject",
+        "name": "Automations & Telegram: Builds That Run Without You",
+        "url": "https://www.youtube.com/watch?v=qzprQOPdDSQ",
+        "thumbnailUrl": "https://i.ytimg.com/vi/qzprQOPdDSQ/hqdefault.jpg",
+        "duration": "PT0M37S"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 20,
+      "item": {
+        "@type": "VideoObject",
+        "name": "Labs: What We Are Building in the Open",
+        "url": "https://www.youtube.com/watch?v=G7l3r58J9uo",
+        "thumbnailUrl": "https://i.ytimg.com/vi/G7l3r58J9uo/hqdefault.jpg",
+        "duration": "PT0M28S"
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body class="page">
+
+  <header class="section">
+    <div class="eyebrow">Get started</div>
+    <h1 class="page-title">Twenty short videos. Most under a minute.</h1>
+    <p class="page-lede">
+      In the order that teaches: first canvas → branching → real builds →
+      research → your own history and knowledge → automations. Watch the
+      three-minute tour, then jump to whatever you came for — or skip the
+      videos entirely and <a href="https://try.forkscape.com">try it in your
+      browser</a> with no key and no signup.
+    </p>
+    <a class="watch-all" href="https://www.youtube.com/@Forkscape-Illusion_media" target="_blank" rel="noopener">▶ Or open the whole series on YouTube →</a>
+  </header>
+
+  <!-- 1 · START HERE -->
+  <section class="section section--tight" id="start-here">
+    <div class="eyebrow" style="color:var(--teal)">1 · Start here</div>
+    <h2 class="section-title">Your first fifteen minutes.</h2>
+    <p class="chapter-note">What ForkScape is, why a canvas beats a chat window, and the handful of moves that drive it.</p>
+    <div class="vid-grid">
+      <a class="vid-card" style="--c:var(--teal)" href="https://www.youtube.com/watch?v=DbXgHJASaq0" target="_blank" rel="noopener">
+        <div class="vid-thumb"><img src="https://i.ytimg.com/vi/DbXgHJASaq0/hqdefault.jpg" alt="" loading="lazy" /><span class="vid-time">3:18</span></div>
+        <div class="vid-body"><h3>The Complete Tour of ForkScape</h3><p>The whole product in one pass — canvas, nodes, agents, and where everything lives.</p></div>
+      </a>
+      <a class="vid-card" style="--c:var(--teal)" href="https://www.youtube.com/watch?v=-gRw0cc1634" target="_blank" rel="noopener">
+        <div class="vid-thumb"><img src="https://i.ytimg.com/vi/-gRw0cc1634/hqdefault.jpg" alt="" loading="lazy" /><span class="vid-time">0:46</span></div>
+        <div class="vid-body"><h3>Branching: Stop Losing Good Answers in a Scroll</h3><p>The core idea in 46 seconds — ask one node two questions and keep both answers.</p></div>
+      </a>
+      <a class="vid-card" style="--c:var(--teal)" href="https://www.youtube.com/watch?v=Xs6efBKvgQo" target="_blank" rel="noopener">
+        <div class="vid-thumb"><img src="https://i.ytimg.com/vi/Xs6efBKvgQo/hqdefault.jpg" alt="" loading="lazy" /><span class="vid-time">0:40</span></div>
+        <div class="vid-body"><h3>Power Tour: Drive the Canvas Like an Editor</h3><p>Keyboard-first navigation — select, run, branch and rearrange without touching the mouse.</p></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- 2 · BUILD SOMETHING REAL -->
+  <section class="section section--tight" id="build">
+    <div class="eyebrow" style="color:var(--amber)">2 · Build something real</div>
+    <h2 class="section-title">From one sentence to a running app.</h2>
+    <p class="chapter-note">Agents that write real files on your disk, with you holding the brakes.</p>
+    <div class="vid-grid">
+      <a class="vid-card" style="--c:var(--amber)" href="https://www.youtube.com/watch?v=KaC2FVXnjuM" target="_blank" rel="noopener">
+        <div class="vid-thumb"><img src="https://i.ytimg.com/vi/KaC2FVXnjuM/hqdefault.jpg" alt="" loading="lazy" /><span class="vid-time">3:58</span></div>
+        <div class="vid-body"><h3>Build a Real Multipage App From One Sentence</h3><p>The Create App wizard end to end — plan, agents fanning out, live preview.</p></div>
+      </a>
+      <a class="vid-card" style="--c:var(--amber)" href="https://www.youtube.com/watch?v=aV4sGZb3WrI" target="_blank" rel="noopener">
+        <div class="vid-thumb"><img src="https://i.ytimg.com/vi/aV4sGZb3WrI/hqdefault.jpg" alt="" loading="lazy" /><span class="vid-time">1:25</span></div>
+        <div class="vid-body"><h3>Agents That Work in Your Real Codebase</h3><p>Point agents at an existing project folder — read, edit, run, all on your machine.</p></div>
+      </a>
+      <a class="vid-card" style="--c:var(--amber)" href="https://www.youtube.com/watch?v=XKuIHzuSp8s" target="_blank" rel="noopener">
+        <div class="vid-thumb"><img src="https://i.ytimg.com/vi/XKuIHzuSp8s/hqdefault.jpg" alt="" loading="lazy" /><span class="vid-time">0:52</span></div>
+        <div class="vid-body"><h3>You Stay in the Loop: Three Brakes on Autonomy</h3><p>Plan review, trust prompts and approval gates — what agents must ask before they act.</p></div>
+      </a>
+      <a class="vid-card" style="--c:var(--amber)" href="https://www.youtube.com/watch?v=JboGvjHU9Po" target="_blank" rel="noopener">
+        <div class="vid-thumb"><img src="https://i.ytimg.com/vi/JboGvjHU9Po/hqdefault.jpg" alt="" loading="lazy" /><span class="vid-time">1:24</span></div>
+        <div class="vid-body"><h3>Git, GitHub and Your Team</h3><p>Branch-per-canvas workflows, commits from the canvas, and sharing work.</p></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- 3 · RESEARCH & MODELS -->
+  <section class="section section--tight" id="research">
+    <div class="eyebrow" style="color:var(--blue)">3 · Research &amp; models</div>
+    <h2 class="section-title">Ask five models, keep the best answer.</h2>
+    <p class="chapter-note">Fan a question out, compare on evidence, and watch what every token costs.</p>
+    <div class="vid-grid">
+      <a class="vid-card" style="--c:var(--blue)" href="https://www.youtube.com/watch?v=IuNHhoCbkWg" target="_blank" rel="noopener">
+        <div class="vid-thumb"><img src="https://i.ytimg.com/vi/IuNHhoCbkWg/hqdefault.jpg" alt="" loading="lazy" /><span class="vid-time">2:16</span></div>
+        <div class="vid-body"><h3>Research Mode: Ask Five Models at Once</h3><p>One question, five models in parallel, one synthesized report with sources.</p></div>
+      </a>
+      <a class="vid-card" style="--c:var(--blue)" href="https://www.youtube.com/watch?v=FruXTeSXpvw" target="_blank" rel="noopener">
+        <div class="vid-thumb"><img src="https://i.ytimg.com/vi/FruXTeSXpvw/hqdefault.jpg" alt="" loading="lazy" /><span class="vid-time">0:30</span></div>
+        <div class="vid-body"><h3>A/B Benchmark: Pick Models on Evidence</h3><p>Run the same prompt through two models side by side and let the result decide.</p></div>
+      </a>
+      <a class="vid-card" style="--c:var(--blue)" href="https://www.youtube.com/watch?v=aagwQ5qDfmc" target="_blank" rel="noopener">
+        <div class="vid-thumb"><img src="https://i.ytimg.com/vi/aagwQ5qDfmc/hqdefault.jpg" alt="" loading="lazy" /><span class="vid-time">0:41</span></div>
+        <div class="vid-body"><h3>Smart Routing &amp; Context Limits</h3><p>Cheap models for cheap work, big models where it matters — automatically.</p></div>
+      </a>
+      <a class="vid-card" style="--c:var(--blue)" href="https://www.youtube.com/watch?v=GVLlknp4cAk" target="_blank" rel="noopener">
+        <div class="vid-thumb"><img src="https://i.ytimg.com/vi/GVLlknp4cAk/hqdefault.jpg" alt="" loading="lazy" /><span class="vid-time">0:34</span></div>
+        <div class="vid-body"><h3>The Dashboard: Real Token Cost, Per Model</h3><p>What every canvas actually cost, and how much branching saved you.</p></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- 4 · YOUR HISTORY & KNOWLEDGE -->
+  <section class="section section--tight" id="knowledge">
+    <div class="eyebrow" style="color:var(--green)">4 · Your history &amp; knowledge</div>
+    <h2 class="section-title">Bring everything you already have.</h2>
+    <p class="chapter-note">Old chats, CLI sessions, your documents — imported, organized, remembered.</p>
+    <div class="vid-grid">
+      <a class="vid-card" style="--c:var(--green)" href="https://www.youtube.com/watch?v=JbOfOcfeark" target="_blank" rel="noopener">
+        <div class="vid-thumb"><img src="https://i.ytimg.com/vi/JbOfOcfeark/hqdefault.jpg" alt="" loading="lazy" /><span class="vid-time">1:09</span></div>
+        <div class="vid-body"><h3>Import a ChatGPT or Claude Export</h3><p>Your linear chat history becomes a browsable, branchable tree.</p></div>
+      </a>
+      <a class="vid-card" style="--c:var(--green)" href="https://www.youtube.com/watch?v=OI3Hhg9nKhI" target="_blank" rel="noopener">
+        <div class="vid-thumb"><img src="https://i.ytimg.com/vi/OI3Hhg9nKhI/hqdefault.jpg" alt="" loading="lazy" /><span class="vid-time">0:32</span></div>
+        <div class="vid-body"><h3>Bring Your Claude Code and Codex Sessions</h3><p>CLI coding sessions land on the canvas with their full tool history.</p></div>
+      </a>
+      <a class="vid-card" style="--c:var(--green)" href="https://www.youtube.com/watch?v=n8iaVdqjoPI" target="_blank" rel="noopener">
+        <div class="vid-thumb"><img src="https://i.ytimg.com/vi/n8iaVdqjoPI/hqdefault.jpg" alt="" loading="lazy" /><span class="vid-time">0:32</span></div>
+        <div class="vid-body"><h3>Conversations: Every Canvas, Searchable</h3><p>All your canvases in one sidebar — with semantic search over what they're about.</p></div>
+      </a>
+      <a class="vid-card" style="--c:var(--green)" href="https://www.youtube.com/watch?v=66dw1gwarLw" target="_blank" rel="noopener">
+        <div class="vid-thumb"><img src="https://i.ytimg.com/vi/66dw1gwarLw/hqdefault.jpg" alt="" loading="lazy" /><span class="vid-time">0:37</span></div>
+        <div class="vid-body"><h3>The Knowledge Base: Ground Models in Your Docs</h3><p>Answers cite your own documents instead of guessing.</p></div>
+      </a>
+      <a class="vid-card" style="--c:var(--green)" href="https://www.youtube.com/watch?v=xEqRQAnscKE" target="_blank" rel="noopener">
+        <div class="vid-thumb"><img src="https://i.ytimg.com/vi/xEqRQAnscKE/hqdefault.jpg" alt="" loading="lazy" /><span class="vid-time">0:34</span></div>
+        <div class="vid-body"><h3>The Memory Palace: What the AI Remembers About You</h3><p>Durable preferences, visible and editable — no re-explaining every session.</p></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- 5 · GO FURTHER -->
+  <section class="section section--tight" id="further">
+    <div class="eyebrow" style="color:var(--purple, #a78bfa)">5 · Go further</div>
+    <h2 class="section-title">Automations, skills and the toolbox.</h2>
+    <p class="chapter-note">The pieces that compound once the basics are muscle memory.</p>
+    <div class="vid-grid">
+      <a class="vid-card" style="--c:#a78bfa" href="https://www.youtube.com/watch?v=Jc60VUkPTzo" target="_blank" rel="noopener">
+        <div class="vid-thumb"><img src="https://i.ytimg.com/vi/Jc60VUkPTzo/hqdefault.jpg" alt="" loading="lazy" /><span class="vid-time">0:46</span></div>
+        <div class="vid-body"><h3>Skills &amp; Enhance: Better Prompts, Automatically</h3><p>Reusable skills, and a one-click pass that tightens your prompt before it runs.</p></div>
+      </a>
+      <a class="vid-card" style="--c:#a78bfa" href="https://www.youtube.com/watch?v=Z5KseCVqtrE" target="_blank" rel="noopener">
+        <div class="vid-thumb"><img src="https://i.ytimg.com/vi/Z5KseCVqtrE/hqdefault.jpg" alt="" loading="lazy" /><span class="vid-time">1:51</span></div>
+        <div class="vid-body"><h3>The Context Toolbox: Compress and Summarise</h3><p>Long branch? Compress it into a summary node and keep going without the weight.</p></div>
+      </a>
+      <a class="vid-card" style="--c:#a78bfa" href="https://www.youtube.com/watch?v=qzprQOPdDSQ" target="_blank" rel="noopener">
+        <div class="vid-thumb"><img src="https://i.ytimg.com/vi/qzprQOPdDSQ/hqdefault.jpg" alt="" loading="lazy" /><span class="vid-time">0:37</span></div>
+        <div class="vid-body"><h3>Automations &amp; Telegram: Builds That Run Without You</h3><p>Scheduled runs, triggers, and steering an agent from your phone.</p></div>
+      </a>
+      <a class="vid-card" style="--c:#a78bfa" href="https://www.youtube.com/watch?v=G7l3r58J9uo" target="_blank" rel="noopener">
+        <div class="vid-thumb"><img src="https://i.ytimg.com/vi/G7l3r58J9uo/hqdefault.jpg" alt="" loading="lazy" /><span class="vid-time">0:28</span></div>
+        <div class="vid-body"><h3>Labs: What We Are Building in the Open</h3><p>The experimental shelf — what's coming and how to turn it on early.</p></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section section--tight">
+    <div class="cta-strip">
+      <h2 class="section-title">Ready when you are.</h2>
+      <p class="section-sub">The browser playground needs no key and no signup. The desktop app is free and runs everything you just watched.</p>
+      <p style="margin-top:18px">
+        <a class="btn" href="https://try.forkscape.com">Try in your browser</a>
+        <a class="btn btn--ghost" href="download.html" style="margin-left:10px">⬇ Download for desktop</a>
+      </p>
+    </div>
+  </section>
+
+  <script type="module">
+    import { mountChrome } from './js/site.js';
+    mountChrome({ active: 'Get started' });
+  </script>
+</body>
+</html>

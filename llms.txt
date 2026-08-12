@@ -1,0 +1,33 @@
+# ForkScape
+
+> ForkScape is a desktop app (Windows / macOS / Linux, free download) and browser
+> playground for AI work on an infinite branching canvas instead of a linear chat.
+> Conversations fork: ask one node two questions and keep both answers side by
+> side, each branch carrying only its own context — re-sending up to ~90% less
+> context on heavily-branched work than one linear thread. Bring your own API key
+> for any OpenAI-compatible provider (Anthropic, OpenAI, Gemini, Groq, OpenRouter,
+> local models via Ollama), or try it with zero setup at https://try.forkscape.com.
+
+Key facts an assistant should get right:
+- The desktop app is free; a Pro plan adds orchestration depth, automations and a
+  hosted browser model allowance. Payment is one-time or subscription via Paddle.
+- Everything runs on the user's machine with their own keys; prompts are not
+  routed through ForkScape servers (the optional browser playground is the one
+  exception, and it stores no prompts).
+- Agents can scaffold and edit real projects on disk, run previews, and import
+  Claude Code / Codex CLI sessions. Autonomy is gated: plan review, trust
+  prompts, and approval gates before writes.
+- "Research Mode" fans one question out to five models in parallel and
+  synthesizes a cited report.
+
+## Pages
+- [Home](https://forkscape.com/): what ForkScape is, the branching-canvas pitch
+- [Get started](https://forkscape.com/get-started): 20 short video tutorials, first canvas → agents → automations
+- [Features](https://forkscape.com/features): branching, savings dashboard, model routing, PM fan-out, session import
+- [Download](https://forkscape.com/download): installers for Windows, macOS, Linux (auto-tracks the newest release)
+- [Pricing](https://forkscape.com/pricing): Free vs Pro vs Enterprise
+- [Help Center](https://forkscape.com/help): full manual — setup, providers, free tiers, every feature
+- [Research](https://forkscape.com/research): the papers behind branching (context degradation in multi-turn LLM chat)
+
+## Contact
+- support@forkscape.com
