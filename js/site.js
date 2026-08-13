@@ -59,6 +59,7 @@ export function mountChrome({ active = '', immersive = false } = {}) {
         <a href="terms.html">Terms of Service</a>
         <a href="privacy.html">Privacy Policy</a>
         <a href="refunds.html">Refunds &amp; Cancellation</a>
+        <a href="licenses.html">Open-source licenses</a>
       </div>
     </div>
     <div class="footer__legal">

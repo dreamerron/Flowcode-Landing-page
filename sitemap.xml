@@ -9,6 +9,7 @@
   <url><loc>https://forkscape.com/help</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://forkscape.com/research</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://forkscape.com/network</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://forkscape.com/licenses</loc><changefreq>monthly</changefreq><priority>0.2</priority></url>
   <url><loc>https://forkscape.com/terms</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
   <url><loc>https://forkscape.com/privacy</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
   <url><loc>https://forkscape.com/refunds</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
