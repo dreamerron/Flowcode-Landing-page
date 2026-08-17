@@ -153,6 +153,11 @@
       </details>
     </div>
   </section>
+    <div id="checkout-fallback" hidden style="max-width:720px;margin:18px auto 0;padding:16px 20px;border:1px solid #2dd4bf66;border-radius:10px;background:#2dd4bf14;text-align:center">
+      <b>Checkout couldn’t open?</b> No problem — <a href="mailto:sales@forkscape.com" style="color:#2dd4bf;font-weight:700">email us</a> and we’ll set up your license directly (same price, same launch discount).
+    </div>
+
+
 
   <script type="module">
     import { mountChrome } from './js/site.js';
@@ -194,9 +199,28 @@
       [PRICES.monthly]: 'dsc_01m06z35g7xmj7jq27ckryrb7q',  // LAUNCH30 — 30% off first month (LIVE)
     };
 
-    window.Paddle.Initialize({
+    // A buyer who can't open checkout is offered email instead of a dead
+    // button. Real-world causes: ad-blockers eat paddle.js entirely (dev
+    // audience = high blocker rate), the domain-approval gate, or a Paddle
+    // outage. Losing a Lifetime buyer to any of those is the worst outcome.
+    const PLAN_LABEL = { [PRICES.monthly]: 'Pro Monthly', [PRICES.yearly]: 'Pro Yearly', [PRICES.lifetime]: 'Lifetime' };
+    function checkoutFallback(priceId) {
+      const plan = PLAN_LABEL[priceId] ?? 'Pro';
+      const el = document.getElementById('checkout-fallback');
+      const subject = encodeURIComponent(`ForkScape ${plan} purchase`);
+      const body = encodeURIComponent(`Hi,\n\nI tried to buy ForkScape ${plan} on the pricing page but the checkout didn't open. Please set me up directly.\n\n(Sent from the pricing page's backup path.)`);
+      el.querySelector('a').href = `mailto:sales@forkscape.com?subject=${subject}&body=${body}`;
+      el.hidden = false;
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    let lastPriceId = null;
+
+    if (window.Paddle) window.Paddle.Initialize({
       token: CLIENT_TOKEN,
       eventCallback(event) {
+        // A checkout that errors out (approval gate, network, Paddle outage)
+        // flips to the email path rather than stranding the buyer.
+        if (event.name === 'checkout.error') { checkoutFallback(lastPriceId); return; }
         // The buyer's key is fetched by transaction id on thanks.html — the
         // fulfillment worker's webhook and this redirect are how it gets
         // there. See web/fulfillment-worker.js (GET /license?txn=).
@@ -215,11 +239,17 @@
     });
 
     function openCheckout(priceId) {
+      lastPriceId = priceId;
+      if (!window.Paddle) { checkoutFallback(priceId); return; } // paddle.js blocked/unreachable
       const discountId = LAUNCH_DISCOUNTS[priceId];
-      window.Paddle.Checkout.open({
-        items: [{ priceId, quantity: 1 }],
-        ...(discountId ? { discountId } : {}),
-      });
+      try {
+        window.Paddle.Checkout.open({
+          items: [{ priceId, quantity: 1 }],
+          ...(discountId ? { discountId } : {}),
+        });
+      } catch {
+        checkoutFallback(priceId);
+      }
     }
 
     // Pro card: Monthly/Yearly toggle swaps the displayed price and which
