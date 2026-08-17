@@ -8,6 +8,7 @@ const LINKS = [
   { href: 'features.html', label: 'Features' },
   { href: 'research.html', label: 'Research' },
   { href: 'pricing.html', label: 'Pricing' },
+  { href: 'blog.html', label: 'Blog' },
 ];
 
 export function mountChrome({ active = '', immersive = false } = {}) {
@@ -41,6 +42,7 @@ export function mountChrome({ active = '', immersive = false } = {}) {
         <a href="download.html">Download</a>
         <a href="https://try.forkscape.com">Try in browser</a>
         <a href="help.html">Help Center</a>
+        <a href="blog.html">Blog</a>
       </div>
       <div class="footer__col">
         <h4>Research</h4>

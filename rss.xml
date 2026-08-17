@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ForkScape blog</title>
+    <link>https://forkscape.com/blog</link>
+    <atom:link href="https://forkscape.com/rss.xml" rel="self" type="application/rss+xml" />
+    <description>Graph engineering, multi-agent workflows, and honest token economics — from the people building the canvas.</description>
+    <language>en</language>
+    <item>
+      <title>Graph engineering, but you can see the graph</title>
+      <link>https://forkscape.com/graph-engineering</link>
+      <guid>https://forkscape.com/graph-engineering</guid>
+      <pubDate>Mon, 17 Aug 2026 09:00:00 GMT</pubDate>
+      <description>Every framework in the graph-engineering wave is a code library. What the five canonical patterns look like when the graph is the interface — and where code-first honestly still wins.</description>
+    </item>
+  </channel>
+</rss>

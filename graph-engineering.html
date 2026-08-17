@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Graph engineering, but you can see the graph — ForkScape</title>
+  <meta name="description" content="Every framework in the graph-engineering wave is a code library. ForkScape ships the same five canonical patterns — chaining, routing, parallel fan-in, orchestrator-workers, evaluator-optimizer — as things you drag on a canvas and watch run." />
+  <link rel="canonical" href="https://forkscape.com/graph-engineering" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Graph engineering, but you can see the graph" />
+  <meta property="og:description" content="The five canonical agent-graph patterns, implemented as canvas primitives instead of Python. Where visual beats code — and where it honestly doesn't." />
+  <meta property="og:url" content="https://forkscape.com/graph-engineering" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Graph engineering, but you can see the graph",
+    "description": "The five canonical agent-graph patterns, implemented as canvas primitives instead of Python.",
+    "author": { "@type": "Person", "name": "Rutul" },
+    "publisher": { "@type": "Organization", "name": "ForkScape", "url": "https://forkscape.com" },
+    "datePublished": "2026-08-17",
+    "mainEntityOfPage": "https://forkscape.com/graph-engineering"
+  }
+  </script>
+  <style>
+    .post { max-width: 720px; margin: 0 auto; font-size: 16.5px; line-height: 1.7; }
+    .post p { margin: 0 0 18px; color: var(--dim, #b8c4d8); }
+    .post h2 { font-size: 24px; margin: 44px 0 14px; }
+    .post h3 { font-size: 18px; margin: 30px 0 10px; }
+    .post strong { color: var(--text, #e8eef8); }
+    .post a { color: var(--teal, #00d1b2); }
+    .post .meta { font-size: 13.5px; letter-spacing: 0.04em; opacity: 0.7; margin-bottom: 30px; }
+    .post ul, .post ol { color: var(--dim, #b8c4d8); margin: 0 0 18px; padding-left: 24px; }
+    .post li { margin: 7px 0; }
+    .pattern {
+      background: rgba(10, 14, 24, 0.92); border: 1px solid rgba(120, 140, 180, 0.16);
+      border-left: 3px solid var(--teal, #00d1b2); border-radius: 10px;
+      padding: 16px 20px; margin: 18px 0;
+    }
+    .pattern b { color: var(--text, #e8eef8); }
+    .post pre {
+      background: rgba(6, 9, 16, 0.95); border: 1px solid rgba(120, 140, 180, 0.2);
+      border-radius: 10px; padding: 16px 18px; overflow-x: auto;
+      font-size: 13px; line-height: 1.55; margin: 0 0 18px;
+    }
+    .post code { font-family: ui-monospace, "SF Mono", Consolas, monospace; }
+    .post p code, .post li code { background: rgba(120,140,180,0.14); padding: 1px 6px; border-radius: 5px; font-size: 0.88em; }
+    .cta-box {
+      background: rgba(0, 209, 178, 0.08); border: 1px solid rgba(0, 209, 178, 0.35);
+      border-radius: 12px; padding: 20px 24px; margin: 36px 0 0; text-align: center;
+    }
+    .cta-box a.btn-ish {
+      display: inline-block; margin: 10px 8px 0; padding: 10px 22px; border-radius: 10px;
+      background: var(--teal, #00d1b2); color: #04121a; font-weight: 700; text-decoration: none;
+    }
+    .cta-box a.quiet { display: inline-block; margin: 10px 8px 0; padding: 10px 18px; color: var(--teal); text-decoration: none; }
+  </style>
+</head>
+<body class="page">
+  <header class="section">
+    <div class="eyebrow">Blog · 17 Aug 2026</div>
+    <h1 class="page-title">Graph engineering, but you can see the graph</h1>
+    <p class="page-lede">The hottest idea in AI agents right now is that workflows should be explicit graphs, not loops. Every tool in that conversation is a code library. Here's what the same five patterns look like when the graph is the interface.</p>
+  </header>
+
+  <section class="section section--tight">
+    <article class="post">
+      <p class="meta">By Rutul, founder of ForkScape · 8 min read</p>
+
+      <p>On July 17, Peter Steinberger — the developer behind OpenClaw — asked six words: <em>"Are we still talking loops or did we shift to graphs yet?"</em> Within a day it had millions of views, and within a week "graph engineering" had a name, a wave of explainers, and a canon.</p>
+
+      <p>The idea underneath is real, and it's older than the name: a single agent spinning in a loop (act → check → retry) stops scaling the moment work genuinely branches. What replaces it is an explicit <strong>graph</strong> — specialized nodes, edges that route work between them, state that flows along the edges. Instead of one heroic agent with a fifty-line prompt, you declare a small organization: who does what, who hands off to whom, what has to be true before the next stage fires.</p>
+
+      <p>The writeups that followed converged on five canonical patterns. If you've read any of them, you know the list:</p>
+
+      <ul>
+        <li><strong>Prompt chaining</strong> — each stage gets a clean context window containing only what it needs, not the whole conversation so far</li>
+        <li><strong>Routing</strong> — a classifier picks one of several paths by looking at its own output</li>
+        <li><strong>Parallelization</strong> — fan out to independent workers, then join with a declared policy (all? any? majority?)</li>
+        <li><strong>Orchestrator-workers</strong> — a coordinator discovers the work list at runtime and spawns workers to match</li>
+        <li><strong>Evaluator-optimizer</strong> — a generator and a checker in a bounded loop until the output passes</li>
+      </ul>
+
+      <p>And here's the thing nobody in the conversation seems to notice: <strong>every framework being discussed is a code library.</strong> LangGraph, CrewAI, Microsoft Agent Framework, Google ADK, LlamaIndex Workflows, the OpenAI Agents SDK — all of them ask you to describe your graph in Python or TypeScript, and the graph itself exists only in your head and your debugger.</p>
+
+      <h2>You're describing a picture to a compiler</h2>
+
+      <p>This is a strange place for the industry to have landed. The whole pitch of graph engineering is that the structure should be <em>explicit</em> — drawable, reviewable, reason-about-able. The five patterns are all fundamentally <em>spatial</em> ideas: branches, joins, cycles, fan-outs. And the state of the art for expressing them is:</p>
+
+      <pre><code>workflow = StateGraph(AgentState)
+workflow.add_node("researcher", researcher_node)
+workflow.add_node("writer", writer_node)
+workflow.add_conditional_edges(
+    "researcher",
+    should_continue,
+    {"continue": "writer", "retry": "researcher"},
+)
+workflow.set_entry_point("researcher")
+app = workflow.compile()</code></pre>
+
+      <p>That's a picture, described to a compiler, through a keyhole. When it runs, you get log lines. When it breaks, you get a stack trace and a mental exercise: reconstruct the graph in your head, replay the state through it, find the edge that fired wrong.</p>
+
+      <p>Code-first graphs are the right call when the graph ships <em>inside a product</em> — a support pipeline serving thousands of tickets, a backend service, something headless and versioned and load-tested. If that's what you're building, use LangGraph; it's good at exactly that, and a canvas would be the wrong tool.</p>
+
+      <p>But most of the people riding this wave aren't embedding graphs in products. They're <em>doing their own work</em> — research, code, analysis, content — and wondering why orchestrating three specialized agents requires a Python project, a virtualenv, and a debugging session. For humans doing work, the graph shouldn't be described. It should be <strong>seen</strong>.</p>
+
+      <h2>The five patterns, on a canvas</h2>
+
+      <p>ForkScape is a desktop app where AI conversations live as nodes on an infinite canvas, and branches are the point: ask the same node two questions, you get two child branches — two directions from one shared context, instead of one scrolling thread that forgets where you were. That's been the product since day one; it turns out we'd been building graph engineering since before the name existed. As of this month, all five canonical patterns are shipped, visual, and testable:</p>
+
+      <div class="pattern"><b>Prompt chaining → reference links.</b> A node reads exactly the nodes you've linked into it — a whitelisted handoff, drawn as a dashed edge, not an ever-growing transcript. The pattern's "clean context window" is literally visible: you can see what each stage reads.</div>
+
+      <div class="pattern"><b>Routing → conditional automations.</b> "When the classifier finishes, match its output — <code>auth</code> goes to the careful branch, <code>typo</code> goes to the fast one, anything else hits the fallback." Declared on the canvas, first match wins, misses logged loudly.</div>
+
+      <div class="pattern"><b>Parallelization → joins with a policy.</b> Three strategy agents run in parallel; the coordinator arms itself only when <em>all three</em> have finished (or <em>any</em>, if that's the declared policy). The join is a rule on the canvas, not a hope that the user remembered to wait.</div>
+
+      <div class="pattern"><b>Orchestrator-workers → spawn on demand.</b> An agent node can spawn sub-agent branches at runtime — the work list discovered while working, each worker visible as its own branch with its own context, results folding back to the parent.</div>
+
+      <div class="pattern"><b>Evaluator-optimizer → a real cycle, with a cap.</b> A Fixer writes code; a Tester runs the actual suite and reports honestly; a loop-back edge feeds the failure output into the Fixer as feedback — until the tests pass or five attempts are spent. You watch the loop run. When it stalls, it says so.</div>
+
+      <p>And the part that no log file gives you: <strong>gates.</strong> Any edge can require human approval before the next stage fires. In our stock-analysis template, three strategy agents and a risk coordinator run themselves — but the node that could place a (paper) trade sits behind a click that a human has to make. Human-in-the-loop isn't a callback you register; it's a gate you can point at.</p>
+
+      <h2>Receipts, not vibes</h2>
+
+      <p>The economic claim behind branching — that a graph re-sends radically less context than one linear thread — is measured in the app, not asserted. The dashboard meters every real call and compares it to what a single continuous conversation would have re-sent, with the counterfactual capped so the number stays honest. On real multi-branch sessions it lands around 70%+ less context re-sent. Linear canvas? It says 0%. We'd rather show you a small true number than a large flattering one.</p>
+
+      <h2>Try the claim, not the pitch</h2>
+
+      <p>The browser demo runs a real model, free, no signup — build a branch, watch a join fire, run the bug-fix loop template. If it's not obviously different from a chat window in five minutes, close the tab.</p>
+
+      <div class="cta-box">
+        <b>See the graph.</b><br />
+        <a class="btn-ish" href="https://try.forkscape.com">Try in your browser</a>
+        <a class="btn-ish" href="download.html">Download free</a><br />
+        <a class="quiet" href="preview.html">Launch Preview: 30 days of Pro, free →</a>
+      </div>
+    </article>
+  </section>
+
+  <script type="module">
+    import { mountChrome } from './js/site.js';
+    mountChrome({ active: 'Blog' });
+  </script>
+</body>
+</html>
