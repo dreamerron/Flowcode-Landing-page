@@ -173,6 +173,16 @@
       monthly: { price: '$12', unit: '/month', blurb: 'Billed monthly — cancel anytime.' },
       yearly: { price: '$120', unit: '/year', blurb: 'Billed yearly — two months free vs. monthly.' },
     };
+    // Launch discounts (P10) — auto-applied at checkout per price, so nobody
+    // types a code. Each dsc_ is ALSO restricted to its price in the Paddle
+    // catalog (LAUNCH50→yearly, LAUNCH30→monthly): the restriction is what
+    // stops a code being hand-applied to Lifetime; this map is just the
+    // auto-apply convenience. Delete an entry to switch that offer off.
+    // Sandbox ids — the live catalog mints NEW dsc_ ids at go-live (P12).
+    const LAUNCH_DISCOUNTS = {
+      [PRICES.yearly]: 'dsc_01kzn2xyk7tpzw111aqahdz1td',   // LAUNCH50 — 50% off first year
+      [PRICES.monthly]: 'dsc_01kzn2zqtkjbtw3nendnx2wtf2',  // LAUNCH30 — 30% off first month
+    };
 
     window.Paddle.Environment.set('sandbox');
     window.Paddle.Initialize({
@@ -196,7 +206,11 @@
     });
 
     function openCheckout(priceId) {
-      window.Paddle.Checkout.open({ items: [{ priceId, quantity: 1 }] });
+      const discountId = LAUNCH_DISCOUNTS[priceId];
+      window.Paddle.Checkout.open({
+        items: [{ priceId, quantity: 1 }],
+        ...(discountId ? { discountId } : {}),
+      });
     }
 
     // Pro card: Monthly/Yearly toggle swaps the displayed price and which
