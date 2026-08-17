@@ -4,6 +4,7 @@
 
 const LINKS = [
   { href: 'index.html', label: 'Home' },
+  { href: 'get-started.html', label: 'Get started' },
   { href: 'features.html', label: 'Features' },
   { href: 'research.html', label: 'Research' },
   { href: 'pricing.html', label: 'Pricing' },
@@ -34,6 +35,7 @@ export function mountChrome({ active = '', immersive = false } = {}) {
       </div>
       <div class="footer__col">
         <h4>Product</h4>
+        <a href="get-started.html">Get started</a>
         <a href="features.html">Features</a>
         <a href="pricing.html">Pricing</a>
         <a href="download.html">Download</a>
@@ -57,6 +59,7 @@ export function mountChrome({ active = '', immersive = false } = {}) {
         <a href="terms.html">Terms of Service</a>
         <a href="privacy.html">Privacy Policy</a>
         <a href="refunds.html">Refunds &amp; Cancellation</a>
+        <a href="licenses.html">Open-source licenses</a>
       </div>
     </div>
     <div class="footer__legal">

@@ -4,118 +4,596 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FORKSCAPE — Features · Everything branches. Everything is measured.</title>
-  <meta name="description" content="Branching canvas, live token & dollar savings dashboard, per-task model routing, PM fan-out, quality control, lineage replay, and session import — FORKSCAPE's features." />
+  <meta name="description" content="Thirteen animated explainers: branching vs linear chat, context quality, PM orchestration, the Create App wizard, research mode, model routing, memory palace and more." />
+  <link rel="canonical" href="https://forkscape.com/features" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="ForkScape Features" />
+  <meta property="og:description" content="Thirteen animated explainers: branching vs linear chat, context quality, PM orchestration, the Create App wizard, research mode, model routing, memory palace and more." />
+  <meta property="og:url" content="https://forkscape.com/features" />
+  <meta property="og:site_name" content="ForkScape" />
+  <meta name="twitter:card" content="summary" />
   <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/pages.css" />
+  <style>
+/* ── Feature explainer scenes (design session, Aug 2026). Scenes 1–2 render
+   in WebGL via <fs-stage3d> (js/fs3d.js, vendored three.js); 3–13 are pure
+   CSS. Brand tokens come from css/style.css; only the pacing knobs live
+   here. Every scene animates only while on screen, and reduced-motion
+   freezes each on its resolved frame. ─────────────────────────────────── */
+fs-stage3d{position:absolute;inset:0;display:block}
+:root{--dur:9s;--pause:1.5s}
+
+/* ── scene shell ─────────────────────────────────────────────── */
+.scene{max-width:760px;margin:0 auto;padding:60px 20px 52px;border-top:1px solid rgba(232,236,244,.06)}
+.kicker{font-family:var(--font-display);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);margin:0 0 10px}
+.h{font-family:var(--font-display);font-size:clamp(22px,3.6vw,31px);font-weight:700;letter-spacing:-.01em;margin:0 0 8px;text-wrap:balance}
+.sub{color:var(--dim);font-size:15px;line-height:1.5;margin:0 0 20px;text-wrap:pretty}
+.cap{color:var(--dim);font-size:13.5px;line-height:1.55;margin:16px 0 0;text-wrap:pretty;border-left:2px solid rgba(0,209,178,.35);padding-left:12px}
+
+/* ── stage + primitives (shared by every scene) ──────────────── */
+.stage{position:relative;width:100%;max-width:720px;aspect-ratio:16/9;container-type:size;
+  border-radius:18px;border:1px solid rgba(232,236,244,.09);background:rgba(10,14,24,.92);overflow:hidden}
+.split{display:flex}
+.pane{position:relative;flex:1;container-type:size;overflow:hidden}
+.pane+.pane{border-left:1px solid rgba(232,236,244,.09)}
+
+.node,.dot,.wire,.chip,.bar,.g,.card,.tick{position:absolute}
+.node{border-radius:1.6cqw;border:1px solid rgba(232,236,244,.14);background:rgba(14,19,32,.96);
+  display:grid;place-items:center;text-align:center;isolation:isolate;
+  font-family:var(--font-display);font-size:2.2cqw;font-weight:600;color:var(--ink);line-height:1.2}
+.node::before{content:"";position:absolute;inset:-1.4cqw;border-radius:3.2cqw;z-index:-1;
+  background:var(--c,var(--teal));filter:blur(1.8cqw);opacity:var(--g,.14)}
+.dot{width:1.8cqw;height:1.8cqw;border-radius:50%;background:var(--c,var(--teal));
+  box-shadow:0 0 .9cqw var(--c,var(--teal))}
+.wire{height:.3cqw;border-radius:2px;background:rgba(232,236,244,.16);transform-origin:0 50%}
+.chip{font-family:var(--font-display);font-size:1.7cqw;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--dim);white-space:nowrap}
+.bar{height:1.4cqw;border-radius:.7cqw;background:rgba(232,236,244,.08);overflow:hidden}
+.bar i{position:absolute;inset:0;border-radius:inherit;transform-origin:0 50%;transform:scaleX(0);background:var(--c,var(--teal))}
+.card{border-radius:1cqw;border:1px solid rgba(232,236,244,.14);background:rgba(20,26,42,.96)}
+.tick{font-size:2.2cqw;color:var(--green);font-weight:700}
+.lbl{z-index:2;max-width:44cqw;white-space:normal;line-height:1.3}
+.glow{position:absolute;inset:-1.5cqw;border-radius:3.2cqw;z-index:-1;filter:blur(1.9cqw);opacity:.12}
+
+/* ── play gating: nothing runs until the scene is on screen ──── */
+.stage *{animation-play-state:paused;animation-fill-mode:backwards!important}
+.scene.play .stage *{animation-play-state:running}
+
+@media (prefers-reduced-motion:reduce){
+  .stage *{animation-play-state:paused!important;animation-delay:-400s!important;
+    animation-iteration-count:1!important;animation-fill-mode:both!important}
+}
+@media (max-width:560px){
+  .scene{padding:40px 14px 36px}
+  .split{flex-direction:column}
+  .stage.split{aspect-ratio:3/4}
+  .pane+.pane{border-left:0;border-top:1px solid rgba(232,236,244,.09)}
+}
+
+/* ── shared motion vocabulary ────────────────────────────────── */
+@keyframes tr{
+  0%{transform:translate(0,0);opacity:0}
+  5%{opacity:1}
+  22%{transform:translate(var(--tx,0),var(--ty,0));opacity:1}
+  29%{transform:translate(var(--tx,0),var(--ty,0));opacity:0}
+  100%{transform:translate(var(--tx,0),var(--ty,0));opacity:0}}
+@keyframes appear{
+  0%{opacity:0;transform:scale(.72)}
+  9%{opacity:1;transform:scale(1)}
+  90%{opacity:1;transform:scale(1)}
+  99%,100%{opacity:0;transform:scale(1)}}
+@keyframes moveIn{
+  0%{opacity:0;transform:translate(0,0) scale(.8)}
+  10%{opacity:1;transform:translate(0,0) scale(1)}
+  40%{opacity:1;transform:translate(0,0) scale(1)}
+  58%{opacity:1;transform:translate(var(--tx,0),var(--ty,0)) scale(.92)}
+  92%{opacity:1;transform:translate(var(--tx,0),var(--ty,0)) scale(.92)}
+  100%{opacity:0;transform:translate(var(--tx,0),var(--ty,0)) scale(.92)}}
+@keyframes drawX{0%,5%{transform:scaleX(0)}22%{transform:scaleX(1)}92%{transform:scaleX(1)}100%{transform:scaleX(0)}}
+@keyframes drawY{0%,5%{transform:scaleY(0)}22%{transform:scaleY(1)}92%{transform:scaleY(1)}100%{transform:scaleY(0)}}
+@keyframes fill{0%,8%{transform:scaleX(0)}62%{transform:scaleX(var(--to,1))}92%{transform:scaleX(var(--to,1))}100%{transform:scaleX(0)}}
+@keyframes lift{0%,6%{opacity:.1}40%,88%{opacity:.55}98%,100%{opacity:.1}}
+@keyframes fade{0%,10%{opacity:1}55%,88%{opacity:.12}99%,100%{opacity:1}}
+@keyframes blink{0%,44%{opacity:0}50%,90%{opacity:1}99%,100%{opacity:0}}
+@keyframes drift{0%,100%{transform:translateY(0)}50%{transform:translateY(-1.2cqw)}}
+.a-tr{animation:tr var(--dur) cubic-bezier(.5,0,.3,1) infinite}
+.a-ap{animation:appear var(--dur) cubic-bezier(.34,1.4,.5,1) infinite}
+.a-mv{animation:moveIn var(--dur) cubic-bezier(.4,0,.2,1) infinite}
+.a-dx{animation:drawX var(--dur) ease-out infinite;transform-origin:0 50%}
+.a-dy{animation:drawY var(--dur) ease-out infinite;transform-origin:50% 100%}
+.a-fill{animation:fill var(--dur) ease-out infinite}
+.a-lift{animation:lift var(--dur) ease-in-out infinite}
+.a-fade{animation:fade var(--dur) ease-in-out infinite}
+.a-blink{animation:blink var(--dur) steps(1) infinite}
+.a-drift{animation:drift calc(var(--dur)/2) ease-in-out infinite}
+
+/* offset-baked variants: a long animation-delay would push an element's hold
+   past the end of the loop, so these start late inside the same cycle. */
+@keyframes s4line{0%,16%{transform:scaleX(0)}30%{transform:scaleX(1)}92%{transform:scaleX(1)}100%{transform:scaleX(0)}}
+@keyframes s4win{0%,42%{opacity:0;transform:scale(.8)}50%{opacity:1;transform:scale(1)}92%{opacity:1;transform:scale(1)}100%{opacity:0}}
+@keyframes s5card{0%,14%{opacity:0;transform:translate(0,0) scale(.8)}22%,44%{opacity:1;transform:translate(0,0) scale(1)}58%,92%{opacity:1;transform:translate(var(--tx,0),var(--ty,0)) scale(.92)}100%{opacity:0;transform:translate(var(--tx,0),var(--ty,0)) scale(.92)}}
+@keyframes s5tick{0%,62%{opacity:0;transform:scale(.6)}68%,92%{opacity:1;transform:scale(1)}100%{opacity:0}}
+@keyframes s6node{0%,44%{opacity:0;transform:scale(.7)}56%,92%{opacity:1;transform:scale(1)}100%{opacity:0}}
+@keyframes s9glow{0%,30%{opacity:.1}42%,92%{opacity:.6}100%{opacity:.1}}
+@keyframes s6wire{0%,56%{transform:scaleX(0)}66%{transform:scaleX(1)}92%{transform:scaleX(1)}100%{transform:scaleX(0)}}
+@keyframes s8fill{0%,20%{transform:scaleX(0)}62%,92%{transform:scaleX(var(--to,1))}100%{transform:scaleX(0)}}
+@keyframes s9card{0%,20%{opacity:0;transform:scale(.8)}28%,92%{opacity:1;transform:scale(1)}100%{opacity:0}}
+@keyframes s9tick{0%,34%{opacity:0;transform:scale(.5)}42%,92%{opacity:1;transform:scale(1)}100%{opacity:0}}
+@keyframes s11thread{0%,30%{transform:scaleY(0)}44%{transform:scaleY(1)}92%{transform:scaleY(1)}100%{transform:scaleY(0)}}
+@keyframes s11tick{0%,64%{opacity:0;transform:scale(.6)}70%,92%{opacity:1;transform:scale(1)}100%{opacity:0}}
+@keyframes s13wire{0%,28%{transform:scaleX(0)}42%{transform:scaleX(1)}92%{transform:scaleX(1)}100%{transform:scaleX(0)}}
+@keyframes s13tick{0%,50%{opacity:0;transform:scale(.5)}58%,92%{opacity:1;transform:scale(1)}100%{opacity:0}}
+.a-s4line{animation:s4line var(--dur) ease-out infinite;transform-origin:0 50%}
+.a-s4win{animation:s4win var(--dur) cubic-bezier(.34,1.4,.5,1) infinite}
+.a-s5card{animation:s5card var(--dur) cubic-bezier(.4,0,.2,1) infinite}
+.a-s5tick{animation:s5tick var(--dur) cubic-bezier(.34,1.4,.5,1) infinite}
+.a-s6wire{animation:s6wire var(--dur) ease-out infinite;transform-origin:0 50%}
+.a-s6node{animation:s6node var(--dur) cubic-bezier(.34,1.4,.5,1) infinite}
+.a-s9glow{animation:s9glow var(--dur) ease-in-out infinite}
+.a-s8fill{animation:s8fill var(--dur) ease-out infinite}
+.a-s9card{animation:s9card var(--dur) cubic-bezier(.34,1.4,.5,1) infinite}
+.a-s9tick{animation:s9tick var(--dur) cubic-bezier(.34,1.4,.5,1) infinite}
+.a-s11thread{animation:s11thread var(--dur) ease-out infinite;transform-origin:50% 100%}
+.a-s11tick{animation:s11tick var(--dur) cubic-bezier(.34,1.4,.5,1) infinite}
+.a-s13wire{animation:s13wire var(--dur) ease-out infinite;transform-origin:0 50%}
+.a-s13tick{animation:s13tick var(--dur) cubic-bezier(.34,1.4,.5,1) infinite}
+
+/* ── 1. branching vs linear ──────────────────────────────────── */
+@keyframes s1msg{0%,6%{opacity:0;transform:scale(.6)}12%{opacity:1;transform:scale(1)}88%{opacity:1;transform:scale(1)}98%,100%{opacity:0}}
+@keyframes s1resend{
+  0%,9%{opacity:0}11%{opacity:.85}16%{opacity:0}
+  25%{opacity:0}27%{opacity:.85}32%{opacity:0}
+  41%{opacity:0}43%{opacity:.85}48%{opacity:0}
+  57%{opacity:0}59%{opacity:.85}64%{opacity:0}
+  100%{opacity:0}}
+@keyframes s1step{0%,8%{transform:scaleX(.1)}24%{transform:scaleX(.32)}40%{transform:scaleX(.56)}56%{transform:scaleX(.8)}70%,92%{transform:scaleX(1)}100%{transform:scaleX(.1)}}
+.a-s1msg{animation:s1msg var(--dur) cubic-bezier(.34,1.4,.5,1) infinite}
+.a-s1resend{animation:s1resend var(--dur) steps(1) infinite}
+.a-s1step{animation:s1step var(--dur) ease-out infinite}
+.msg{position:absolute;border-radius:1.4cqw;border:1px solid rgba(251,191,36,.4);background:rgba(251,191,36,.14);overflow:hidden}
+.msg i{position:absolute;inset:0;background:var(--amber);opacity:0}
+
+/* ── 3. PM orchestration ─────────────────────────────────────── */
+@keyframes s3snap{0%,66%{opacity:0;transform:scale(.5)}74%{opacity:1;transform:scale(1.08)}79%{transform:scale(1)}92%{opacity:1;transform:scale(1)}100%{opacity:0}}
+.a-s3snap{animation:s3snap var(--dur) cubic-bezier(.34,1.5,.5,1) infinite}
+
+/* ── 4. create app wizard ────────────────────────────────────── */
+@keyframes s4work{0%,20%{opacity:0}26%{opacity:.5}40%{opacity:.15}54%{opacity:.5}62%,100%{opacity:0}}
+.a-s4work{animation:s4work var(--dur) ease-in-out infinite}
+
+/* ── 6. import & organize ────────────────────────────────────── */
+@keyframes s6out{0%,8%{opacity:1;transform:translateX(0)}34%{opacity:1;transform:translateX(18cqw)}44%,100%{opacity:0;transform:translateX(24cqw)}}
+@keyframes s6in{0%,44%{opacity:0;transform:scale(.7)}56%{opacity:1;transform:scale(1)}92%{opacity:1;transform:scale(1)}100%{opacity:0}}
+.a-s6out{animation:s6out var(--dur) cubic-bezier(.4,0,.2,1) infinite}
+.a-s6in{animation:s6in var(--dur) cubic-bezier(.34,1.4,.5,1) infinite}
+
+/* ── 7. per-node model switching ─────────────────────────────── */
+@keyframes s7flip{0%,14%{opacity:0;transform:rotateX(90deg)}20%,38%{opacity:1;transform:rotateX(0)}44%,100%{opacity:0;transform:rotateX(-90deg)}}
+@keyframes s7glowA{0%,20%{opacity:.5}38%,100%{opacity:0}}
+@keyframes s7glowB{0%,40%{opacity:0}52%,90%{opacity:.6}99%,100%{opacity:0}}
+.a-s7flip{animation:s7flip var(--dur) ease-in-out infinite}
+.a-s7ga{animation:s7glowA var(--dur) ease-in-out infinite}
+.a-s7gb{animation:s7glowB var(--dur) ease-in-out infinite}
+
+/* ── 8. smart routing ────────────────────────────────────────── */
+@keyframes s8drop{0%{opacity:0;transform:translate(0,-6cqw)}6%{opacity:1;transform:translate(0,0)}18%{transform:translate(var(--dx,0),var(--dy,0))}30%{opacity:1;transform:translate(var(--tx),var(--ty))}38%,100%{opacity:0;transform:translate(var(--tx),var(--ty))}}
+.a-s8{animation:s8drop var(--dur) cubic-bezier(.5,0,.3,1) infinite}
+
+/* ── 10. design studio ───────────────────────────────────────── */
+@keyframes s10knob{0%,44%{transform:translateX(0)}58%,92%{transform:translateX(21cqw)}100%{transform:translateX(0)}}
+@keyframes s10desk{0%,44%{opacity:1}54%,92%{opacity:0}100%{opacity:1}}
+@keyframes s10phone{0%,46%{opacity:0}56%,92%{opacity:1}100%{opacity:0}}
+.a-s10k{animation:s10knob var(--dur) cubic-bezier(.4,0,.2,1) infinite}
+.a-s10d{animation:s10desk var(--dur) ease-in-out infinite}
+.a-s10p{animation:s10phone var(--dur) ease-in-out infinite}
+
+/* ── 12. provider ring ───────────────────────────────────────── */
+@keyframes s12plug{
+  0%,4%{transform:translate(0,-19cqw)}
+  10%,14%{transform:translate(17.3cqw,-11.7cqw)}
+  21%,25%{transform:translate(21.3cqw,4.6cqw)}
+  32%,36%{transform:translate(8.9cqw,17.4cqw)}
+  43%,47%{transform:translate(-10.4cqw,16.8cqw)}
+  54%,58%{transform:translate(-21.7cqw,3.3cqw)}
+  65%,92%{transform:translate(-16.4cqw,-12.7cqw)}
+  100%{transform:translate(0,-19cqw)}}
+@keyframes s12lit{0%,2%{opacity:.1}8%,20%{opacity:.5}30%,100%{opacity:.12}}
+.a-s12{animation:s12plug var(--dur) cubic-bezier(.5,0,.3,1) infinite}
+.a-s12lit{animation:s12lit var(--dur) ease-out infinite}
+
+/* ── 13. research ────────────────────────────────────────────── */
+@keyframes s13open{0%,4%{opacity:0;transform:rotateY(80deg)}16%{opacity:1;transform:rotateY(0)}92%{opacity:1;transform:rotateY(0)}100%{opacity:0}}
+@keyframes s13wob{0%,20%{transform:translateX(0)}60%,90%{transform:translateX(2.4cqw)}100%{transform:translateX(0)}}
+.a-s13o{animation:s13open var(--dur) cubic-bezier(.4,0,.2,1) infinite}
+.a-s13w{animation:s13wob var(--dur) ease-in-out infinite}
+  </style>
 </head>
 <body class="page">
 
-  <!-- 1 · HERO — branching canvas -->
-  <header class="section">
+  <header class="section" style="padding-bottom:12px">
     <div class="eyebrow">Features</div>
     <h1 class="page-title">Everything branches. Everything is measured.</h1>
     <p class="page-lede">
-      AI work branches on an infinite canvas instead of piling up in one
-      endless chat. Each branch carries only its own context — so no agent
-      ever drags the whole conversation behind it.
+      Thirteen little scenes, one product: AI work on an infinite canvas that
+      forks instead of piling up — with agents, research fan-outs and a live
+      meter on what every branch costs.
     </p>
-    <div class="canvas-frame" id="canvas-demo" aria-label="FORKSCAPE branching canvas preview"></div>
   </header>
 
-  <!-- 2 · THE METER -->
+<!-- ═══ 1. BRANCHING vs LINEAR (WebGL) ═════════════════ -->
+<section class="scene" style="border-top:0">
+  <p class="kicker">01 · Branching</p>
+  <h2 class="h">Every turn drags the whole chat</h2>
+  <p class="sub">Left: each new message re-sends every earlier one, so the pile — and the bill — keeps growing. Right: a branch sends only its own short path.</p>
+  <div class="stage split" role="img" aria-label="On the left, one long chat: each new message makes the entire stack fly to the model again and the amber cost bar climbs. On the right, ForkScape: three short branches, each sending only its own single message, and the teal cost bar stays almost flat.">
+    <div class="pane">
+      <fs-stage3d scene="linear"></fs-stage3d>
+      <div class="chip lbl" style="left:6cqw;top:5%">One long chat</div>
+      <div class="chip lbl" style="left:6cqw;top:12%;color:var(--amber);letter-spacing:.04em;text-transform:none;font-size:1.9cqw">Sends 3 → 4 → 5 messages</div>
+      <div class="chip lbl" style="left:6cqw;bottom:5%;color:var(--amber)">Context re-sent</div>
+    </div>
+    <div class="pane">
+      <fs-stage3d scene="branch"></fs-stage3d>
+      <div class="chip lbl" style="left:6cqw;top:5%;color:var(--teal)">ForkScape</div>
+      <div class="chip lbl" style="left:6cqw;top:12%;color:var(--teal);letter-spacing:.04em;text-transform:none;font-size:1.9cqw">Sends 1 message, every time</div>
+      <div class="chip lbl" style="left:6cqw;bottom:5%;color:var(--teal)">Context re-sent</div>
+    </div>
+  </div>
+  <p class="cap">A branch only re-sends its own path — up to ~90% less context re-sent (your dashboard measures the real number).</p>
+</section>
+
+<!-- ═══ 2. CONTEXT QUALITY + TOKEN SAVING (WebGL) ═════════ -->
+<section class="scene">
+  <p class="kicker">02 · Context quality</p>
+  <h2 class="h">Long threads lose the thread</h2>
+  <p class="sub">Left: as the pile grows, older turns fade out of reach and the answer goes dim — while the token bar fills. Right: two messages of clean context, a bright answer, a tenth of the tokens.</p>
+  <div class="stage split" role="img" aria-label="On the left, a long thread: older messages fade away, the answer sphere dims, and the amber token bar fills to the end. On the right, one branch: two bright messages, an answer sphere that brightens, and a teal token bar that stops at a tenth.">
+    <div class="pane">
+      <fs-stage3d scene="muddy"></fs-stage3d>
+      <div class="chip lbl" style="left:6cqw;top:5%">Long thread</div>
+      <div class="chip lbl" style="left:6cqw;top:12%;color:var(--amber);letter-spacing:.04em;text-transform:none;font-size:1.9cqw">Older turns fade → vaguer answer</div>
+      <div class="chip lbl" style="left:6cqw;bottom:5%;color:var(--amber)">Tokens</div>
+    </div>
+    <div class="pane">
+      <fs-stage3d scene="clean"></fs-stage3d>
+      <div class="chip lbl" style="left:6cqw;top:5%;color:var(--teal)">One branch</div>
+      <div class="chip lbl" style="left:6cqw;top:12%;color:var(--teal);letter-spacing:.04em;text-transform:none;font-size:1.9cqw">Short context → sharper answer</div>
+      <div class="chip lbl" style="left:6cqw;bottom:5%;color:var(--teal)">Tokens</div>
+    </div>
+  </div>
+  <p class="cap">Short, clean context = better answers AND fewer tokens.</p>
+</section>
+
+<!-- ═══ 3. PM ORCHESTRATION ══════════════════════════════════════ -->
+<section class="scene">
+  <p class="kicker">03 · Orchestration</p>
+  <h2 class="h">One goal, workers in parallel</h2>
+  <p class="sub">A Project Manager agent breaks the wish into jobs, runs them at once, and assembles the result.</p>
+  <div class="stage" role="img" aria-label="A project-manager node receives a goal, fans it out to three worker branches running at the same time, and their results snap back together into one result node.">
+    <div class="dot a-tr" style="left:3cqw;top:26cqw;--tx:11cqw;--c:var(--purple);width:2.4cqw;height:2.4cqw"></div>
+    <div class="node" style="left:16cqw;top:22cqw;width:16cqw;height:10cqw;--c:var(--purple);--g:0">PM
+      <span class="glow a-lift" style="background:var(--purple)"></span>
+    </div>
+    <div class="wire a-dx" style="left:33cqw;top:27cqw;width:24cqw;rotate:-22deg;animation-delay:calc(var(--dur)*.14)"></div>
+    <div class="wire a-dx" style="left:33cqw;top:27cqw;width:24cqw;animation-delay:calc(var(--dur)*.14)"></div>
+    <div class="wire a-dx" style="left:33cqw;top:27cqw;width:24cqw;rotate:22deg;animation-delay:calc(var(--dur)*.14)"></div>
+    <div class="node" style="left:56cqw;top:5cqw;width:15cqw;height:8cqw;--c:var(--blue);font-size:1.9cqw">Research</div>
+    <div class="node" style="left:56cqw;top:23cqw;width:15cqw;height:8cqw;--c:var(--green);font-size:1.9cqw">Build</div>
+    <div class="node" style="left:56cqw;top:41cqw;width:15cqw;height:8cqw;--c:var(--amber);font-size:1.9cqw">Check</div>
+    <div class="dot a-tr" style="left:34cqw;top:26cqw;--tx:21cqw;--ty:-17cqw;--c:var(--blue);animation-delay:calc(var(--dur)*.24)"></div>
+    <div class="dot a-tr" style="left:34cqw;top:26cqw;--tx:21cqw;--ty:1cqw;--c:var(--green);animation-delay:calc(var(--dur)*.24)"></div>
+    <div class="dot a-tr" style="left:34cqw;top:26cqw;--tx:21cqw;--ty:19cqw;--c:var(--amber);animation-delay:calc(var(--dur)*.24)"></div>
+    <div class="dot a-tr" style="left:70cqw;top:8cqw;--tx:14cqw;--ty:18cqw;--c:var(--blue);animation-delay:calc(var(--dur)*.46)"></div>
+    <div class="dot a-tr" style="left:70cqw;top:26cqw;--tx:14cqw;--c:var(--green);animation-delay:calc(var(--dur)*.46)"></div>
+    <div class="dot a-tr" style="left:70cqw;top:44cqw;--tx:14cqw;--ty:-18cqw;--c:var(--amber);animation-delay:calc(var(--dur)*.46)"></div>
+    <div class="node a-s3snap" style="left:80cqw;top:21cqw;width:16cqw;height:11cqw;--c:var(--teal);font-size:1.9cqw">Result</div>
+  </div>
+  <p class="cap">Describe the goal — a Project Manager agent plans, spawns workers in parallel, and assembles the result.</p>
+</section>
+
+<!-- ═══ 4. CREATE APP WIZARD ═════════════════════════════════════ -->
+<section class="scene">
+  <p class="kicker">04 · Create app</p>
+  <h2 class="h">One sentence to a running app</h2>
+  <p class="sub">Plan, build, launch, preview — every stage stays a node you can open and change.</p>
+  <div class="stage" role="img" aria-label="A typed wish becomes a blueprint that draws itself, then code that types itself, then a small browser window that opens with a running app.">
+    <div class="card a-ap" style="left:5cqw;top:4cqw;width:34cqw;height:8cqw;border-radius:1.4cqw 1.4cqw 1.4cqw .3cqw;display:grid;place-items:center;font-size:1.9cqw;color:var(--dim)">“a habit tracker…”</div>
+    <div class="node" style="left:5cqw;top:20cqw;width:22cqw;height:16cqw;--c:var(--blue)">
+      <span style="position:absolute;left:3cqw;top:2.6cqw;font-size:1.6cqw;color:var(--dim);letter-spacing:.1em">PLAN</span>
+      <span class="a-s4line" style="position:absolute;left:3cqw;top:8.6cqw;width:16cqw;height:.4cqw;background:rgba(96,165,250,.6)"></span>
+      <span class="a-s4line" style="position:absolute;left:3cqw;top:11cqw;width:11cqw;height:.4cqw;background:rgba(96,165,250,.45);animation-delay:calc(var(--dur)*.03)"></span>
+      <span class="a-s4line" style="position:absolute;left:3cqw;top:13.4cqw;width:14cqw;height:.4cqw;background:rgba(96,165,250,.45);animation-delay:calc(var(--dur)*.06)"></span>
+    </div>
+    <div class="node" style="left:33cqw;top:20cqw;width:22cqw;height:16cqw;--c:var(--purple)">
+      <span style="position:absolute;left:3cqw;top:2.6cqw;font-size:1.6cqw;color:var(--dim);letter-spacing:.1em">BUILD</span>
+      <span class="a-s4line" style="position:absolute;left:3cqw;top:8cqw;width:15cqw;height:.6cqw;background:rgba(167,139,250,.55);animation-delay:calc(var(--dur)*.06)"></span>
+      <span class="a-s4line" style="position:absolute;left:3cqw;top:10.6cqw;width:11cqw;height:.6cqw;background:rgba(167,139,250,.4);animation-delay:calc(var(--dur)*.09)"></span>
+      <span class="a-s4line" style="position:absolute;left:3cqw;top:13.2cqw;width:13cqw;height:.6cqw;background:rgba(167,139,250,.4);animation-delay:calc(var(--dur)*.12)"></span>
+      <span class="a-s4work" style="position:absolute;inset:0;border-radius:1.6cqw;background:linear-gradient(100deg,transparent 35%,rgba(232,236,244,.14) 50%,transparent 65%)"></span>
+    </div>
+    <div class="node a-s4win" style="left:61cqw;top:16cqw;width:33cqw;height:24cqw;--c:var(--green)">
+      <span style="position:absolute;left:0;right:0;top:0;height:4cqw;background:rgba(232,236,244,.06)"></span>
+      <span style="position:absolute;left:2cqw;top:1.5cqw;width:1.2cqw;height:1.2cqw;border-radius:50%;background:rgba(232,236,244,.2)"></span>
+      <span style="position:absolute;left:4.4cqw;top:1.5cqw;width:1.2cqw;height:1.2cqw;border-radius:50%;background:rgba(232,236,244,.2)"></span>
+      <span style="position:absolute;left:4cqw;top:7cqw;width:14cqw;height:2cqw;border-radius:.5cqw;background:rgba(232,236,244,.16)"></span>
+      <span style="position:absolute;left:4cqw;top:11.4cqw;width:11cqw;height:7cqw;border-radius:.8cqw;background:rgba(74,222,128,.18)"></span>
+      <span style="position:absolute;left:17.6cqw;top:11.4cqw;width:11cqw;height:7cqw;border-radius:.8cqw;background:rgba(232,236,244,.08)"></span>
+      <span class="a-blink" style="position:absolute;right:2.6cqw;top:1.2cqw;width:1.8cqw;height:1.8cqw;border-radius:50%;background:var(--green);box-shadow:0 0 1cqw var(--green)"></span>
+    </div>
+    <div class="chip" style="left:61cqw;top:42cqw;color:var(--green)">Running</div>
+  </div>
+  <p class="cap">From one sentence to a running app — plan, build, launch, preview, all on the canvas.</p>
+</section>
+
+<!-- ═══ 5. RESEARCH MODE ═════════════════════════════════════════ -->
+<section class="scene">
+  <p class="kicker">05 · Research mode</p>
+  <h2 class="h">Five models, one report</h2>
+  <p class="sub">Ask once. Answers come back side by side and merge into a single cited document.</p>
+  <div class="stage" role="img" aria-label="One question copies itself to five model nodes side by side; their five answer cards slide together into one stacked PDF report with a checkmark.">
+    <div class="node" style="left:6cqw;top:4cqw;width:14cqw;height:7cqw;--c:var(--teal);font-size:1.8cqw">Model A</div>
+    <div class="node" style="left:24cqw;top:4cqw;width:14cqw;height:7cqw;--c:var(--blue);font-size:1.8cqw">Model B</div>
+    <div class="node" style="left:42cqw;top:4cqw;width:14cqw;height:7cqw;--c:var(--purple);font-size:1.8cqw">Model C</div>
+    <div class="node" style="left:60cqw;top:4cqw;width:14cqw;height:7cqw;--c:var(--amber);font-size:1.8cqw">Model D</div>
+    <div class="node" style="left:78cqw;top:4cqw;width:14cqw;height:7cqw;--c:var(--green);font-size:1.8cqw">Model E</div>
+    <div class="node" style="left:41cqw;top:45cqw;width:18cqw;height:8cqw;--c:var(--teal);font-size:1.9cqw">Question</div>
+    <div class="dot a-tr" style="left:49cqw;top:45cqw;--tx:-36cqw;--ty:-33cqw"></div>
+    <div class="dot a-tr" style="left:49cqw;top:45cqw;--tx:-18cqw;--ty:-33cqw;--c:var(--blue);animation-delay:calc(var(--dur)*.02)"></div>
+    <div class="dot a-tr" style="left:49cqw;top:45cqw;--ty:-33cqw;--c:var(--purple);animation-delay:calc(var(--dur)*.04)"></div>
+    <div class="dot a-tr" style="left:49cqw;top:45cqw;--tx:18cqw;--ty:-33cqw;--c:var(--amber);animation-delay:calc(var(--dur)*.06)"></div>
+    <div class="dot a-tr" style="left:49cqw;top:45cqw;--tx:36cqw;--ty:-33cqw;--c:var(--green);animation-delay:calc(var(--dur)*.08)"></div>
+    <div class="card a-s5card" style="left:7cqw;top:15cqw;width:12cqw;height:9cqw;--tx:34cqw;--ty:14cqw;background:rgba(0,209,178,.14);animation-delay:calc(var(--dur)*0)"></div>
+    <div class="card a-s5card" style="left:25cqw;top:15cqw;width:12cqw;height:9cqw;--tx:16.5cqw;--ty:15cqw;background:rgba(96,165,250,.14);animation-delay:calc(var(--dur)*.02)"></div>
+    <div class="card a-s5card" style="left:43cqw;top:15cqw;width:12cqw;height:9cqw;--ty:16cqw;background:rgba(167,139,250,.14);animation-delay:calc(var(--dur)*.04)"></div>
+    <div class="card a-s5card" style="left:61cqw;top:15cqw;width:12cqw;height:9cqw;--tx:-17.5cqw;--ty:17cqw;background:rgba(251,191,36,.14);animation-delay:calc(var(--dur)*.06)"></div>
+    <div class="card a-s5card" style="left:79cqw;top:15cqw;width:12cqw;height:9cqw;--tx:-35cqw;--ty:18cqw;background:rgba(74,222,128,.14);animation-delay:calc(var(--dur)*.08)"></div>
+    <div class="card a-s3snap" style="left:41cqw;top:29cqw;width:17cqw;height:13cqw;background:rgba(24,31,48,.98);overflow:hidden">
+      <span style="position:absolute;right:0;top:0;width:5cqw;height:4cqw;background:#e2483d"></span>
+      <span style="position:absolute;right:.5cqw;top:.6cqw;font-family:var(--font-display);font-size:1.5cqw;font-weight:700;color:#fff">PDF</span>
+      <span style="position:absolute;left:2cqw;top:6.4cqw;width:9cqw;height:.5cqw;background:rgba(232,236,244,.25)"></span>
+      <span style="position:absolute;left:2cqw;top:8.6cqw;width:12cqw;height:.5cqw;background:rgba(232,236,244,.18)"></span>
+      <span style="position:absolute;left:2cqw;top:10.8cqw;width:7cqw;height:.5cqw;background:rgba(232,236,244,.18)"></span>
+    </div>
+    <div class="tick a-s5tick" style="left:60cqw;top:32cqw;font-size:3.4cqw">✓</div>
+  </div>
+  <p class="cap">Ask once — five models research side by side and merge into one cited PDF report.</p>
+</section>
+
+<!-- ═══ 6. IMPORT & ORGANIZE ═════════════════════════════════════ -->
+<section class="scene">
+  <p class="kicker">06 · Import</p>
+  <h2 class="h">Your old chats, untangled</h2>
+  <p class="sub">Bring a history export in; it comes out as a tree you can navigate and fork from.</p>
+  <div class="stage" role="img" aria-label="A long tangled chat scroll slides out of another AI window and untangles into a tidy colour-grouped branch tree.">
+    <div class="card" style="left:4cqw;top:8cqw;width:32cqw;height:38cqw;background:rgba(20,26,42,.7)">
+      <span style="position:absolute;left:0;right:0;top:0;height:3.4cqw;background:rgba(232,236,244,.06)"></span>
+      <span style="position:absolute;left:2cqw;top:.9cqw;font-size:1.5cqw;color:var(--dim);letter-spacing:.08em">OTHER AI · export</span>
+    </div>
+    <div class="g a-s6out" style="inset:auto;left:8cqw;top:14cqw;width:24cqw;height:28cqw">
+      <span style="position:absolute;left:0;top:2cqw;width:16cqw;height:.5cqw;background:var(--dim);transform:rotate(18deg);opacity:.6"></span>
+      <span style="position:absolute;left:12cqw;top:6cqw;width:14cqw;height:.5cqw;background:var(--dim);transform:rotate(-42deg);opacity:.6"></span>
+      <span style="position:absolute;left:3cqw;top:11cqw;width:18cqw;height:.5cqw;background:var(--dim);transform:rotate(28deg);opacity:.6"></span>
+      <span style="position:absolute;left:1cqw;top:19cqw;width:15cqw;height:.5cqw;background:var(--dim);transform:rotate(-16deg);opacity:.6"></span>
+      <span style="position:absolute;left:11cqw;top:3.4cqw;width:2.6cqw;height:2.6cqw;border-radius:50%;border:.4cqw solid var(--dim);opacity:.85"></span>
+      <span style="position:absolute;left:2cqw;top:10cqw;width:2.6cqw;height:2.6cqw;border-radius:50%;border:.4cqw solid var(--dim);opacity:.85"></span>
+      <span style="position:absolute;left:14cqw;top:17cqw;width:2.6cqw;height:2.6cqw;border-radius:50%;border:.4cqw solid var(--dim);opacity:.85"></span>
+    </div>
+    <div class="node a-s6in" style="left:44cqw;top:23cqw;width:13cqw;height:8cqw;--c:var(--teal);font-size:1.8cqw">Root</div>
+    <div class="wire a-s6wire" style="left:57cqw;top:27cqw;width:20cqw;rotate:-32deg"></div>
+    <div class="wire a-s6wire" style="left:57cqw;top:27cqw;width:20cqw;animation-delay:calc(var(--dur)*.02)"></div>
+    <div class="wire a-s6wire" style="left:57cqw;top:27cqw;width:20cqw;rotate:32deg;animation-delay:calc(var(--dur)*.04)"></div>
+    <div class="node a-s6node" style="left:76cqw;top:6cqw;width:16cqw;height:7cqw;--c:var(--blue);font-size:1.7cqw">Work</div>
+    <div class="node a-s6node" style="left:76cqw;top:23cqw;width:16cqw;height:7cqw;--c:var(--purple);font-size:1.7cqw;animation-delay:calc(var(--dur)*.02)">Study</div>
+    <div class="node a-s6node" style="left:76cqw;top:40cqw;width:16cqw;height:7cqw;--c:var(--green);font-size:1.7cqw;animation-delay:calc(var(--dur)*.04)">Life</div>
+  </div>
+  <p class="cap">Bring your ChatGPT / Claude history — one import turns the scroll into an organized branch tree.</p>
+</section>
+
+<!-- ═══ 7. PER-NODE MODEL SWITCHING ══════════════════════════════ -->
+<section class="scene">
+  <p class="kicker">07 · Model per node</p>
+  <h2 class="h">Every node, its own model</h2>
+  <p class="sub">Switch on one node without touching the rest of the tree.</p>
+  <div class="stage" role="img" aria-label="One node in a small tree flips its model chip through three names and changes colour on its own while its siblings stay unchanged.">
+    <div class="node" style="left:5cqw;top:22cqw;width:16cqw;height:9cqw;--c:var(--teal);font-size:1.8cqw">Root</div>
+    <div class="wire" style="left:21cqw;top:26.5cqw;width:20cqw;rotate:-32deg"></div>
+    <div class="wire" style="left:21cqw;top:26.5cqw;width:20cqw"></div>
+    <div class="wire" style="left:21cqw;top:26.5cqw;width:20cqw;rotate:32deg"></div>
+    <div class="node" style="left:38cqw;top:4cqw;width:20cqw;height:9cqw;--c:var(--dim);--g:.06;font-size:1.8cqw;color:var(--dim)">Model A</div>
+    <div class="node" style="left:38cqw;top:40cqw;width:20cqw;height:9cqw;--c:var(--dim);--g:.06;font-size:1.8cqw;color:var(--dim)">Model A</div>
+    <div class="wire" style="left:58cqw;top:26.5cqw;width:8cqw"></div>
+    <div class="node" style="left:66cqw;top:20cqw;width:26cqw;height:13cqw;--c:var(--blue);--g:0">
+      <span class="glow a-s7ga" style="background:var(--blue);opacity:0"></span>
+      <span class="glow a-s7gb" style="background:var(--purple);opacity:0"></span>
+      <span class="a-s7flip" style="position:absolute;font-size:2.6cqw">Model A</span>
+      <span class="a-s7flip" style="position:absolute;font-size:2.6cqw;animation-delay:calc(var(--dur)*.2)">Model B</span>
+      <span class="a-s7flip" style="position:absolute;font-size:2.6cqw;animation-delay:calc(var(--dur)*.4)">Model C</span>
+    </div>
+  </div>
+  <p class="cap">Every node can run a different model — pick per task, not per conversation.</p>
+</section>
+
+<!-- ═══ 8. SMART MODEL ROUTING ═══════════════════════════════════ -->
+<section class="scene">
+  <p class="kicker">08 · Routing</p>
+  <h2 class="h">Right model, right step</h2>
+  <p class="sub">Auto-pick sends each task where it belongs — and only pays big where big is needed.</p>
+  <div class="stage" role="img" aria-label="Three tasks drop into a router that sends each down a different pipe: the hard one to a big model, code to a code model, the easy one to a cheap model whose cost bar barely moves.">
+    <div class="card" style="left:4cqw;top:5cqw;width:9cqw;height:9cqw;display:grid;place-items:center;font-size:3cqw">💡</div>
+    <div class="card" style="left:4cqw;top:22cqw;width:9cqw;height:9cqw;display:grid;place-items:center;font-size:3cqw">🔧</div>
+    <div class="card" style="left:4cqw;top:39cqw;width:9cqw;height:9cqw;display:grid;place-items:center;font-size:3cqw">📝</div>
+    <div class="node" style="left:28cqw;top:19cqw;width:14cqw;height:14cqw;border-radius:2cqw;transform:rotate(45deg);--c:var(--teal);font-size:0"></div>
+    <div class="chip" style="left:29cqw;top:37cqw;color:var(--teal)">Router</div>
+    <div class="dot a-s8" style="left:14cqw;top:8.6cqw;--dx:20cqw;--dy:17cqw;--tx:52cqw;--ty:0cqw;--c:var(--purple)"></div>
+    <div class="dot a-s8" style="left:14cqw;top:25.6cqw;--dx:20cqw;--dy:0cqw;--tx:52cqw;--ty:0cqw;--c:var(--blue);animation-delay:calc(var(--dur)*.14)"></div>
+    <div class="dot a-s8" style="left:14cqw;top:42.6cqw;--dx:20cqw;--dy:-17cqw;--tx:52cqw;--ty:0cqw;--c:var(--green);animation-delay:calc(var(--dur)*.28)"></div>
+    <div class="node" style="left:66cqw;top:3cqw;width:26cqw;height:11cqw;--c:var(--purple);--g:0;font-size:1.9cqw">Big model
+      <span class="glow a-lift" style="background:var(--purple);animation-delay:calc(var(--dur)*.1)"></span>
+    </div>
+    <div class="node" style="left:66cqw;top:20cqw;width:26cqw;height:11cqw;--c:var(--blue);font-size:1.9cqw">Code model</div>
+    <div class="node" style="left:66cqw;top:37cqw;width:26cqw;height:11cqw;--c:var(--green);font-size:1.9cqw">Cheap model</div>
+    <div class="bar" style="left:66cqw;top:15.6cqw;width:26cqw;height:1cqw;--c:var(--purple)"><i class="a-s8fill" style="--to:1"></i></div>
+    <div class="bar" style="left:66cqw;top:32.6cqw;width:26cqw;height:1cqw;--c:var(--blue)"><i class="a-s8fill" style="--to:.45;animation-delay:calc(var(--dur)*.06)"></i></div>
+    <div class="bar" style="left:66cqw;top:49.6cqw;width:26cqw;height:1cqw;--c:var(--green)"><i class="a-s8fill" style="--to:.08;animation-delay:calc(var(--dur)*.12)"></i></div>
+  </div>
+  <p class="cap">Auto-pick routes each task to the right model — big brains for hard steps, cheap ones for easy steps.</p>
+</section>
+
+<!-- ═══ 9. PROMPT ENGINEERING ════════════════════════════════════ -->
+<section class="scene">
+  <p class="kicker">09 · Enhance</p>
+  <h2 class="h">Rough ask, precise prompt</h2>
+  <p class="sub">Enhance rewrites what you typed into role, goal and constraints before it hits the model.</p>
+  <div class="stage" role="img" aria-label="A scribbled prompt passes through an enhance lens and comes out as a structured card with role, goal and constraints ticking on, and the answer it produces glows brighter.">
+    <div class="card a-ap" style="left:3cqw;top:20cqw;width:23cqw;height:11cqw;border-radius:1.4cqw 1.4cqw .3cqw 1.4cqw;display:grid;place-items:center;font-size:1.9cqw;color:var(--dim)">“make it better??”</div>
+    <div class="dot a-tr" style="left:27cqw;top:24.6cqw;--tx:5cqw;--c:var(--dim);animation-delay:calc(var(--dur)*.12)"></div>
+    <div class="node a-drift" style="left:31cqw;top:19cqw;width:12cqw;height:12cqw;border-radius:50%;--c:var(--amber);font-size:3cqw;border-color:rgba(251,191,36,.4)">✨</div>
+    <div class="card a-s9card" style="left:48cqw;top:10cqw;width:27cqw;height:30cqw">
+      <span style="position:absolute;left:2.4cqw;top:2.4cqw;font-size:1.5cqw;color:var(--teal);letter-spacing:.1em">ROLE</span>
+      <span style="position:absolute;left:2.4cqw;top:5.4cqw;width:19cqw;height:.6cqw;background:rgba(232,236,244,.2)"></span>
+      <span style="position:absolute;left:2.4cqw;top:9cqw;font-size:1.5cqw;color:var(--teal);letter-spacing:.1em">GOAL</span>
+      <span style="position:absolute;left:2.4cqw;top:12cqw;width:21cqw;height:.6cqw;background:rgba(232,236,244,.2)"></span>
+      <span class="a-s9tick" style="position:absolute;left:2.4cqw;top:16.6cqw;font-size:1.8cqw;color:var(--green)">✓</span>
+      <span class="a-s9tick" style="position:absolute;left:2.4cqw;top:20.2cqw;font-size:1.8cqw;color:var(--green);animation-delay:calc(var(--dur)*.05)">✓</span>
+      <span class="a-s9tick" style="position:absolute;left:2.4cqw;top:23.8cqw;font-size:1.8cqw;color:var(--green);animation-delay:calc(var(--dur)*.1)">✓</span>
+      <span style="position:absolute;left:6cqw;top:17.8cqw;width:14cqw;height:.6cqw;background:rgba(232,236,244,.14)"></span>
+      <span style="position:absolute;left:6cqw;top:21.4cqw;width:17cqw;height:.6cqw;background:rgba(232,236,244,.14)"></span>
+      <span style="position:absolute;left:6cqw;top:25cqw;width:12cqw;height:.6cqw;background:rgba(232,236,244,.14)"></span>
+    </div>
+    <div class="node" style="left:79cqw;top:19cqw;width:16cqw;height:13cqw;--c:var(--teal);--g:0;font-size:1.9cqw">Answer
+      <span class="glow a-s9glow" style="background:var(--teal)"></span>
+    </div>
+  </div>
+  <p class="cap">One click rewrites your rough ask into a precise prompt — role, goal, constraints — before it ever hits the model.</p>
+</section>
+
+<!-- ═══ 10. DESIGN STUDIO ════════════════════════════════════════ -->
+<section class="scene">
+  <p class="kicker">10 · Design studio</p>
+  <h2 class="h">Design it, then ship the code</h2>
+  <p class="sub">Real responsive HTML on the canvas — not a picture of a layout.</p>
+  <div class="stage" role="img" aria-label="A blank artboard assembles a small landing page, then a slider drags it to phone width and the layout reflows.">
+    <div class="card a-s10d" style="left:6cqw;top:5cqw;width:52cqw;height:36cqw;background:rgba(16,21,34,.96)">
+      <span class="a-ap" style="position:absolute;left:3cqw;top:3cqw;width:46cqw;height:3.4cqw;border-radius:.6cqw;background:rgba(232,236,244,.12)"></span>
+      <span class="a-ap" style="position:absolute;left:3cqw;top:9cqw;width:46cqw;height:11cqw;border-radius:.8cqw;background:rgba(0,209,178,.16);animation-delay:calc(var(--dur)*.06)"></span>
+      <span class="a-ap" style="position:absolute;left:3cqw;top:23cqw;width:22cqw;height:9cqw;border-radius:.8cqw;background:rgba(232,236,244,.08);animation-delay:calc(var(--dur)*.12)"></span>
+      <span class="a-ap" style="position:absolute;left:27cqw;top:23cqw;width:22cqw;height:9cqw;border-radius:.8cqw;background:rgba(232,236,244,.08);animation-delay:calc(var(--dur)*.16)"></span>
+    </div>
+    <div class="card a-s10p" style="left:23cqw;top:5cqw;width:18cqw;height:36cqw;background:rgba(16,21,34,.96);opacity:0">
+      <span style="position:absolute;left:2cqw;top:2.4cqw;width:14cqw;height:2.6cqw;border-radius:.5cqw;background:rgba(232,236,244,.12)"></span>
+      <span style="position:absolute;left:2cqw;top:7cqw;width:14cqw;height:9cqw;border-radius:.7cqw;background:rgba(0,209,178,.16)"></span>
+      <span style="position:absolute;left:2cqw;top:18.4cqw;width:14cqw;height:6.4cqw;border-radius:.7cqw;background:rgba(232,236,244,.08)"></span>
+      <span style="position:absolute;left:2cqw;top:27cqw;width:14cqw;height:6.4cqw;border-radius:.7cqw;background:rgba(232,236,244,.08)"></span>
+    </div>
+    <div style="position:absolute;left:6cqw;top:46cqw;width:30cqw;height:.6cqw;border-radius:1cqw;background:rgba(232,236,244,.14)"></div>
+    <div class="dot a-s10k" style="left:33cqw;top:44.6cqw;width:3.4cqw;height:3.4cqw;--c:var(--teal)"></div>
+    <div class="chip" style="left:6cqw;top:50cqw">Desktop → phone</div>
+    <div class="node" style="left:64cqw;top:15cqw;width:30cqw;height:14cqw;--c:var(--teal);font-size:2cqw">&lt;/&gt; Export HTML</div>
+    <div class="chip" style="left:64cqw;top:32cqw;color:var(--teal)">Working code</div>
+  </div>
+  <p class="cap">Design real, responsive HTML on the canvas — export working code, not a picture.</p>
+</section>
+
+<!-- ═══ 11. MEMORY PALACE ════════════════════════════════════════ -->
+<section class="scene">
+  <p class="kicker">11 · Memory</p>
+  <h2 class="h">What it learns, it keeps</h2>
+  <p class="sub">A knowledge graph and an Obsidian vault on your own disk — recalled when it helps.</p>
+  <div class="stage" role="img" aria-label="Knowledge learned in finished branches flies up into a constellation of linked stars kept in a vault, and a later question pulls one star back down to answer instantly.">
+    <div class="wire" style="left:46cqw;top:11cqw;width:17cqw;transform:rotate(28deg);background:rgba(167,139,250,.35)"></div>
+    <div class="wire" style="left:46cqw;top:11cqw;width:18cqw;transform:rotate(-16deg);background:rgba(167,139,250,.35)"></div>
+    <div class="wire" style="left:62cqw;top:19cqw;width:15cqw;transform:rotate(-42deg);background:rgba(167,139,250,.35)"></div>
+    <div class="dot" style="left:44.8cqw;top:9.8cqw;--c:var(--purple);width:2.4cqw;height:2.4cqw"></div>
+    <div class="dot" style="left:60.8cqw;top:17.8cqw;--c:var(--purple);width:2.4cqw;height:2.4cqw"></div>
+    <div class="dot" style="left:62.8cqw;top:5.8cqw;--c:var(--purple);width:2.4cqw;height:2.4cqw"></div>
+    <div class="dot" style="left:75.8cqw;top:7.8cqw;--c:var(--purple);width:2.4cqw;height:2.4cqw"></div>
+    <div class="chip" style="left:80cqw;top:14cqw;color:var(--purple)">🔒 your disk</div>
+    <div class="node" style="left:5cqw;top:33cqw;width:21cqw;height:9cqw;--c:var(--blue);font-size:1.7cqw">Finished</div>
+    <div class="node" style="left:5cqw;top:45cqw;width:21cqw;height:9cqw;--c:var(--green);font-size:1.7cqw">Finished</div>
+    <div class="dot a-tr" style="left:26cqw;top:36cqw;--tx:19cqw;--ty:-25cqw;--c:var(--purple)"></div>
+    <div class="dot a-tr" style="left:26cqw;top:48cqw;--tx:35cqw;--ty:-38cqw;--c:var(--purple);animation-delay:calc(var(--dur)*.08)"></div>
+    <div class="node" style="left:40cqw;top:40cqw;width:22cqw;height:10cqw;--c:var(--teal);font-size:1.8cqw">New question</div>
+    <div class="wire a-s11thread" style="left:50cqw;top:13cqw;width:.4cqw;height:27cqw;background:rgba(167,139,250,.4)"></div>
+    <div class="dot a-tr" style="left:44cqw;top:9cqw;--tx:5cqw;--ty:31cqw;--c:var(--purple);width:2.4cqw;height:2.4cqw;animation-delay:calc(var(--dur)*.46)"></div>
+    <div class="tick a-s11tick" style="left:64cqw;top:42cqw;font-size:3.4cqw">✓</div>
+  </div>
+  <p class="cap">What your agents learn is kept — as a knowledge graph and an Obsidian vault on your own disk — and recalled when it helps.</p>
+</section>
+
+<!-- ═══ 12. ANY PROVIDER, YOUR KEYS ══════════════════════════════ -->
+<section class="scene">
+  <p class="kicker">12 · Providers</p>
+  <h2 class="h">Any provider, your keys</h2>
+  <p class="sub">Cloud, local, or anything OpenAI-compatible. Keys stay on your machine.</p>
+  <div class="stage" role="img" aria-label="A plug hops around a ring of provider nodes, lighting each connection in turn, including a local offline one.">
+    <div class="node" style="left:42cqw;top:23cqw;width:16cqw;height:8cqw;--c:var(--teal);font-size:1.7cqw">Canvas</div>
+    <div class="node" style="left:42cqw;top:4.5cqw;width:16cqw;height:7cqw;font-size:1.5cqw;--c:var(--teal);--g:.08"><span class="glow a-s12lit" style="background:var(--teal);opacity:.1"></span>Anthropic</div>
+    <div class="node" style="left:59.3cqw;top:11.8cqw;width:16cqw;height:7cqw;font-size:1.5cqw;--c:var(--teal);--g:.08"><span class="glow a-s12lit" style="background:var(--teal);opacity:.1;animation-delay:calc(var(--dur)*.1)"></span>OpenAI</div>
+    <div class="node" style="left:63.3cqw;top:28.1cqw;width:16cqw;height:7cqw;font-size:1.5cqw;--c:var(--teal);--g:.08"><span class="glow a-s12lit" style="background:var(--teal);opacity:.1;animation-delay:calc(var(--dur)*.21)"></span>Gemini</div>
+    <div class="node" style="left:50.9cqw;top:40.9cqw;width:16cqw;height:7cqw;font-size:1.5cqw;--c:var(--teal);--g:.08"><span class="glow a-s12lit" style="background:var(--teal);opacity:.1;animation-delay:calc(var(--dur)*.32)"></span>Grok</div>
+    <div class="node" style="left:31.6cqw;top:40.3cqw;width:16cqw;height:7cqw;font-size:1.5cqw;--c:var(--teal);--g:.08"><span class="glow a-s12lit" style="background:var(--teal);opacity:.1;animation-delay:calc(var(--dur)*.43)"></span>OpenRouter</div>
+    <div class="node" style="left:20.3cqw;top:26.8cqw;width:16cqw;height:7cqw;font-size:1.5cqw;--c:var(--teal);--g:.08"><span class="glow a-s12lit" style="background:var(--teal);opacity:.1;animation-delay:calc(var(--dur)*.54)"></span>🏠 Ollama</div>
+    <div class="node" style="left:25.6cqw;top:10.8cqw;width:16cqw;height:7cqw;font-size:1.4cqw;--c:var(--teal);--g:.08"><span class="glow a-s12lit" style="background:var(--teal);opacity:.1;animation-delay:calc(var(--dur)*.65)"></span>Any compatible</div>
+    <div class="dot a-s12" style="left:48.6cqw;top:25.6cqw;width:2.8cqw;height:2.8cqw;--c:var(--teal)"></div>
+  </div>
+  <p class="cap">Bring any provider — cloud keys, local models, or any OpenAI-compatible endpoint. Your keys never leave your machine.</p>
+</section>
+
+<!-- ═══ 13. BUILT ON RESEARCH ════════════════════════════════════ -->
+<section class="scene">
+  <p class="kicker">13 · Why branching</p>
+  <h2 class="h">Built on published findings</h2>
+  <p class="sub">Long single threads drift. Short branches are the documented fix.</p>
+  <div class="stage" role="img" aria-label="A research paper opens, its finding drawn as a long drifting wobbly line, and beside it ForkScape's short straight branches, the two joined by a checkmark.">
+    <div class="card a-s13o" style="left:5cqw;top:11cqw;width:26cqw;height:33cqw;background:rgba(20,26,42,.96);transform-origin:0 50%">
+      <span style="position:absolute;left:2.4cqw;top:2.6cqw;font-size:1.5cqw;color:var(--dim);letter-spacing:.08em">arXiv</span>
+      <span style="position:absolute;left:2.4cqw;top:6.4cqw;width:21cqw;font-family:var(--font-display);font-size:2.2cqw;font-weight:600;line-height:1.25">Lost in Multi-Turn</span>
+      <span style="position:absolute;left:2.4cqw;top:18cqw;width:20cqw;height:.5cqw;background:rgba(232,236,244,.16)"></span>
+      <span style="position:absolute;left:2.4cqw;top:21cqw;width:16cqw;height:.5cqw;background:rgba(232,236,244,.16)"></span>
+      <span style="position:absolute;left:2.4cqw;top:24cqw;width:18cqw;height:.5cqw;background:rgba(232,236,244,.16)"></span>
+    </div>
+    <div class="chip" style="left:36cqw;top:9cqw;color:var(--amber)">Models drift</div>
+    <div class="g a-s13w" style="inset:auto;left:36cqw;top:15cqw;width:34cqw;height:14cqw">
+      <span style="position:absolute;left:0;top:1cqw;width:13cqw;height:.5cqw;background:var(--amber);opacity:.7;transform:rotate(14deg)"></span>
+      <span style="position:absolute;left:12cqw;top:4cqw;width:12cqw;height:.5cqw;background:var(--amber);opacity:.7;transform:rotate(-18deg)"></span>
+      <span style="position:absolute;left:22cqw;top:2cqw;width:12cqw;height:.5cqw;background:var(--amber);opacity:.7;transform:rotate(22deg)"></span>
+    </div>
+    <div class="chip" style="left:36cqw;top:33cqw;color:var(--teal)">Branches stay short</div>
+    <div class="wire a-s13wire" style="left:36cqw;top:39cqw;width:17cqw;background:rgba(0,209,178,.55)"></div>
+    <div class="wire a-s13wire" style="left:36cqw;top:43cqw;width:17cqw;background:rgba(0,209,178,.55);animation-delay:calc(var(--dur)*.03)"></div>
+    <div class="wire a-s13wire" style="left:36cqw;top:47cqw;width:17cqw;background:rgba(0,209,178,.55);animation-delay:calc(var(--dur)*.06)"></div>
+    <div class="tick a-s13tick" style="left:76cqw;top:24cqw;font-size:6cqw">✓</div>
+  </div>
+  <p class="cap">The design follows published findings on multi-turn drift — branching is the fix, not a gimmick.</p>
+</section>
+
+
+  <!-- CTA -->
   <section class="section section--tight">
-    <div class="eyebrow" style="color:var(--amber)">The Meter</div>
-    <h2 class="section-title">A live savings dashboard, per canvas.</h2>
-    <p class="section-sub">
-      FORKSCAPE measures how much context you saved versus running the same
-      work as one linear session — both token volume <em>and</em> dollars,
-      cache-aware.
-    </p>
-    <div class="meter-panel">
-      <div class="meter-card" style="--c:var(--teal)">
-        <strong>~90%</strong>
-        <span>up to ~90% less context re-sent on heavily-branched work —
-        each branch carries only what it needs.</span>
-        <div class="meter-bars">
-          <div class="meter-bar"><span>Linear chat</span><i style="--c:var(--red); --w:96%"></i><span>2.4M tok</span></div>
-          <div class="meter-bar"><span>FORKSCAPE</span><i style="--c:var(--teal); --w:12%"></i><span>0.26M tok</span></div>
-        </div>
-      </div>
-      <div class="meter-card" style="--c:var(--green)">
-        <strong>$ saved</strong>
-        <span>dollar savings are smaller than token savings — re-sent
-        context bills as a cheap cache read, and the dashboard prices that
-        honestly.</span>
-        <div class="meter-bars">
-          <div class="meter-bar"><span>Linear chat</span><i style="--c:var(--red); --w:70%"></i><span>$18.20</span></div>
-          <div class="meter-bar"><span>FORKSCAPE</span><i style="--c:var(--green); --w:38%"></i><span>$9.85</span></div>
-        </div>
-      </div>
-    </div>
-    <div class="honest-note">
-      <b>Honest numbers, always.</b> The bars above are an illustrative example.
-      Up to ~90% less context re-sent applies to heavily-branched work; dollar
-      savings are smaller because re-sent context bills as a cheap cache read.
-      The dashboard shows both — measured on your real runs, not a marketing
-      average.
-    </div>
-  </section>
-
-  <!-- 3 · FEATURE GRID -->
-  <section class="section">
-    <h2 class="section-title">Built to orchestrate, not to chat.</h2>
-    <div class="grid">
-      <div class="feature-card" style="--c:var(--blue)">
-        <h3>Per-task model routing</h3>
-        <p>Every task is classified — coding, planning, thinking, web, image,
-        or general — and routed to the right model for the job, automatically.</p>
-      </div>
-      <div class="feature-card" style="--c:var(--purple)">
-        <h3>PM fan-out</h3>
-        <p>One goal decomposes into parallel specialist agents that never
-        fight over context. Parent → child → worker, each with its own lane.</p>
-      </div>
-      <div class="feature-card" style="--c:var(--teal)">
-        <h3>Local-first, any model</h3>
-        <p>Anthropic, OpenAI, Gemini, Grok, Ollama, and local CLIs. Your keys,
-        your machine, no lock-in.</p>
-      </div>
-      <div class="feature-card" style="--c:var(--amber)">
-        <h3>Quality control</h3>
-        <p>A judge scores every deliverable 1–4; builds are verified with
-        typecheck and tests, then visually reviewed after launch.</p>
-      </div>
-      <div class="feature-card" style="--c:var(--green)">
-        <h3>Lineage replay</h3>
-        <p>Unchanged re-runs cost 0 tokens. FORKSCAPE replays the lineage from
-        cache instead of paying for the same work twice.</p>
-      </div>
-      <div class="feature-card" style="--c:var(--red)">
-        <h3>Session import</h3>
-        <p>Import Claude Code or Codex CLI transcripts and rebuild them as an
-        optimized branching canvas — your history, restructured.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 4 · CTA -->
-  <section class="section" id="download">
     <div class="cta-strip">
-      <h2>Put your AI work on a canvas.</h2>
-      <div class="row">
-        <a class="btn" href="download.html">⬇ Download — free</a>
-        <a class="btn btn--ghost" href="https://try.forkscape.com">▶ Try it in your browser</a>
-      </div>
-      <p class="after">Want the receipts first? <a href="research.html">Read the research behind FORKSCAPE →</a></p>
+      <h2 class="section-title">See it with your own work.</h2>
+      <p class="section-sub">The browser playground needs no key and no signup. The desktop app is free and runs everything above.</p>
+      <p style="margin-top:18px">
+        <a class="btn" href="https://try.forkscape.com">Try in your browser</a>
+        <a class="btn btn--ghost" href="download.html" style="margin-left:10px">⬇ Download for desktop</a>
+        <a class="btn btn--ghost" href="get-started.html" style="margin-left:10px">▶ Watch the tutorials</a>
+      </p>
     </div>
   </section>
 
   <script type="module">
     import { mountChrome } from './js/site.js';
-    import { buildFlatCanvas } from './js/flatcanvas.js';
+    import './js/fs3d.js';
     mountChrome({ active: 'Features' });
-    buildFlatCanvas(document.getElementById('canvas-demo'));
+
+    // Play gating: a scene's CSS animations run only while it is on screen,
+    // so thirteen looping scenes never animate at once. (The WebGL stages
+    // gate themselves the same way inside fs3d.js.)
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => e.target.classList.toggle('play', e.isIntersecting));
+    }, { rootMargin: '-8% 0px -8% 0px', threshold: 0.01 });
+    document.querySelectorAll('.scene').forEach((s) => io.observe(s));
   </script>
 </body>
 </html>

@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FORKSCAPE — Open-source licenses</title>
+  <meta name="description" content="Every open-source component ForkScape ships, with its licence — 829 packages and crates." />
+  <link rel="canonical" href="https://forkscape.com/licenses" />
+  <meta name="robots" content="index,follow" />
+  <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+  <style>
+    .lic-tools { display:flex; gap:10px; flex-wrap:wrap; margin:22px 0 10px; }
+    .lic-find { flex:1; min-width:220px; background:rgba(10,14,24,.9); border:1px solid rgba(120,140,180,.2);
+      border-radius:9px; padding:9px 12px; color:var(--ink); font:inherit; font-size:14px; }
+    .lic-pills { display:flex; flex-wrap:wrap; gap:7px; margin-top:6px; }
+    .lic-pill { border:1px solid rgba(120,140,180,.22); border-radius:999px; padding:3px 11px; font-size:12px; color:var(--dim); }
+    .lic-pill b { color:var(--ink); }
+    .lic-table { width:100%; border-collapse:collapse; margin-top:14px; font-size:13.5px; }
+    .lic-table th { text-align:left; color:var(--dim); font-weight:600; font-size:12px; text-transform:uppercase;
+      letter-spacing:.06em; padding:8px 10px; border-bottom:1px solid rgba(120,140,180,.2); }
+    .lic-table td { padding:6px 10px; border-bottom:1px solid rgba(120,140,180,.08); vertical-align:top; }
+    .lic-table td.n { font-family:ui-monospace,monospace; word-break:break-word; }
+    .lic-kind { font-size:10.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--dim); }
+    .lic-wrap { overflow-x:auto; }
+  </style>
+</head>
+<body class="page">
+  <header class="section">
+    <div class="eyebrow">Legal</div>
+    <h1 class="page-title">Open-source licenses</h1>
+    <p class="page-lede">
+      ForkScape 1.2.1 is built on 829 open-source components. Every one is
+      listed here with its licence, as those licences require. The same list is
+      in the app under <b>Help ▸ Open-source licenses</b>.
+    </p>
+    <div class="lic-pills">
+      <span class="lic-pill">MIT <b>297</b></span>
+      <span class="lic-pill">MIT OR Apache-2.0 <b>240</b></span>
+      <span class="lic-pill">Apache-2.0 <b>86</b></span>
+      <span class="lic-pill">Apache-2.0 OR MIT <b>61</b></span>
+      <span class="lic-pill">MIT/Apache-2.0 <b>40</b></span>
+      <span class="lic-pill">Unicode-3.0 <b>18</b></span>
+      <span class="lic-pill">ISC <b>8</b></span>
+      <span class="lic-pill">Apache-2.0 OR ISC OR MIT <b>7</b></span>
+      <span class="lic-pill">Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT <b>7</b></span>
+      <span class="lic-pill">BSD-3-Clause <b>6</b></span>
+    </div>
+  </header>
+
+  <section class="section section--tight">
+    <div class="lic-tools">
+      <input class="lic-find" id="licFind" type="search" placeholder="Filter by name or licence…" aria-label="Filter components" />
+    </div>
+    <div class="lic-wrap">
+      <table class="lic-table">
+        <thead><tr><th>Type</th><th>Component</th><th>Version</th><th>Licence</th></tr></thead>
+        <tbody id="licBody">
+          <tr><td class="lic-kind">npm</td><td class="n">@asamuzakjp/css-color</td><td>3.2.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@csstools/color-helpers</td><td>5.1.0</td><td>MIT-0</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@csstools/css-calc</td><td>2.1.4</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@csstools/css-color-parser</td><td>3.1.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@csstools/css-parser-algorithms</td><td>3.0.5</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@csstools/css-tokenizer</td><td>3.0.4</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@esbuild/linux-x64</td><td>0.25.12</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@esbuild/linux-x64</td><td>0.21.5</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@jridgewell/gen-mapping</td><td>0.3.13</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@jridgewell/remapping</td><td>2.3.5</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@jridgewell/resolve-uri</td><td>3.1.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@jridgewell/sourcemap-codec</td><td>1.5.5</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@jridgewell/trace-mapping</td><td>0.3.31</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@rollup/rollup-linux-x64-gnu</td><td>4.61.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@rollup/rollup-linux-x64-musl</td><td>4.61.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@supabase/auth-js</td><td>2.108.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@supabase/functions-js</td><td>2.108.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@supabase/phoenix</td><td>0.4.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@supabase/postgrest-js</td><td>2.108.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@supabase/realtime-js</td><td>2.108.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@supabase/storage-js</td><td>2.108.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@supabase/supabase-js</td><td>2.108.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@sveltejs/acorn-typescript</td><td>1.0.10</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@sveltejs/load-config</td><td>0.1.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@sveltejs/vite-plugin-svelte</td><td>5.1.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@sveltejs/vite-plugin-svelte-inspector</td><td>4.0.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@tauri-apps/api</td><td>2.11.0</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@tauri-apps/cli</td><td>2.11.2</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@tauri-apps/cli-linux-x64-gnu</td><td>2.11.2</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@tauri-apps/cli-linux-x64-musl</td><td>2.11.2</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@tauri-apps/plugin-clipboard-manager</td><td>2.3.2</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@tauri-apps/plugin-dialog</td><td>2.7.1</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@tauri-apps/plugin-fs</td><td>2.5.1</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@tauri-apps/plugin-http</td><td>2.5.9</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@tauri-apps/plugin-shell</td><td>2.3.5</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@tsconfig/svelte</td><td>5.0.8</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@types/estree</td><td>1.0.9</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@types/node</td><td>22.19.20</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@types/trusted-types</td><td>2.0.7</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@vitest/expect</td><td>2.1.9</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@vitest/mocker</td><td>2.1.9</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@vitest/pretty-format</td><td>2.1.9</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@vitest/runner</td><td>2.1.9</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@vitest/snapshot</td><td>2.1.9</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@vitest/spy</td><td>2.1.9</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">@vitest/utils</td><td>2.1.9</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">acorn</td><td>8.16.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">agent-base</td><td>7.1.4</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">aria-query</td><td>5.3.1</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">assertion-error</td><td>2.0.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">asynckit</td><td>0.4.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">axobject-query</td><td>4.1.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">cac</td><td>6.7.14</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">call-bind-apply-helpers</td><td>1.0.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">chai</td><td>5.3.3</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">check-error</td><td>2.1.3</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">chokidar</td><td>4.0.3</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">clsx</td><td>2.1.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">combined-stream</td><td>1.0.8</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">cssstyle</td><td>4.6.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">data-urls</td><td>5.0.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">debug</td><td>4.4.3</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">decimal.js</td><td>10.6.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">deep-eql</td><td>5.0.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">deepmerge</td><td>4.3.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">delayed-stream</td><td>1.0.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">devalue</td><td>5.8.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">dunder-proto</td><td>1.0.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">entities</td><td>6.0.1</td><td>BSD-2-Clause</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">es-define-property</td><td>1.0.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">es-errors</td><td>1.3.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">es-module-lexer</td><td>1.7.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">es-object-atoms</td><td>1.1.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">es-set-tostringtag</td><td>2.1.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">esbuild</td><td>0.25.12</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">esbuild</td><td>0.21.5</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">esm-env</td><td>1.2.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">esrap</td><td>2.2.11</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">estree-walker</td><td>3.0.3</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">expect-type</td><td>1.3.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">fdir</td><td>6.5.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">form-data</td><td>4.0.5</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">function-bind</td><td>1.1.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">get-intrinsic</td><td>1.3.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">get-proto</td><td>1.0.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">gopd</td><td>1.2.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">has-symbols</td><td>1.1.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">has-tostringtag</td><td>1.0.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">hasown</td><td>2.0.4</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">html-encoding-sniffer</td><td>4.0.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">http-proxy-agent</td><td>7.0.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">https-proxy-agent</td><td>7.0.6</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">iceberg-js</td><td>0.8.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">iconv-lite</td><td>0.6.3</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">is-potential-custom-element-name</td><td>1.0.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">is-reference</td><td>3.0.3</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">jsdom</td><td>25.0.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">kleur</td><td>4.1.5</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">locate-character</td><td>3.0.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">loupe</td><td>3.2.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">lru-cache</td><td>10.4.3</td><td>ISC</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">magic-string</td><td>0.30.21</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">math-intrinsics</td><td>1.1.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">mime-db</td><td>1.52.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">mime-types</td><td>2.1.35</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">mri</td><td>1.2.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">ms</td><td>2.1.3</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">nanoid</td><td>3.3.12</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">nwsapi</td><td>2.2.24</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">parse5</td><td>7.3.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">pathe</td><td>1.1.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">pathval</td><td>2.0.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">picocolors</td><td>1.1.1</td><td>ISC</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">picomatch</td><td>4.0.4</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">playwright-core</td><td>1.60.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">postcss</td><td>8.5.15</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">punycode</td><td>2.3.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">readdirp</td><td>4.1.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">rollup</td><td>4.61.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">rrweb-cssom</td><td>0.8.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">rrweb-cssom</td><td>0.7.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">sade</td><td>1.8.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">safer-buffer</td><td>2.1.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">saxes</td><td>6.0.0</td><td>ISC</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">siginfo</td><td>2.0.0</td><td>ISC</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">source-map-js</td><td>1.2.1</td><td>BSD-3-Clause</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">stackback</td><td>0.0.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">std-env</td><td>3.10.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">svelte</td><td>5.56.3</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">svelte-check</td><td>4.6.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">symbol-tree</td><td>3.2.4</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">tinybench</td><td>2.9.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">tinyexec</td><td>0.3.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">tinyglobby</td><td>0.2.17</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">tinypool</td><td>1.1.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">tinyrainbow</td><td>1.2.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">tinyspy</td><td>3.0.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">tldts</td><td>6.1.86</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">tldts-core</td><td>6.1.86</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">tough-cookie</td><td>5.1.2</td><td>BSD-3-Clause</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">tr46</td><td>5.1.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">tslib</td><td>2.8.1</td><td>0BSD</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">typescript</td><td>5.9.3</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">undici-types</td><td>6.21.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">vite</td><td>6.4.3</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">vite</td><td>5.4.21</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">vite-node</td><td>2.1.9</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">vitefu</td><td>1.1.3</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">vitest</td><td>2.1.9</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">w3c-xmlserializer</td><td>5.0.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">webidl-conversions</td><td>7.0.0</td><td>BSD-2-Clause</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">whatwg-encoding</td><td>3.1.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">whatwg-mimetype</td><td>4.0.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">whatwg-url</td><td>14.2.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">why-is-node-running</td><td>2.3.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">ws</td><td>8.21.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">xml-name-validator</td><td>5.0.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">xmlchars</td><td>2.2.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">npm</td><td class="n">zimmerframe</td><td>1.1.4</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">adler2</td><td>2.0.1</td><td>0BSD OR MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">ahash</td><td>0.8.12</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">aho-corasick</td><td>1.1.4</td><td>Unlicense OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">alloc-no-stdlib</td><td>2.0.4</td><td>BSD-3-Clause</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">alloc-stdlib</td><td>0.2.2</td><td>BSD-3-Clause</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">allocator-api2</td><td>0.2.21</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">anyhow</td><td>1.0.102</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">arboard</td><td>3.6.1</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">arc-swap</td><td>1.9.2</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">arrayref</td><td>0.3.9</td><td>BSD-2-Clause</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">arrow</td><td>53.4.1</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">arrow-arith</td><td>53.4.1</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">arrow-array</td><td>53.4.1</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">arrow-buffer</td><td>53.4.1</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">arrow-cast</td><td>53.4.1</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">arrow-csv</td><td>53.4.1</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">arrow-data</td><td>53.4.1</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">arrow-ipc</td><td>53.4.1</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">arrow-json</td><td>53.4.1</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">arrow-ord</td><td>53.4.1</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">arrow-row</td><td>53.4.1</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">arrow-schema</td><td>53.4.1</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">arrow-select</td><td>53.4.1</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">arrow-string</td><td>53.4.1</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">async-compression</td><td>0.4.42</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">async-io</td><td>1.13.0</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">async-lock</td><td>2.8.0</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">async-lock</td><td>3.4.2</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">async-priority-channel</td><td>0.2.0</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">async-recursion</td><td>1.1.1</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">async-trait</td><td>0.1.89</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">async_cell</td><td>0.2.3</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">atk</td><td>0.18.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">atk-sys</td><td>0.18.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">atoi</td><td>2.0.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">atomic-waker</td><td>1.1.2</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">autocfg</td><td>1.5.1</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">aws-config</td><td>1.8.18</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">aws-credential-types</td><td>1.2.14</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">aws-lc-rs</td><td>1.17.1</td><td>ISC AND (Apache-2.0 OR ISC)</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">aws-lc-sys</td><td>0.42.0</td><td>ISC AND (Apache-2.0 OR ISC) AND Apache-2.0 AND MIT AND BSD-3-Clause AND (Apache-2.0 OR ISC OR MIT) AND (Apache-2.0 OR ISC OR MIT-0)</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">aws-runtime</td><td>1.7.5</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">aws-sdk-dynamodb</td><td>1.116.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">aws-sdk-sso</td><td>1.102.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">aws-sdk-ssooidc</td><td>1.104.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">aws-sdk-sts</td><td>1.107.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">aws-sigv4</td><td>1.4.5</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">aws-smithy-async</td><td>1.2.14</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">aws-smithy-http</td><td>0.63.6</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">aws-smithy-http-client</td><td>1.1.13</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">aws-smithy-json</td><td>0.62.7</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">aws-smithy-observability</td><td>0.2.6</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">aws-smithy-query</td><td>0.60.15</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">aws-smithy-runtime</td><td>1.11.3</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">aws-smithy-runtime-api</td><td>1.12.3</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">aws-smithy-runtime-api-macros</td><td>1.0.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">aws-smithy-schema</td><td>0.1.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">aws-smithy-types</td><td>1.5.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">aws-smithy-xml</td><td>0.60.15</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">aws-types</td><td>1.3.16</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">base64</td><td>0.22.1</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">base64-simd</td><td>0.8.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">bit-set</td><td>0.8.0</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">bit-vec</td><td>0.8.0</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">bitflags</td><td>1.3.2</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">bitflags</td><td>2.13.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">bitpacking</td><td>0.9.3</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">bitvec</td><td>1.1.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">block-buffer</td><td>0.10.4</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">block-buffer</td><td>0.12.1</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">brotli</td><td>8.0.3</td><td>BSD-3-Clause AND MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">brotli-decompressor</td><td>5.0.1</td><td>BSD-3-Clause/MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">bs58</td><td>0.5.1</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">bytemuck</td><td>1.18.0</td><td>Zlib OR Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">byteorder</td><td>1.5.0</td><td>Unlicense OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">byteorder-lite</td><td>0.1.0</td><td>Unlicense OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">bytes</td><td>1.11.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">bytes-utils</td><td>0.1.4</td><td>Apache-2.0/MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">cairo-rs</td><td>0.18.5</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">cairo-sys-rs</td><td>0.18.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">camino</td><td>1.2.2</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">cargo-platform</td><td>0.1.9</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">cargo_metadata</td><td>0.19.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">cargo_toml</td><td>0.22.3</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">cc</td><td>1.2.63</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">census</td><td>0.4.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">cfb</td><td>0.7.3</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">cfg-expr</td><td>0.15.8</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">cfg-if</td><td>1.0.4</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">cfg_aliases</td><td>0.2.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">chrono</td><td>0.4.39</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">chrono-tz</td><td>0.10.4</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">cmake</td><td>0.1.58</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">cmov</td><td>0.5.4</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">comfy-table</td><td>7.2.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">compression-codecs</td><td>0.4.38</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">compression-core</td><td>0.4.32</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">concurrent-queue</td><td>2.5.0</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">const-oid</td><td>0.10.2</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">const-random</td><td>0.1.18</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">const-random-macro</td><td>0.1.16</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">cookie</td><td>0.18.1</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">cookie_store</td><td>0.22.1</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">cpufeatures</td><td>0.2.17</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">cpufeatures</td><td>0.3.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">crc32fast</td><td>1.5.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">crossbeam-channel</td><td>0.5.15</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">crossbeam-deque</td><td>0.8.7</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">crossbeam-epoch</td><td>0.9.20</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">crossbeam-queue</td><td>0.3.13</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">crossbeam-utils</td><td>0.8.21</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">crunchy</td><td>0.2.4</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">crypto-common</td><td>0.1.7</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">crypto-common</td><td>0.2.2</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">cssparser</td><td>0.36.0</td><td>MPL-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">cssparser-macros</td><td>0.6.1</td><td>MPL-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">csv</td><td>1.4.0</td><td>Unlicense/MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">csv-core</td><td>0.1.13</td><td>Unlicense/MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">ctor</td><td>0.8.0</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">ctor-proc-macro</td><td>0.0.7</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">ctutils</td><td>0.4.2</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">darling</td><td>0.23.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">darling_core</td><td>0.23.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">darling_macro</td><td>0.23.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">dashmap</td><td>5.5.3</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">dashmap</td><td>6.2.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">data-url</td><td>0.3.2</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">datafusion</td><td>42.2.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">datafusion-catalog</td><td>42.2.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">datafusion-common</td><td>42.2.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">datafusion-common-runtime</td><td>42.2.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">datafusion-execution</td><td>42.2.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">datafusion-expr</td><td>42.2.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">datafusion-expr-common</td><td>42.2.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">datafusion-functions</td><td>42.2.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">datafusion-functions-aggregate</td><td>42.2.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">datafusion-functions-aggregate-common</td><td>42.2.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">datafusion-functions-nested</td><td>42.2.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">datafusion-functions-window</td><td>42.2.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">datafusion-optimizer</td><td>42.2.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">datafusion-physical-expr</td><td>42.2.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">datafusion-physical-expr-common</td><td>42.2.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">datafusion-physical-optimizer</td><td>42.2.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">datafusion-physical-plan</td><td>42.2.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">datafusion-sql</td><td>42.2.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">dbus</td><td>0.9.11</td><td>Apache-2.0/MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">deepsize</td><td>0.2.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">deepsize_derive</td><td>0.1.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">deranged</td><td>0.5.8</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">derive_more</td><td>2.1.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">derive_more-impl</td><td>2.1.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">digest</td><td>0.10.7</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">digest</td><td>0.11.3</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">dirs</td><td>6.0.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">dirs-sys</td><td>0.5.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">displaydoc</td><td>0.2.6</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">dlopen2</td><td>0.8.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">dlopen2_derive</td><td>0.4.3</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">doc-comment</td><td>0.3.4</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">document-features</td><td>0.2.12</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">dom_query</td><td>0.27.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">downcast-rs</td><td>1.2.1</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">dpi</td><td>0.1.2</td><td>Apache-2.0 AND MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">dtoa</td><td>1.0.11</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">dtoa-short</td><td>0.3.5</td><td>MPL-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">dtor</td><td>0.3.0</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">dtor-proc-macro</td><td>0.0.6</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">dunce</td><td>1.0.5</td><td>CC0-1.0 OR MIT-0 OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">dyn-clone</td><td>1.0.20</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">either</td><td>1.16.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">embed-resource</td><td>3.0.9</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">encoding_rs</td><td>0.8.35</td><td>(Apache-2.0 OR MIT) AND BSD-3-Clause</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">equivalent</td><td>1.0.2</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">erased-serde</td><td>0.4.10</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">errno</td><td>0.3.14</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">event-listener</td><td>2.5.3</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">event-listener</td><td>4.0.3</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">event-listener</td><td>5.4.1</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">event-listener-strategy</td><td>0.5.4</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">fastdivide</td><td>0.4.2</td><td>zlib-acknowledgement OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">fastrand</td><td>1.9.0</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">fastrand</td><td>2.4.1</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">fax</td><td>0.2.7</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">fdeflate</td><td>0.3.7</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">field-offset</td><td>0.3.6</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">find-msvc-tools</td><td>0.1.9</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">fixedbitset</td><td>0.4.2</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">fixedbitset</td><td>0.5.7</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">flatbuffers</td><td>24.12.23</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">flate2</td><td>1.1.9</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">fnv</td><td>1.0.7</td><td>Apache-2.0 / MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">foldhash</td><td>0.1.5</td><td>Zlib</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">foldhash</td><td>0.2.0</td><td>Zlib</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">foreign-types</td><td>0.3.2</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">foreign-types-shared</td><td>0.1.1</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">form_urlencoded</td><td>1.2.2</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">fs4</td><td>0.8.4</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">fs_extra</td><td>1.3.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">fsst</td><td>0.21.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">funty</td><td>2.0.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">futures</td><td>0.3.32</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">futures-channel</td><td>0.3.32</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">futures-core</td><td>0.3.32</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">futures-executor</td><td>0.3.32</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">futures-io</td><td>0.3.32</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">futures-lite</td><td>1.13.0</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">futures-macro</td><td>0.3.32</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">futures-sink</td><td>0.3.32</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">futures-task</td><td>0.3.32</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">futures-util</td><td>0.3.32</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">gdk</td><td>0.18.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">gdk-pixbuf</td><td>0.18.5</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">gdk-pixbuf-sys</td><td>0.18.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">gdk-sys</td><td>0.18.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">gdkwayland-sys</td><td>0.18.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">gdkx11</td><td>0.18.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">gdkx11-sys</td><td>0.18.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">generic-array</td><td>0.14.7</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">gethostname</td><td>1.1.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">getrandom</td><td>0.2.17</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">getrandom</td><td>0.3.4</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">getrandom</td><td>0.4.2</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">gio</td><td>0.18.4</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">gio-sys</td><td>0.18.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">glib</td><td>0.18.5</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">glib-macros</td><td>0.18.5</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">glib-sys</td><td>0.18.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">glob</td><td>0.3.3</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">gobject-sys</td><td>0.18.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">gtk</td><td>0.18.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">gtk-sys</td><td>0.18.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">gtk3-macros</td><td>0.18.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">h2</td><td>0.3.27</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">h2</td><td>0.4.14</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">half</td><td>2.4.1</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">hashbrown</td><td>0.12.3</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">hashbrown</td><td>0.14.5</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">hashbrown</td><td>0.15.5</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">hashbrown</td><td>0.17.1</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">heck</td><td>0.4.1</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">heck</td><td>0.5.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">hex</td><td>0.4.3</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">hmac</td><td>0.13.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">html5ever</td><td>0.38.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">htmlescape</td><td>0.3.1</td><td>Apache-2.0 / MIT / MPL-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">http</td><td>0.2.12</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">http</td><td>1.4.2</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">http-body</td><td>0.4.6</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">http-body</td><td>1.0.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">http-body-util</td><td>0.1.3</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">httparse</td><td>1.10.1</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">httpdate</td><td>1.0.3</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">humantime</td><td>2.4.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">hybrid-array</td><td>0.4.13</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">hyper</td><td>0.14.32</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">hyper</td><td>1.10.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">hyper-rustls</td><td>0.24.2</td><td>Apache-2.0 OR ISC OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">hyper-rustls</td><td>0.27.9</td><td>Apache-2.0 OR ISC OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">hyper-tls</td><td>0.6.0</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">hyper-util</td><td>0.1.20</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">hyperloglogplus</td><td>0.4.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">iana-time-zone</td><td>0.1.65</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">ico</td><td>0.5.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">icu_collections</td><td>2.2.0</td><td>Unicode-3.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">icu_locale_core</td><td>2.2.0</td><td>Unicode-3.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">icu_normalizer</td><td>2.2.0</td><td>Unicode-3.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">icu_normalizer_data</td><td>2.2.0</td><td>Unicode-3.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">icu_properties</td><td>2.2.0</td><td>Unicode-3.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">icu_properties_data</td><td>2.2.0</td><td>Unicode-3.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">icu_provider</td><td>2.2.0</td><td>Unicode-3.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">ident_case</td><td>1.0.1</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">idna</td><td>1.1.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">idna_adapter</td><td>1.2.2</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">image</td><td>0.25.10</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">indexmap</td><td>1.9.3</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">indexmap</td><td>2.14.0</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">infer</td><td>0.19.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">instant</td><td>0.1.13</td><td>BSD-3-Clause</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">io-lifetimes</td><td>1.0.11</td><td>Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">ipnet</td><td>2.12.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">is-docker</td><td>0.2.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">is-wsl</td><td>0.4.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">itertools</td><td>0.12.1</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">itertools</td><td>0.13.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">itertools</td><td>0.14.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">itoa</td><td>1.0.18</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">javascriptcore-rs</td><td>1.1.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">javascriptcore-rs-sys</td><td>1.1.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">jobserver</td><td>0.1.35</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">json-patch</td><td>3.0.1</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">jsonptr</td><td>0.6.3</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">keyboard-types</td><td>0.7.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">lance</td><td>0.21.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">lance-arrow</td><td>0.21.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">lance-core</td><td>0.21.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">lance-datafusion</td><td>0.21.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">lance-encoding</td><td>0.21.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">lance-file</td><td>0.21.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">lance-index</td><td>0.21.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">lance-io</td><td>0.21.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">lance-linalg</td><td>0.21.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">lance-table</td><td>0.21.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">lance-testing</td><td>0.21.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">lancedb</td><td>0.14.1</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">lazy_static</td><td>1.5.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">levenshtein_automata</td><td>0.2.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">lexical-core</td><td>1.0.6</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">lexical-parse-float</td><td>1.0.6</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">lexical-parse-integer</td><td>1.0.6</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">lexical-util</td><td>1.0.7</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">lexical-write-float</td><td>1.0.6</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">lexical-write-integer</td><td>1.0.6</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">libappindicator</td><td>0.9.0</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">libappindicator-sys</td><td>0.9.0</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">libc</td><td>0.2.186</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">libdbus-sys</td><td>0.2.7</td><td>Apache-2.0/MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">libloading</td><td>0.7.4</td><td>ISC</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">libm</td><td>0.2.16</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">linux-raw-sys</td><td>0.3.8</td><td>Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">linux-raw-sys</td><td>0.4.15</td><td>Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">linux-raw-sys</td><td>0.12.1</td><td>Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">litemap</td><td>0.8.2</td><td>Unicode-3.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">litrs</td><td>1.0.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">lock_api</td><td>0.4.14</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">log</td><td>0.4.32</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">lru</td><td>0.12.5</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">lru-slab</td><td>0.1.2</td><td>MIT OR Apache-2.0 OR Zlib</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">lz4_flex</td><td>0.11.6</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">markup5ever</td><td>0.38.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">md-5</td><td>0.10.6</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">measure_time</td><td>0.8.3</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">memchr</td><td>2.8.1</td><td>Unlicense OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">memmap2</td><td>0.9.11</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">memoffset</td><td>0.9.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">mime</td><td>0.3.17</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">minimal-lexical</td><td>0.2.1</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">miniz_oxide</td><td>0.8.9</td><td>MIT OR Zlib OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">mio</td><td>1.2.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">mock_instant</td><td>0.3.2</td><td>0BSD</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">moka</td><td>0.11.3</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">moka</td><td>0.12.15</td><td>(MIT OR Apache-2.0) AND Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">moxcms</td><td>0.8.1</td><td>BSD-3-Clause OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">muda</td><td>0.19.2</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">multimap</td><td>0.10.1</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">murmurhash32</td><td>0.3.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">native-tls</td><td>0.2.18</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">new_debug_unreachable</td><td>1.0.6</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">nix</td><td>0.31.3</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">nom</td><td>7.1.3</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">nom</td><td>8.0.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">num</td><td>0.4.3</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">num-bigint</td><td>0.4.8</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">num-complex</td><td>0.4.6</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">num-conv</td><td>0.2.2</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">num-integer</td><td>0.1.46</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">num-iter</td><td>0.1.45</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">num-rational</td><td>0.4.2</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">num-traits</td><td>0.2.19</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">num_cpus</td><td>1.17.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">object_store</td><td>0.10.2</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">object_store</td><td>0.11.2</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">once_cell</td><td>1.21.4</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">oneshot</td><td>0.1.13</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">open</td><td>5.3.5</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">openssl</td><td>0.10.81</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">openssl-macros</td><td>0.1.1</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">openssl-probe</td><td>0.2.1</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">openssl-sys</td><td>0.9.117</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">option-ext</td><td>0.2.0</td><td>MPL-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">os_pipe</td><td>1.2.3</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">outref</td><td>0.5.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">ownedbytes</td><td>0.7.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">pango</td><td>0.18.3</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">pango-sys</td><td>0.18.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">parking</td><td>2.2.1</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">parking_lot</td><td>0.12.5</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">parking_lot_core</td><td>0.9.12</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">paste</td><td>1.0.15</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">pastey</td><td>0.2.3</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">path_abs</td><td>0.5.1</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">pathdiff</td><td>0.2.3</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">percent-encoding</td><td>2.3.2</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">permutation</td><td>0.4.1</td><td>Apache-2.0/MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">petgraph</td><td>0.6.5</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">petgraph</td><td>0.7.1</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">petgraph</td><td>0.8.3</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">phf</td><td>0.12.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">phf</td><td>0.13.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">phf_codegen</td><td>0.13.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">phf_generator</td><td>0.13.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">phf_macros</td><td>0.13.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">phf_shared</td><td>0.12.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">phf_shared</td><td>0.13.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">pin-project</td><td>1.1.13</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">pin-project-internal</td><td>1.1.13</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">pin-project-lite</td><td>0.2.17</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">pin-utils</td><td>0.1.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">pkg-config</td><td>0.3.33</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">plist</td><td>1.9.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">png</td><td>0.17.16</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">png</td><td>0.18.1</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">polling</td><td>2.8.0</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">portable-atomic</td><td>1.13.1</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">potential_utf</td><td>0.1.5</td><td>Unicode-3.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">powerfmt</td><td>0.2.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">ppv-lite86</td><td>0.2.21</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">precomputed-hash</td><td>0.1.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">prettyplease</td><td>0.2.37</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">proc-macro-crate</td><td>1.3.1</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">proc-macro-crate</td><td>2.0.2</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">proc-macro-error</td><td>1.0.4</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">proc-macro-error-attr</td><td>1.0.4</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">proc-macro2</td><td>1.0.106</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">process-wrap</td><td>9.1.0</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">prost</td><td>0.13.5</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">prost-build</td><td>0.13.5</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">prost-derive</td><td>0.13.5</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">prost-types</td><td>0.13.5</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">psl-types</td><td>2.0.11</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">publicsuffix</td><td>2.3.0</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">pxfm</td><td>0.1.30</td><td>BSD-3-Clause OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">quanta</td><td>0.11.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">quick-error</td><td>2.0.1</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">quick-xml</td><td>0.36.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">quick-xml</td><td>0.39.4</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">quick-xml</td><td>0.41.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">quinn</td><td>0.11.9</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">quinn-proto</td><td>0.11.14</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">quinn-udp</td><td>0.5.14</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">quote</td><td>1.0.45</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">radium</td><td>0.7.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">rand</td><td>0.8.6</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">rand</td><td>0.9.4</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">rand_chacha</td><td>0.3.1</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">rand_chacha</td><td>0.9.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">rand_core</td><td>0.6.4</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">rand_core</td><td>0.9.5</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">rand_distr</td><td>0.4.3</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">rangemap</td><td>1.7.1</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">raw-cpuid</td><td>10.7.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">raw-window-handle</td><td>0.6.2</td><td>MIT OR Apache-2.0 OR Zlib</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">rayon</td><td>1.12.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">rayon-core</td><td>1.13.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">ref-cast</td><td>1.0.25</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">ref-cast-impl</td><td>1.0.25</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">regex</td><td>1.12.4</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">regex-automata</td><td>0.4.14</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">regex-lite</td><td>0.1.9</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">regex-syntax</td><td>0.8.11</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">reqwest</td><td>0.12.28</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">rfd</td><td>0.16.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">ring</td><td>0.17.14</td><td>Apache-2.0 AND ISC</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">rmcp</td><td>2.1.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">rmcp-macros</td><td>2.1.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">roaring</td><td>0.10.9</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">rust-stemmers</td><td>1.2.0</td><td>MIT/BSD-3-Clause</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">rustc-hash</td><td>1.1.0</td><td>Apache-2.0/MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">rustc-hash</td><td>2.1.2</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">rustc_version</td><td>0.4.1</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">rustix</td><td>0.37.28</td><td>Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">rustix</td><td>0.38.44</td><td>Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">rustix</td><td>1.1.4</td><td>Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">rustls</td><td>0.21.12</td><td>Apache-2.0 OR ISC OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">rustls</td><td>0.23.40</td><td>Apache-2.0 OR ISC OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">rustls-native-certs</td><td>0.8.4</td><td>Apache-2.0 OR ISC OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">rustls-pemfile</td><td>2.2.0</td><td>Apache-2.0 OR ISC OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">rustls-pki-types</td><td>1.14.1</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">rustls-webpki</td><td>0.101.7</td><td>ISC</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">rustls-webpki</td><td>0.103.13</td><td>ISC</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">rustversion</td><td>1.0.22</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">ryu</td><td>1.0.23</td><td>Apache-2.0 OR BSL-1.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">same-file</td><td>1.0.6</td><td>Unlicense/MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">scheduled-thread-pool</td><td>0.2.7</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">schemars</td><td>0.8.22</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">schemars</td><td>0.9.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">schemars</td><td>1.2.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">schemars_derive</td><td>0.8.22</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">schemars_derive</td><td>1.2.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">scopeguard</td><td>1.2.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">sct</td><td>0.7.1</td><td>Apache-2.0 OR ISC OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">selectors</td><td>0.36.1</td><td>MPL-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">semver</td><td>1.0.28</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">seq-macro</td><td>0.3.6</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">serde</td><td>1.0.228</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">serde-untagged</td><td>0.1.9</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">serde_core</td><td>1.0.228</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">serde_derive</td><td>1.0.228</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">serde_derive_internals</td><td>0.29.1</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">serde_json</td><td>1.0.150</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">serde_repr</td><td>0.1.20</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">serde_spanned</td><td>0.6.9</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">serde_spanned</td><td>1.1.1</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">serde_urlencoded</td><td>0.7.1</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">serde_with</td><td>3.21.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">serde_with_macros</td><td>3.21.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">serialize-to-javascript</td><td>0.1.2</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">serialize-to-javascript-impl</td><td>0.1.2</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">servo_arc</td><td>0.4.3</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">sha1</td><td>0.10.6</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">sha2</td><td>0.10.9</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">sha2</td><td>0.11.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">shared_child</td><td>1.1.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">shellexpand</td><td>3.1.2</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">shlex</td><td>2.0.1</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">sigchld</td><td>0.2.4</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">signal-hook</td><td>0.3.18</td><td>Apache-2.0/MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">signal-hook-registry</td><td>1.4.8</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">simd-adler32</td><td>0.3.9</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">siphasher</td><td>1.0.3</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">sketches-ddsketch</td><td>0.2.2</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">slab</td><td>0.4.12</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">smallvec</td><td>1.15.1</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">snafu</td><td>0.7.5</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">snafu</td><td>0.8.9</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">snafu-derive</td><td>0.7.5</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">snafu-derive</td><td>0.8.9</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">socket2</td><td>0.4.10</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">socket2</td><td>0.5.10</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">socket2</td><td>0.6.4</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">soup3</td><td>0.5.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">soup3-sys</td><td>0.5.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">sqlparser</td><td>0.50.0</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">sqlparser_derive</td><td>0.2.2</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">stable_deref_trait</td><td>1.2.1</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">std_prelude</td><td>0.2.12</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">stfu8</td><td>0.2.7</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">string_cache</td><td>0.9.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">string_cache_codegen</td><td>0.6.1</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">strsim</td><td>0.11.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">strum</td><td>0.26.3</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">strum_macros</td><td>0.26.4</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">subtle</td><td>2.6.1</td><td>BSD-3-Clause</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">syn</td><td>1.0.109</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">syn</td><td>2.0.117</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">sync_wrapper</td><td>1.0.2</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">synstructure</td><td>0.13.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">system-deps</td><td>6.2.2</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tagptr</td><td>0.2.0</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tantivy</td><td>0.22.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tantivy-bitpacker</td><td>0.6.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tantivy-columnar</td><td>0.3.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tantivy-common</td><td>0.7.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tantivy-fst</td><td>0.5.0</td><td>Unlicense/MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tantivy-query-grammar</td><td>0.22.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tantivy-sstable</td><td>0.3.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tantivy-stacker</td><td>0.3.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tantivy-tokenizer-api</td><td>0.3.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tao</td><td>0.35.3</td><td>Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tap</td><td>1.0.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">target-lexicon</td><td>0.12.16</td><td>Apache-2.0 WITH LLVM-exception</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tauri</td><td>2.11.2</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tauri-build</td><td>2.6.2</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tauri-codegen</td><td>2.6.2</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tauri-macros</td><td>2.6.2</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tauri-plugin</td><td>2.6.2</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tauri-plugin-clipboard-manager</td><td>2.3.2</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tauri-plugin-dialog</td><td>2.7.1</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tauri-plugin-fs</td><td>2.5.1</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tauri-plugin-http</td><td>2.5.9</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tauri-plugin-shell</td><td>2.3.5</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tauri-runtime</td><td>2.11.2</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tauri-runtime-wry</td><td>2.11.2</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tauri-utils</td><td>2.9.2</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tauri-winres</td><td>0.3.6</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tempfile</td><td>3.27.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tendril</td><td>0.5.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">thiserror</td><td>1.0.69</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">thiserror</td><td>2.0.18</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">thiserror-impl</td><td>1.0.69</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">thiserror-impl</td><td>2.0.18</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tiff</td><td>0.11.3</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">time</td><td>0.3.47</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">time-core</td><td>0.1.8</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">time-macros</td><td>0.2.27</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tiny-keccak</td><td>2.0.2</td><td>CC0-1.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tinystr</td><td>0.8.3</td><td>Unicode-3.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tinyvec</td><td>1.11.0</td><td>Zlib OR Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tinyvec_macros</td><td>0.1.1</td><td>MIT OR Apache-2.0 OR Zlib</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tokio</td><td>1.52.3</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tokio-macros</td><td>2.7.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tokio-native-tls</td><td>0.3.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tokio-rustls</td><td>0.24.1</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tokio-rustls</td><td>0.26.4</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tokio-stream</td><td>0.1.18</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tokio-util</td><td>0.7.18</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">toml</td><td>0.8.2</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">toml</td><td>0.9.12+spec-1.1.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">toml</td><td>1.1.2+spec-1.1.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">toml_datetime</td><td>0.6.3</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">toml_datetime</td><td>0.7.5+spec-1.1.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">toml_datetime</td><td>1.1.1+spec-1.1.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">toml_edit</td><td>0.19.15</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">toml_edit</td><td>0.20.2</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">toml_parser</td><td>1.1.2+spec-1.1.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">toml_writer</td><td>1.1.1+spec-1.1.0</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tower</td><td>0.5.3</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tower-http</td><td>0.6.11</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tower-layer</td><td>0.3.3</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tower-service</td><td>0.3.3</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tracing</td><td>0.1.44</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tracing-attributes</td><td>0.1.31</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tracing-core</td><td>0.1.36</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tray-icon</td><td>0.23.1</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">tree_magic_mini</td><td>3.2.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">triomphe</td><td>0.1.16</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">try-lock</td><td>0.2.5</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">twox-hash</td><td>2.1.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">typeid</td><td>1.0.3</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">typenum</td><td>1.20.1</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">unic-char-property</td><td>0.9.0</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">unic-char-range</td><td>0.9.0</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">unic-common</td><td>0.9.0</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">unic-ucd-ident</td><td>0.9.0</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">unic-ucd-version</td><td>0.9.0</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">unicode-ident</td><td>1.0.24</td><td>(MIT OR Apache-2.0) AND Unicode-3.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">unicode-segmentation</td><td>1.13.3</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">unicode-width</td><td>0.2.2</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">untrusted</td><td>0.9.0</td><td>ISC</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">url</td><td>2.5.8</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">urlencoding</td><td>2.1.3</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">urlpattern</td><td>0.3.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">utf-8</td><td>0.7.6</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">utf8-ranges</td><td>1.0.5</td><td>Unlicense/MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">utf8_iter</td><td>1.0.4</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">uuid</td><td>1.23.3</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">vcpkg</td><td>0.2.15</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">version-compare</td><td>0.2.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">version_check</td><td>0.9.5</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">vsimd</td><td>0.8.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">waker-fn</td><td>1.2.0</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">walkdir</td><td>2.5.0</td><td>Unlicense/MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">want</td><td>0.3.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">wayland-backend</td><td>0.3.16</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">wayland-client</td><td>0.31.15</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">wayland-protocols</td><td>0.32.13</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">wayland-protocols-wlr</td><td>0.3.12</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">wayland-scanner</td><td>0.31.11</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">wayland-sys</td><td>0.31.11</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">web_atoms</td><td>0.2.4</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">webkit2gtk</td><td>2.0.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">webkit2gtk-sys</td><td>2.0.2</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">webpki-roots</td><td>1.0.7</td><td>CDLA-Permissive-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">weezl</td><td>0.1.12</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">winnow</td><td>0.5.40</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">winnow</td><td>0.7.15</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">winnow</td><td>1.0.3</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">wl-clipboard-rs</td><td>0.9.3</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">writeable</td><td>0.6.3</td><td>Unicode-3.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">wry</td><td>0.55.1</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">wyz</td><td>0.5.1</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">x11</td><td>2.21.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">x11-dl</td><td>2.21.0</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">x11rb</td><td>0.13.2</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">x11rb-protocol</td><td>0.13.2</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">xmlparser</td><td>0.13.6</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">yoke</td><td>0.8.3</td><td>Unicode-3.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">yoke-derive</td><td>0.8.2</td><td>Unicode-3.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">zerocopy</td><td>0.8.52</td><td>BSD-2-Clause OR Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">zerofrom</td><td>0.1.8</td><td>Unicode-3.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">zerofrom-derive</td><td>0.1.7</td><td>Unicode-3.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">zeroize</td><td>1.8.2</td><td>Apache-2.0 OR MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">zerotrie</td><td>0.2.4</td><td>Unicode-3.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">zerovec</td><td>0.11.6</td><td>Unicode-3.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">zerovec-derive</td><td>0.11.3</td><td>Unicode-3.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">zmij</td><td>1.0.21</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">zstd</td><td>0.13.3</td><td>MIT</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">zstd-safe</td><td>7.2.4</td><td>MIT OR Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">zstd-sys</td><td>2.0.16+zstd.1.5.7</td><td>MIT/Apache-2.0</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">zune-core</td><td>0.5.1</td><td>MIT OR Apache-2.0 OR Zlib</td></tr>
+          <tr><td class="lic-kind">crate</td><td class="n">zune-jpeg</td><td>0.5.15</td><td>MIT OR Apache-2.0 OR Zlib</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="section-sub" style="margin-top:22px">
+      Each component's full licence text ships in its own source distribution.
+      For a copy of any notice, or any licensing question, email
+      <a href="mailto:support@forkscape.com">support@forkscape.com</a>.
+    </p>
+  </section>
+
+  <script type="module">
+    import { mountChrome } from './js/site.js';
+    mountChrome({ active: '' });
+    const find = document.getElementById('licFind');
+    const rows = [...document.getElementById('licBody').rows];
+    find.addEventListener('input', () => {
+      const q = find.value.trim().toLowerCase();
+      for (const r of rows) r.hidden = q && !r.textContent.toLowerCase().includes(q);
+    });
+  </script>
+</body>
+</html>

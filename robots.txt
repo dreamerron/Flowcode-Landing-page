@@ -1,0 +1,43 @@
+# forkscape.com — everyone is welcome, including AI crawlers.
+# ForkScape is a tool FOR AI-assisted work; being findable by AI assistants
+# is distribution, not leakage. (V1: explicit allow, so a future default
+# can't silently block them.)
+
+User-agent: *
+Allow: /
+
+# AI assistants & their crawlers — explicitly welcome
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://forkscape.com/sitemap.xml
