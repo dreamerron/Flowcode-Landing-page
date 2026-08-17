@@ -59,14 +59,13 @@
           <button type="button" class="plan__toggle-btn is-active" data-period="monthly">Monthly</button>
           <button type="button" class="plan__toggle-btn" data-period="yearly">Yearly <span class="plan__save">2 mo. free</span></button>
         </div>
-        <div class="price" id="pro-price">$12<small>/month</small></div>
-        <p class="blurb" style="margin-top:-8px" id="pro-blurb">Billed monthly — cancel anytime.</p>
-        <!-- LAUNCH50 — decision locked: 50% off the FIRST YEAR ONLY, renewing at
-             $120/yr. Wire this in as a real discount code applied at Paddle
-             Checkout.open({ discountId: … }) ONLY after a Paddle SANDBOX
-             purchase has minted a key the app accepts, end to end. Advertising
-             a code that errors at checkout is worse than no launch offer.
-        -->
+        <div class="price" id="pro-price"><s style="opacity:.45;font-size:.55em">$12</s> $8.40<small>/first month</small></div>
+        <p class="blurb" style="margin-top:-8px;color:#2dd4bf" id="pro-blurb"><b>Launch offer:</b> 30% off your first month, applied automatically at checkout — renews at $12/mo, cancel anytime.</p>
+        <!-- Launch pricing is advertised ONLY because the end-to-end proof
+             passed (P9: sandbox purchase → minted key validated) and the
+             discounts auto-apply at checkout via LAUNCH_DISCOUNTS below.
+             Renewal price stays visible — a hidden renewal turns year two
+             into refund requests. Offer ends: see the dsc_ expiry (Sep 29). -->
         <p class="blurb">For people who run serious multi-agent work every day.</p>
         <ul>
           <li>Everything in Free</li>
@@ -170,8 +169,14 @@
       lifetime: 'pri_01kzmvcm7vj4evv9xkvngp7475',  // $199 one-time
     };
     const PERIOD_COPY = {
-      monthly: { price: '$12', unit: '/month', blurb: 'Billed monthly — cancel anytime.' },
-      yearly: { price: '$120', unit: '/year', blurb: 'Billed yearly — two months free vs. monthly.' },
+      monthly: {
+        price: '<s style="opacity:.45;font-size:.55em">$12</s> $8.40', unit: '/first month',
+        blurb: 'Launch offer: 30% off your first month, applied automatically at checkout — renews at $12/mo, cancel anytime.',
+      },
+      yearly: {
+        price: '<s style="opacity:.45;font-size:.55em">$120</s> $60', unit: '/first year',
+        blurb: 'Launch offer: 50% off your first year, applied automatically at checkout — renews at $120/yr (still two months free vs. monthly).',
+      },
     };
     // Launch discounts (P10) — auto-applied at checkout per price, so nobody
     // types a code. Each dsc_ is ALSO restricted to its price in the Paddle
