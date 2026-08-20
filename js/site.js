@@ -70,8 +70,8 @@ export function mountChrome({ active = '', immersive = false } = {}) {
       </div>
     </div>
     <div class="footer__legal">
-      © 2026 FORKSCAPE · Savings vary by workload — the in-app dashboard shows
-      your real numbers, tokens and dollars, cache-aware.
+      © 2026 Illusion Media LLC, trading as ForkScape · Savings vary by workload —
+      the in-app dashboard shows your real numbers, tokens and dollars, cache-aware.
     </div>`;
   document.body.append(footer);
 }
