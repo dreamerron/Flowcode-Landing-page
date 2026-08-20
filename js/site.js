@@ -23,7 +23,12 @@ export function mountChrome({ active = '', immersive = false } = {}) {
     </div>`;
   document.body.prepend(nav);
 
+  // Immersive pages (the scroll-driven homepage) deliberately mount NO footer,
+  // so their plain-HTML legal block is the only thing carrying the terms /
+  // privacy / refunds / contact links — leave it in place. Everywhere else the
+  // real footer below supersedes it, so drop it rather than show both.
   if (immersive) return;
+  document.getElementById('legal-fallback')?.remove();
 
   const footer = document.createElement('footer');
   footer.className = 'footer';

@@ -216,5 +216,24 @@
       // Rate-limited or offline: the buttons still open the release page.
     }
   </script>
+  <!-- Static legal + contact links, in plain HTML.
+       The site chrome (nav + footer) is built at runtime by js/site.js
+       mountChrome(), so until now NOTHING on any page linked to the legal
+       pages in the served markup — anything that doesn't execute JavaScript,
+       including compliance and payment-provider crawlers, saw a page with no
+       terms, privacy, refund policy or contact route at all. Paddle requires
+       those to be "clearly accessible via navigation".
+       mountChrome() removes this block before appending the real footer, so a
+       normal visitor never sees it twice; with JS off (or broken) it stays and
+       the links still work. -->
+  <nav id="legal-fallback" aria-label="Legal and contact"
+       style="max-width:1100px;margin:0 auto;padding:24px 20px;font:14px/1.7 system-ui,-apple-system,sans-serif;opacity:.85">
+    <a href="terms.html">Terms of Service</a> &middot;
+    <a href="privacy.html">Privacy Policy</a> &middot;
+    <a href="refunds.html">Refunds &amp; Cancellation</a> &middot;
+    <a href="licenses.html">Open-source licenses</a> &middot;
+    <a href="mailto:support@forkscape.com">Contact &mdash; support@forkscape.com</a>
+    <br />&copy; 2026 ForkScape. Payments and merchant of record: Paddle.com Market Ltd.
+  </nav>
 </body>
 </html>
