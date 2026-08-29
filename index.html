@@ -135,6 +135,37 @@
   <!-- Scroll driver -->
   <div id="scroll-space"></div>
 
+  <!-- Static legal bar: the homepage runs mountChrome with immersive:true (skips
+       the JS footer) AND hijacks scroll for the WebGL journey, so the normal
+       footer's legal links are both invisible to non-JS crawlers and unreachable
+       by a human scrolling. This slim, always-visible bar puts Terms / Privacy /
+       Refunds / Contact + the operating entity in the served HTML (crawler- and
+       payment-review-visible) and permanently on screen (human-navigable).
+       Scoped styles: the homepage loads only style.css, not pages.css. -->
+  <style>
+    #legal-bar {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+      gap: 6px 16px; padding: 8px 16px;
+      background: rgba(5, 7, 13, 0.82); backdrop-filter: blur(8px);
+      border-top: 1px solid rgba(120, 140, 180, 0.16);
+      font-size: 12px; color: #7f8aa3; line-height: 1.5;
+    }
+    #legal-bar a { color: #c8d4eb; opacity: 0.85; text-decoration: none; }
+    #legal-bar a:hover { opacity: 1; color: #00d1b2; }
+    #legal-bar .lb__sep { opacity: 0.4; }
+    #legal-bar .lb__entity { opacity: 0.75; }
+    @media (max-width: 560px) { #legal-bar { font-size: 11px; gap: 4px 12px; padding: 7px 12px; } }
+  </style>
+  <footer id="legal-bar">
+    <a href="terms.html">Terms</a><span class="lb__sep">·</span>
+    <a href="privacy.html">Privacy</a><span class="lb__sep">·</span>
+    <a href="refunds.html">Refunds</a><span class="lb__sep">·</span>
+    <a href="licenses.html">Licenses</a><span class="lb__sep">·</span>
+    <a href="mailto:support@forkscape.com">Contact</a>
+    <span class="lb__entity">© 2026 ForkScape — a product of Illusion Media LLC</span>
+  </footer>
+
   <script type="module">
     import { mountChrome } from './js/site.js';
     import { buildFlatCanvas } from './js/flatcanvas.js';
