@@ -8,6 +8,7 @@ const LINKS = [
   { href: 'features.html', label: 'Features' },
   { href: 'research.html', label: 'Research' },
   { href: 'pricing.html', label: 'Pricing' },
+  { href: 'help.html', label: 'Help' },
 ];
 
 export function mountChrome({ active = '', immersive = false } = {}) {
