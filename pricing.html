@@ -66,13 +66,13 @@
              cutoff runs 31 days of Enterprise (the trial is built into the
              app — no key, no card, no form). The paid buttons stay for people
              who want to lock in the launch discount or buy Lifetime now. -->
-        <p class="blurb launch-gift"><b>🎁 Launch month:</b> <a href="download.html">download now</a> and your first <b>31 days are free</b> — every Pro and Enterprise feature unlocked, no card, no key. Until 31 October 2026. Prefer a key by email? <a href="preview.html">Launch Preview →</a></p>
+        <p class="blurb launch-gift"><b>🎁 Launch month</b> · until 31 October 2026 · every Pro and Enterprise feature unlocked for 31 days, no card, no key. Prefer a key by email? <a href="preview.html">Launch Preview →</a></p>
         <div class="plan__toggle" data-toggle="pro">
           <button type="button" class="plan__toggle-btn is-active" data-period="monthly">Monthly</button>
           <button type="button" class="plan__toggle-btn" data-period="yearly">Yearly <span class="plan__save">2 mo. free</span></button>
         </div>
-        <div class="price" id="pro-price"><s style="opacity:.45;font-size:.55em">$12</s> $8.40<small>/first month</small></div>
-        <p class="blurb" style="margin-top:-8px;color:#2dd4bf" id="pro-blurb"><b>Launch offer:</b> 30% off your first month, applied automatically at checkout — renews at $12/mo, cancel anytime.</p>
+        <div class="price" id="pro-price"><s style="opacity:.45;font-size:.55em">$12</s> $0<small>/first month</small></div>
+        <p class="blurb" style="margin-top:-8px;color:#2dd4bf" id="pro-blurb"><b>Launch month:</b> download and your first 31 days are free — no card, no key. Then $12/mo, cancel anytime.</p>
         <!-- Launch pricing is advertised ONLY because the end-to-end proof
              passed (P9: sandbox purchase → minted key validated) and the
              discounts auto-apply at checkout via LAUNCH_DISCOUNTS below.
@@ -87,7 +87,8 @@
           <li>Telegram remote control</li>
           <li>Voice &amp; avatar generation tools</li>
         </ul>
-        <button type="button" class="btn" id="pro-cta" data-price="monthly">Get Pro</button>
+        <button type="button" class="btn" id="pro-cta" data-price="monthly">Download — start free</button>
+        <p class="blurb pro-alt" id="pro-alt">Already past your free month, or want it on your card now? <a href="#" id="pro-subscribe">Subscribe · 30% off your first month</a></p>
       </div>
 
       <div class="plan plan--lifetime">
@@ -187,14 +188,21 @@
     // when price localization can't run (no JS, paddle.js blocked, API down).
     // localizePrices() below overwrites these with Paddle's own formatted
     // strings for the visitor's country, then re-renders.
+    // Monthly = the launch-month giveaway (the free 31 days are built into the
+    // desktop app, so the CTA downloads; checkout stays one click away for
+    // anyone past their free month). Yearly = the paid launch offer at checkout.
     const PERIOD_COPY = {
       monthly: {
-        price: '<s style="opacity:.45;font-size:.55em">$12</s> $8.40', unit: '/first month',
-        blurb: 'Launch offer: 30% off your first month, applied automatically at checkout — renews at $12/mo, cancel anytime.',
+        price: '<s style="opacity:.45;font-size:.55em">$12</s> $0', unit: '/first month',
+        blurb: 'Launch month: download and your first 31 days are free — no card, no key. Then $12/mo, cancel anytime.',
+        cta: 'Download — start free', action: 'download',
+        alt: 'Already past your free month, or want it on your card now? <a href="#" id="pro-subscribe">Subscribe · 30% off your first month</a>',
       },
       yearly: {
         price: '<s style="opacity:.45;font-size:.55em">$120</s> $60', unit: '/first year',
         blurb: 'Launch offer: 50% off your first year, applied automatically at checkout — renews at $120/yr (still two months free vs. monthly).',
+        cta: 'Get Pro yearly', action: 'checkout',
+        alt: 'Your free launch month still applies: <a href="download.html">download</a> first, subscribe when it ends.',
       },
     };
     // Launch discounts (P10) — auto-applied at checkout per price, so nobody
@@ -274,11 +282,15 @@
     const proPriceEl = document.getElementById('pro-price');
     const proBlurbEl = document.getElementById('pro-blurb');
     const proCta = document.getElementById('pro-cta');
+    const proAltEl = document.getElementById('pro-alt');
     function renderPro(period) {
       const copy = PERIOD_COPY[period];
       proPriceEl.innerHTML = `${copy.price}<small>${copy.unit}</small>`;
       proBlurbEl.textContent = copy.blurb;
       proCta.dataset.price = period;
+      proCta.dataset.action = copy.action;
+      proCta.textContent = copy.cta;
+      if (proAltEl) proAltEl.innerHTML = copy.alt;
     }
     proToggle?.addEventListener('click', (e) => {
       const btn = e.target.closest('.plan__toggle-btn');
@@ -286,7 +298,17 @@
       for (const b of proToggle.querySelectorAll('.plan__toggle-btn')) b.classList.toggle('is-active', b === btn);
       renderPro(btn.dataset.period);
     });
-    proCta?.addEventListener('click', () => openCheckout(PRICES[proCta.dataset.price]));
+    proCta?.addEventListener('click', () => {
+      if (proCta.dataset.action === 'download') { location.href = 'download.html'; return; }
+      openCheckout(PRICES[proCta.dataset.price]);
+    });
+    // "Subscribe" under the free-month card → the monthly checkout (LAUNCH30 auto-applies).
+    proAltEl?.addEventListener('click', (e) => {
+      const a = e.target.closest('#pro-subscribe');
+      if (!a) return;
+      e.preventDefault();
+      openCheckout(PRICES.monthly);
+    });
     document.getElementById('lifetime-cta')?.addEventListener('click', () => openCheckout(PRICES.lifetime));
 
     // ── Country-localized prices ────────────────────────────────────────────
@@ -344,14 +366,17 @@
       if (!listMo || !listYr || !listLife) return; // partial data → keep US$ fallback
 
       const strike = (was, now) => `<s style="opacity:.45;font-size:.55em">${esc(was)}</s> ${esc(now)}`;
-      PERIOD_COPY.monthly = offMo
-        ? { price: strike(listMo, offMo), unit: `/first month${taxHint}`,
-            blurb: `Launch offer: 30% off your first month, applied automatically at checkout — renews at ${listMo}/mo, cancel anytime.` }
-        : { price: esc(listMo), unit: `/month${taxHint}`, blurb: 'Renews monthly, cancel anytime.' };
+      const zero = (() => { try { return new Intl.NumberFormat(undefined, { style: 'currency', currency, minimumFractionDigits: 0 }).format(0); } catch { return '$0'; } })();
+      PERIOD_COPY.monthly = {
+        ...PERIOD_COPY.monthly,
+        price: strike(listMo, zero), unit: '/first month',
+        blurb: `Launch month: download and your first 31 days are free — no card, no key. Then ${listMo}/mo${taxHint}, cancel anytime.`,
+        alt: `Already past your free month, or want it on your card now? <a href="#" id="pro-subscribe">Subscribe${offMo ? ` · ${esc(offMo)} first month` : ''}</a>`,
+      };
       PERIOD_COPY.yearly = offYr
-        ? { price: strike(listYr, offYr), unit: `/first year${taxHint}`,
+        ? { ...PERIOD_COPY.yearly, price: strike(listYr, offYr), unit: `/first year${taxHint}`,
             blurb: `Launch offer: 50% off your first year, applied automatically at checkout — renews at ${listYr}/yr (still two months free vs. monthly).` }
-        : { price: esc(listYr), unit: `/year${taxHint}`, blurb: 'Renews yearly — two months free vs. monthly.' };
+        : { ...PERIOD_COPY.yearly, price: esc(listYr), unit: `/year${taxHint}`, blurb: 'Renews yearly — two months free vs. monthly.' };
       renderPro(proToggle?.querySelector('.plan__toggle-btn.is-active')?.dataset.period ?? 'monthly');
       const lifePriceEl = document.querySelector('.plan--lifetime .price');
       if (lifePriceEl) lifePriceEl.innerHTML = `${esc(listLife)}<small>/once${taxHint}</small>`;
