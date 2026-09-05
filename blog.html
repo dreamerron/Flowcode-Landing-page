@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FORKSCAPE — Blog · Notes on branching, agents, and graph engineering</title>
+  <meta name="description" content="Writing from the ForkScape team on graph engineering, multi-agent workflows, token economics, and building a visual AI workspace." />
+  <link rel="canonical" href="https://forkscape.com/blog" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="The ForkScape blog" />
+  <meta property="og:description" content="Graph engineering, multi-agent workflows, token economics — from the people building the canvas." />
+  <meta property="og:url" content="https://forkscape.com/blog" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="alternate" type="application/rss+xml" title="ForkScape blog" href="https://forkscape.com/rss.xml" />
+  <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+  <style>
+    .post-card {
+      display: block; max-width: 720px; margin: 0 auto 18px;
+      background: rgba(10, 14, 24, 0.92); border: 1px solid rgba(120, 140, 180, 0.16);
+      border-top: 2px solid var(--teal, #00d1b2); border-radius: 14px;
+      padding: 22px 26px; color: inherit; text-decoration: none;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .post-card:hover { transform: translateY(-3px); box-shadow: 0 0 44px -16px var(--teal, #00d1b2); }
+    .post-card .date { font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.65; }
+    .post-card h2 { margin: 6px 0 8px; font-size: 21px; }
+    .post-card p { margin: 0; color: var(--dim, #b8c4d8); line-height: 1.6; }
+  </style>
+</head>
+<body class="page">
+  <header class="section">
+    <div class="eyebrow">Blog</div>
+    <h1 class="page-title">Notes from the canvas.</h1>
+    <p class="page-lede">Graph engineering, multi-agent workflows, and honest token economics — written by the people building ForkScape. New posts most weeks; there's an <a href="rss.xml">RSS feed</a>.</p>
+  </header>
+
+  <section class="section section--tight">
+    <a class="post-card" href="graph-engineering.html">
+      <div class="date">17 Aug 2026</div>
+      <h2>Graph engineering, but you can see the graph</h2>
+      <p>Every framework in the graph-engineering wave is a code library. Here's what the same five canonical patterns — chaining, routing, joins, orchestrator-workers, evaluator-optimizer — look like when the graph is the interface, and where code-first honestly still wins.</p>
+    </a>
+  </section>
+
+  <script type="module">
+    import { mountChrome } from './js/site.js';
+    mountChrome({ active: 'Blog' });
+  </script>
+  <!-- Static legal + contact links, in plain HTML.
+       The site chrome (nav + footer) is built at runtime by js/site.js
+       mountChrome(), so until now NOTHING on any page linked to the legal
+       pages in the served markup — anything that doesn't execute JavaScript,
+       including compliance and payment-provider crawlers, saw a page with no
+       terms, privacy, refund policy or contact route at all. Paddle requires
+       those to be "clearly accessible via navigation".
+       mountChrome() removes this block before appending the real footer, so a
+       normal visitor never sees it twice; with JS off (or broken) it stays and
+       the links still work. -->
+  <nav id="legal-fallback" aria-label="Legal and contact"
+       style="max-width:1100px;margin:0 auto;padding:24px 20px;font:14px/1.7 system-ui,-apple-system,sans-serif;opacity:.85">
+    <a href="terms.html">Terms of Service</a> &middot;
+    <a href="privacy.html">Privacy Policy</a> &middot;
+    <a href="refunds.html">Refunds &amp; Cancellation</a> &middot;
+    <a href="licenses.html">Open-source licenses</a> &middot;
+    <a href="mailto:support@forkscape.com">Contact &mdash; support@forkscape.com</a>
+    <br />&copy; 2026 Illusion Media LLC, trading as ForkScape. Payments and merchant of record: Paddle.com Market Ltd.
+  </nav>
+</body>
+</html>

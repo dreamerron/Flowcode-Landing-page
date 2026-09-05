@@ -169,7 +169,11 @@ body.page {
 .paper-card .link { display: block; margin-top: 12px; font-size: 12px; color: var(--c, var(--teal)); }
 
 /* ------------------------------------------------------------- pricing --- */
-.plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 22px; margin-top: 40px; align-items: stretch; }
+/* Fixed 2x2, not auto-fit: with exactly 4 tiers, auto-fit packs 3 across
+   the ~1070px content width and leaves Enterprise orphaned alone on its
+   own row with the other half of the row empty. 2 columns reads cleanly
+   at every width down to phones, where the 560px query below drops to 1. */
+.plans { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; margin-top: 40px; align-items: stretch; }
 .plan {
   position: relative; display: flex; flex-direction: column;
   background: rgba(10, 14, 24, 0.92);
@@ -180,12 +184,36 @@ body.page {
   border: 1.5px solid var(--teal);
   box-shadow: 0 0 60px -18px var(--teal);
 }
+/* Amber marks anything time-limited across the site (see the download
+   page's "still building" state) — Lifetime being a launch-only offer
+   reuses that same signal instead of competing with Pro's teal glow. */
+.plan--lifetime {
+  border: 1.5px solid var(--amber);
+  box-shadow: 0 0 60px -18px var(--amber);
+}
 .plan__badge {
   position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
   background: linear-gradient(120deg, var(--teal), var(--blue));
   color: #041016; font-size: 11px; font-weight: 800; letter-spacing: 0.1em;
   text-transform: uppercase; padding: 6px 16px; border-radius: 999px;
 }
+.plan__badge--amber { background: linear-gradient(120deg, var(--amber), #f97316); color: #1a0f02; }
+.plan__toggle {
+  display: flex; gap: 4px; padding: 4px; margin: 14px 0 2px; width: fit-content;
+  background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(120, 140, 180, 0.18);
+  border-radius: 999px;
+}
+.plan__toggle-btn {
+  appearance: none; border: none; background: transparent; color: var(--dim);
+  font-size: 12px; font-weight: 700; padding: 7px 14px; border-radius: 999px;
+  cursor: pointer; display: flex; align-items: center; gap: 6px; font-family: inherit;
+}
+.plan__toggle-btn.is-active { background: var(--teal); color: #041016; }
+.plan__save {
+  font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 999px;
+  background: rgba(74, 222, 128, 0.18); color: var(--green);
+}
+.plan__toggle-btn.is-active .plan__save { background: rgba(4, 16, 22, 0.25); color: #041016; }
 .plan h3 { font-size: 14px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--dim); }
 .plan .price { font-size: 42px; font-weight: 800; margin: 12px 0 4px; }
 .plan .price small { font-size: 14px; color: var(--dim); font-weight: 600; }
@@ -241,6 +269,16 @@ body.page {
 }
 @media (max-width: 560px) {
   .footer__inner { grid-template-columns: 1fr; }
+  .plans { grid-template-columns: 1fr; }
+  /* Desktop groups Free+Enterprise / Pro+Lifetime into rows, which needs
+     Enterprise's markup to sit second in the DOM. Stacked on one column
+     that reading order is wrong — a phone visitor would hit "Let's talk"
+     before ever seeing what Pro or Lifetime cost. Re-order for the stack
+     only: the two purchase options first, Enterprise last. */
+  .plan--free { order: 1; }
+  .plan--pro { order: 2; }
+  .plan--lifetime { order: 3; }
+  .plan--enterprise { order: 4; }
 }
 
 /* ------------------------------------------------ per-platform downloads --- */

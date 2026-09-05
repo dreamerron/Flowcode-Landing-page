@@ -9,6 +9,7 @@ const LINKS = [
   { href: 'research.html', label: 'Research' },
   { href: 'pricing.html', label: 'Pricing' },
   { href: 'help.html', label: 'Help' },
+  { href: 'blog.html', label: 'Blog' },
 ];
 
 export function mountChrome({ active = '', immersive = false } = {}) {
@@ -23,7 +24,12 @@ export function mountChrome({ active = '', immersive = false } = {}) {
     </div>`;
   document.body.prepend(nav);
 
+  // Immersive pages (the scroll-driven homepage) deliberately mount NO footer,
+  // so their plain-HTML legal block is the only thing carrying the terms /
+  // privacy / refunds / contact links — leave it in place. Everywhere else the
+  // real footer below supersedes it, so drop it rather than show both.
   if (immersive) return;
+  document.getElementById('legal-fallback')?.remove();
 
   const footer = document.createElement('footer');
   footer.className = 'footer';
@@ -42,6 +48,7 @@ export function mountChrome({ active = '', immersive = false } = {}) {
         <a href="download.html">Download</a>
         <a href="https://try.forkscape.com">Try in browser</a>
         <a href="help.html">Help Center</a>
+        <a href="blog.html">Blog</a>
       </div>
       <div class="footer__col">
         <h4>Research</h4>
@@ -64,8 +71,8 @@ export function mountChrome({ active = '', immersive = false } = {}) {
       </div>
     </div>
     <div class="footer__legal">
-      © 2026 FORKSCAPE · Savings vary by workload — the in-app dashboard shows
-      your real numbers, tokens and dollars, cache-aware.
+      © 2026 Illusion Media LLC, trading as ForkScape · Savings vary by workload —
+      the in-app dashboard shows your real numbers, tokens and dollars, cache-aware.
     </div>`;
   document.body.append(footer);
 }

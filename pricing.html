@@ -23,7 +23,7 @@
     <h1 class="page-title">Free to start. Pay when it pays for itself.</h1>
 
     <div class="plans">
-      <div class="plan">
+      <div class="plan plan--free">
         <h3>Free</h3>
         <div class="price">$0</div>
         <p class="blurb">The local core. Runs on your machine with your own API
@@ -40,33 +40,7 @@
         <a class="btn btn--ghost" href="download.html">Download free</a>
       </div>
 
-      <div class="plan plan--pro">
-        <span class="plan__badge">Recommended</span>
-        <h3>Pro</h3>
-        <div class="price">$12<small>/month</small></div>
-        <p class="blurb" style="margin-top:-8px">or <b>$120/year</b> — two months free.</p>
-        <!-- LAUNCH50 — decision locked: 50% off the FIRST YEAR ONLY, renewing at
-             $120/yr. Uncomment this block (and delete the two lines above) ONLY
-             after a Paddle SANDBOX purchase has minted a key the app accepts,
-             end to end. Advertising a code that errors at checkout is worse than
-             having no launch offer at all. Keep the renewal price visible — a
-             hidden renewal turns year-two into refund requests.
-        <div class="price"><s style="opacity:.45;font-size:.55em">$120</s> $60<small>/first year</small></div>
-        <p class="blurb" style="color:#2dd4bf"><b>Launch offer:</b> 50% off your first year with code <code>LAUNCH50</code> — renews at $120/yr.</p>
-        -->
-        <p class="blurb">For people who run serious multi-agent work every day.</p>
-        <ul>
-          <li>Everything in Free</li>
-          <li>Unlimited canvases, MCP servers &amp; Research Mode models</li>
-          <li>3 levels of parallel sub-agents</li>
-          <li>Automations — agents on a schedule</li>
-          <li>Telegram remote control</li>
-          <li>Voice &amp; avatar generation tools</li>
-        </ul>
-        <a class="btn" href="mailto:sales@forkscape.com?subject=ForkScape%20Pro">Get Pro</a>
-      </div>
-
-      <div class="plan">
+      <div class="plan plan--enterprise">
         <h3>Enterprise</h3>
         <div class="price">Let's talk</div>
         <p class="blurb">Everything in Pro, plus team features that run entirely
@@ -79,6 +53,51 @@
           <li>Volume licensing &amp; priority support</li>
         </ul>
         <a class="btn btn--ghost" href="mailto:sales@forkscape.com?subject=ForkScape%20Enterprise">Contact sales</a>
+      </div>
+
+      <!-- Pro and Lifetime deliberately land on their own row together (see
+           the 2-column grid below): they're the two ways to buy the SAME
+           feature set, so a visitor comparing subscribe-vs-buy-once should
+           never see one without the other in view. -->
+      <div class="plan plan--pro">
+        <span class="plan__badge">Recommended</span>
+        <h3>Pro</h3>
+        <div class="plan__toggle" data-toggle="pro">
+          <button type="button" class="plan__toggle-btn is-active" data-period="monthly">Monthly</button>
+          <button type="button" class="plan__toggle-btn" data-period="yearly">Yearly <span class="plan__save">2 mo. free</span></button>
+        </div>
+        <div class="price" id="pro-price"><s style="opacity:.45;font-size:.55em">$12</s> $8.40<small>/first month</small></div>
+        <p class="blurb" style="margin-top:-8px;color:#2dd4bf" id="pro-blurb"><b>Launch offer:</b> 30% off your first month, applied automatically at checkout — renews at $12/mo, cancel anytime.</p>
+        <!-- Launch pricing is advertised ONLY because the end-to-end proof
+             passed (P9: sandbox purchase → minted key validated) and the
+             discounts auto-apply at checkout via LAUNCH_DISCOUNTS below.
+             Renewal price stays visible — a hidden renewal turns year two
+             into refund requests. Offer ends: see the dsc_ expiry (Sep 29). -->
+        <p class="blurb">For people who run serious multi-agent work every day.</p>
+        <ul>
+          <li>Everything in Free</li>
+          <li>Unlimited canvases, MCP servers &amp; Research Mode models</li>
+          <li>3 levels of parallel sub-agents</li>
+          <li>Automations — agents on a schedule</li>
+          <li>Telegram remote control</li>
+          <li>Voice &amp; avatar generation tools</li>
+        </ul>
+        <button type="button" class="btn" id="pro-cta" data-price="monthly">Get Pro</button>
+      </div>
+
+      <div class="plan plan--lifetime">
+        <span class="plan__badge plan__badge--amber">Launch offer</span>
+        <h3>Lifetime</h3>
+        <div class="price">$199<small>/once</small></div>
+        <p class="blurb" style="margin-top:-8px">Pay once. Yours forever — no subscription.</p>
+        <p class="blurb">Available for the first few months only, then this plan retires
+        for good — everyone already on it keeps it forever regardless.</p>
+        <ul>
+          <li>Everything in Pro</li>
+          <li>No renewal, ever — one payment, done</li>
+          <li>Every future Pro feature, included automatically</li>
+        </ul>
+        <button type="button" class="btn" id="lifetime-cta">Get Lifetime</button>
       </div>
     </div>
 
@@ -119,6 +138,14 @@
         retroactively.</p>
       </details>
       <details>
+        <summary>What's the difference between Pro and Lifetime?</summary>
+        <p>Same features — the only difference is billing. Pro is a
+        subscription (monthly or yearly); Lifetime is one payment, no renewal,
+        ever. Lifetime is a launch-only offer for the first few months; once it
+        retires, new buyers choose Pro monthly or yearly instead — but anyone
+        who already bought Lifetime keeps it, unaffected.</p>
+      </details>
+      <details>
         <summary>What platforms are supported?</summary>
         <p>Windows, Mac, and Linux — plus a
         <a href="download.html">browser playground</a> to try the canvas
@@ -126,10 +153,142 @@
       </details>
     </div>
   </section>
+    <div id="checkout-fallback" hidden style="max-width:720px;margin:18px auto 0;padding:16px 20px;border:1px solid #2dd4bf66;border-radius:10px;background:#2dd4bf14;text-align:center">
+      <b>Checkout couldn’t open?</b> No problem — <a href="mailto:sales@forkscape.com" style="color:#2dd4bf;font-weight:700">email us</a> and we’ll set up your license directly (same price, same launch discount).
+    </div>
+
+
 
   <script type="module">
     import { mountChrome } from './js/site.js';
     mountChrome({ active: 'Pricing' });
   </script>
+
+  <!-- Paddle checkout — LIVE (migrated 2026-08-17): production environment,
+       live client token, live price/discount ids. Real cards work here once
+       Paddle approves forkscape.com under Checkout → Website approval.
+       Sandbox testing: use the pricing-sandbox-preview history (commit
+       13f46af and earlier) or re-add Environment.set('sandbox') + the test_
+       token + sandbox ids together — the three only work as a set. -->
+  <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+  <script type="module">
+    const CLIENT_TOKEN = 'live_9778ab7839433fe1726b93f7b2b';
+    const PRICES = {
+      monthly: 'pri_01m06z357ny93tqyt1hpsc3syr',   // $12/mo (LIVE)
+      yearly: 'pri_01m06z359zatajv0rw7w0crj67',    // $120/yr (LIVE)
+      lifetime: 'pri_01m06z35c699469jaxsm645yna',  // $199 one-time (LIVE)
+    };
+    const PERIOD_COPY = {
+      monthly: {
+        price: '<s style="opacity:.45;font-size:.55em">$12</s> $8.40', unit: '/first month',
+        blurb: 'Launch offer: 30% off your first month, applied automatically at checkout — renews at $12/mo, cancel anytime.',
+      },
+      yearly: {
+        price: '<s style="opacity:.45;font-size:.55em">$120</s> $60', unit: '/first year',
+        blurb: 'Launch offer: 50% off your first year, applied automatically at checkout — renews at $120/yr (still two months free vs. monthly).',
+      },
+    };
+    // Launch discounts (P10) — auto-applied at checkout per price, so nobody
+    // types a code. Each dsc_ is ALSO restricted to its price in the Paddle
+    // catalog (LAUNCH50→yearly, LAUNCH30→monthly): the restriction is what
+    // stops a code being hand-applied to Lifetime; this map is just the
+    // auto-apply convenience. Delete an entry to switch that offer off.
+    // Sandbox ids — the live catalog mints NEW dsc_ ids at go-live (P12).
+    const LAUNCH_DISCOUNTS = {
+      [PRICES.yearly]: 'dsc_01m06z35e660npjh36map8pezp',   // LAUNCH50 — 50% off first year (LIVE)
+      [PRICES.monthly]: 'dsc_01m06z35g7xmj7jq27ckryrb7q',  // LAUNCH30 — 30% off first month (LIVE)
+    };
+
+    // A buyer who can't open checkout is offered email instead of a dead
+    // button. Real-world causes: ad-blockers eat paddle.js entirely (dev
+    // audience = high blocker rate), the domain-approval gate, or a Paddle
+    // outage. Losing a Lifetime buyer to any of those is the worst outcome.
+    const PLAN_LABEL = { [PRICES.monthly]: 'Pro Monthly', [PRICES.yearly]: 'Pro Yearly', [PRICES.lifetime]: 'Lifetime' };
+    function checkoutFallback(priceId) {
+      const plan = PLAN_LABEL[priceId] ?? 'Pro';
+      const el = document.getElementById('checkout-fallback');
+      const subject = encodeURIComponent(`ForkScape ${plan} purchase`);
+      const body = encodeURIComponent(`Hi,\n\nI tried to buy ForkScape ${plan} on the pricing page but the checkout didn't open. Please set me up directly.\n\n(Sent from the pricing page's backup path.)`);
+      el.querySelector('a').href = `mailto:sales@forkscape.com?subject=${subject}&body=${body}`;
+      el.hidden = false;
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    let lastPriceId = null;
+
+    if (window.Paddle) window.Paddle.Initialize({
+      token: CLIENT_TOKEN,
+      eventCallback(event) {
+        // A checkout that errors out (approval gate, network, Paddle outage)
+        // flips to the email path rather than stranding the buyer.
+        if (event.name === 'checkout.error') { checkoutFallback(lastPriceId); return; }
+        // The buyer's key is fetched by transaction id on thanks.html — the
+        // fulfillment worker's webhook and this redirect are how it gets
+        // there. See web/fulfillment-worker.js (GET /license?txn=).
+        if (event.name !== 'checkout.completed') return;
+        const d = event.data ?? {};
+        const txn = d.transaction_id ?? d.transactionId ?? d.transaction?.id ?? '';
+        // Diagnosed live: Paddle sends transaction_id exactly as documented —
+        // it was the STATIC HOST that lost it. `npx serve`'s clean-URLs mode
+        // 301s thanks.html → /thanks and drops the query string in the
+        // redirect. So (1) navigate extensionless, which serve resolves
+        // directly with no redirect, and (2) stash the id in sessionStorage,
+        // which survives any host's rewrite games; thanks.html reads both.
+        try { if (txn) sessionStorage.setItem('fsk_txn', txn); } catch { /* private mode */ }
+        location.href = txn ? `thanks?txn=${encodeURIComponent(txn)}` : 'thanks';
+      },
+    });
+
+    function openCheckout(priceId) {
+      lastPriceId = priceId;
+      if (!window.Paddle) { checkoutFallback(priceId); return; } // paddle.js blocked/unreachable
+      const discountId = LAUNCH_DISCOUNTS[priceId];
+      try {
+        window.Paddle.Checkout.open({
+          items: [{ priceId, quantity: 1 }],
+          ...(discountId ? { discountId } : {}),
+        });
+      } catch {
+        checkoutFallback(priceId);
+      }
+    }
+
+    // Pro card: Monthly/Yearly toggle swaps the displayed price and which
+    // price id the CTA checks out with.
+    const proToggle = document.querySelector('[data-toggle="pro"]');
+    const proPriceEl = document.getElementById('pro-price');
+    const proBlurbEl = document.getElementById('pro-blurb');
+    const proCta = document.getElementById('pro-cta');
+    proToggle?.addEventListener('click', (e) => {
+      const btn = e.target.closest('.plan__toggle-btn');
+      if (!btn) return;
+      const period = btn.dataset.period;
+      for (const b of proToggle.querySelectorAll('.plan__toggle-btn')) b.classList.toggle('is-active', b === btn);
+      const copy = PERIOD_COPY[period];
+      proPriceEl.innerHTML = `${copy.price}<small>${copy.unit}</small>`;
+      proBlurbEl.textContent = copy.blurb;
+      proCta.dataset.price = period;
+    });
+    proCta?.addEventListener('click', () => openCheckout(PRICES[proCta.dataset.price]));
+    document.getElementById('lifetime-cta')?.addEventListener('click', () => openCheckout(PRICES.lifetime));
+  </script>
+  <!-- Static legal + contact links, in plain HTML.
+       The site chrome (nav + footer) is built at runtime by js/site.js
+       mountChrome(), so until now NOTHING on any page linked to the legal
+       pages in the served markup — anything that doesn't execute JavaScript,
+       including compliance and payment-provider crawlers, saw a page with no
+       terms, privacy, refund policy or contact route at all. Paddle requires
+       those to be "clearly accessible via navigation".
+       mountChrome() removes this block before appending the real footer, so a
+       normal visitor never sees it twice; with JS off (or broken) it stays and
+       the links still work. -->
+  <nav id="legal-fallback" aria-label="Legal and contact"
+       style="max-width:1100px;margin:0 auto;padding:24px 20px;font:14px/1.7 system-ui,-apple-system,sans-serif;opacity:.85">
+    <a href="terms.html">Terms of Service</a> &middot;
+    <a href="privacy.html">Privacy Policy</a> &middot;
+    <a href="refunds.html">Refunds &amp; Cancellation</a> &middot;
+    <a href="licenses.html">Open-source licenses</a> &middot;
+    <a href="mailto:support@forkscape.com">Contact &mdash; support@forkscape.com</a>
+    <br />&copy; 2026 Illusion Media LLC, trading as ForkScape. Payments and merchant of record: Paddle.com Market Ltd.
+  </nav>
 </body>
 </html>
