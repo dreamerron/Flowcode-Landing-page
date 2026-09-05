@@ -178,6 +178,10 @@
       yearly: 'pri_01m06z359zatajv0rw7w0crj67',    // $120/yr (LIVE)
       lifetime: 'pri_01m06z35c699469jaxsm645yna',  // $199 one-time (LIVE)
     };
+    // Default (US$) copy — served in the markup and kept here as the fallback
+    // when price localization can't run (no JS, paddle.js blocked, API down).
+    // localizePrices() below overwrites these with Paddle's own formatted
+    // strings for the visitor's country, then re-renders.
     const PERIOD_COPY = {
       monthly: {
         price: '<s style="opacity:.45;font-size:.55em">$12</s> $8.40', unit: '/first month',
@@ -246,6 +250,11 @@
         window.Paddle.Checkout.open({
           items: [{ priceId, quantity: 1 }],
           ...(discountId ? { discountId } : {}),
+          // One-page overlay: every checkout step on a single screen. The
+          // success redirect stays in eventCallback (checkout.completed →
+          // thanks?txn=…), which carries the transaction id the thanks page
+          // needs — a settings.successUrl couldn't.
+          settings: { displayMode: 'overlay', variant: 'one-page' },
         });
       } catch {
         checkoutFallback(priceId);
@@ -253,23 +262,75 @@
     }
 
     // Pro card: Monthly/Yearly toggle swaps the displayed price and which
-    // price id the CTA checks out with.
+    // price id the CTA checks out with. renderPro is shared with
+    // localizePrices() so a country update re-paints whichever period is
+    // currently selected.
     const proToggle = document.querySelector('[data-toggle="pro"]');
     const proPriceEl = document.getElementById('pro-price');
     const proBlurbEl = document.getElementById('pro-blurb');
     const proCta = document.getElementById('pro-cta');
-    proToggle?.addEventListener('click', (e) => {
-      const btn = e.target.closest('.plan__toggle-btn');
-      if (!btn) return;
-      const period = btn.dataset.period;
-      for (const b of proToggle.querySelectorAll('.plan__toggle-btn')) b.classList.toggle('is-active', b === btn);
+    function renderPro(period) {
       const copy = PERIOD_COPY[period];
       proPriceEl.innerHTML = `${copy.price}<small>${copy.unit}</small>`;
       proBlurbEl.textContent = copy.blurb;
       proCta.dataset.price = period;
+    }
+    proToggle?.addEventListener('click', (e) => {
+      const btn = e.target.closest('.plan__toggle-btn');
+      if (!btn) return;
+      for (const b of proToggle.querySelectorAll('.plan__toggle-btn')) b.classList.toggle('is-active', b === btn);
+      renderPro(btn.dataset.period);
     });
     proCta?.addEventListener('click', () => openCheckout(PRICES[proCta.dataset.price]));
     document.getElementById('lifetime-cta')?.addEventListener('click', () => openCheckout(PRICES.lifetime));
+
+    // ── Country-localized prices ────────────────────────────────────────────
+    // Paddle.PricePreview auto-detects the visitor's country from their IP —
+    // we pass NO address on purpose (static host, no server headers to read a
+    // country from), and only Paddle's pre-formatted strings are displayed:
+    // no arithmetic, no Intl re-formatting. That way PPP overrides, currency
+    // and tax rules land on the card exactly as checkout will charge them.
+    // Three calls because discountId applies to a whole preview request:
+    // one undiscounted (all three prices → list/strikethrough figures), plus
+    // one per launch discount (first-period totals). If any of this fails,
+    // the US$ figures already in the markup simply stay — same fallback
+    // philosophy as checkoutFallback above.
+    const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    async function localizePrices() {
+      if (!window.Paddle?.PricePreview) return;
+      const item = (priceId) => ({ priceId, quantity: 1 });
+      const [list, moOff, yrOff] = await Promise.all([
+        window.Paddle.PricePreview({ items: [item(PRICES.monthly), item(PRICES.yearly), item(PRICES.lifetime)] }),
+        LAUNCH_DISCOUNTS[PRICES.monthly]
+          ? window.Paddle.PricePreview({ items: [item(PRICES.monthly)], discountId: LAUNCH_DISCOUNTS[PRICES.monthly] })
+          : null,
+        LAUNCH_DISCOUNTS[PRICES.yearly]
+          ? window.Paddle.PricePreview({ items: [item(PRICES.yearly)], discountId: LAUNCH_DISCOUNTS[PRICES.yearly] })
+          : null,
+      ]);
+      const total = (res, priceId) =>
+        res?.data?.details?.lineItems?.find((li) => li.price?.id === priceId)?.formattedTotals?.total ?? null;
+      const listMo = total(list, PRICES.monthly);
+      const listYr = total(list, PRICES.yearly);
+      const listLife = total(list, PRICES.lifetime);
+      const offMo = total(moOff, PRICES.monthly);
+      const offYr = total(yrOff, PRICES.yearly);
+      if (!listMo || !listYr || !listLife) return; // partial data → keep US$ fallback
+
+      const strike = (was, now) => `<s style="opacity:.45;font-size:.55em">${esc(was)}</s> ${esc(now)}`;
+      PERIOD_COPY.monthly = offMo
+        ? { price: strike(listMo, offMo), unit: '/first month',
+            blurb: `Launch offer: 30% off your first month, applied automatically at checkout — renews at ${listMo}/mo, cancel anytime.` }
+        : { price: esc(listMo), unit: '/month', blurb: 'Renews monthly, cancel anytime.' };
+      PERIOD_COPY.yearly = offYr
+        ? { price: strike(listYr, offYr), unit: '/first year',
+            blurb: `Launch offer: 50% off your first year, applied automatically at checkout — renews at ${listYr}/yr (still two months free vs. monthly).` }
+        : { price: esc(listYr), unit: '/year', blurb: 'Renews yearly — two months free vs. monthly.' };
+      renderPro(proToggle?.querySelector('.plan__toggle-btn.is-active')?.dataset.period ?? 'monthly');
+      const lifePriceEl = document.querySelector('.plan--lifetime .price');
+      if (lifePriceEl) lifePriceEl.innerHTML = `${esc(listLife)}<small>/once</small>`;
+    }
+    localizePrices().catch(() => { /* preview down → the static US$ copy stands */ });
   </script>
   <!-- Static legal + contact links, in plain HTML.
        The site chrome (nav + footer) is built at runtime by js/site.js
