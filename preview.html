@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FORKSCAPE — Launch Preview · 30 days of Pro, free</title>
-  <meta name="description" content="ForkScape's Launch Preview: a free 30-day Pro license for the desktop app — no card, no account, nothing to cancel. You get Pro; we get your bug reports before launch." />
+  <title>FORKSCAPE — Launch month · 30 days of Pro, free</title>
+  <meta name="description" content="ForkScape launch month: a free 30-day Pro license for the desktop app by email — no card, no account, nothing to cancel. Offer ends 31 October 2026." />
   <link rel="canonical" href="https://forkscape.com/preview" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="ForkScape Launch Preview — 30 days of Pro, free" />
+  <meta property="og:title" content="ForkScape launch month — 30 days of Pro, free" />
   <meta property="og:description" content="Full desktop Pro for a month. No card, no account. You test, we fix, everybody wins." />
   <meta property="og:url" content="https://forkscape.com/preview" />
   <meta name="twitter:card" content="summary" />
@@ -45,9 +45,9 @@
 </head>
 <body class="page">
   <header class="section">
-    <div class="eyebrow">Launch Preview</div>
+    <div class="eyebrow">Launch month</div>
     <h1 class="page-title">30 days of Pro. Free. That's it.</h1>
-    <p class="page-lede">We're days from launch. Until then: a full desktop Pro license for a month — no card, no account, nothing to cancel. It simply expires on its own. You get Pro; we get your bug reports while it matters most.</p>
+    <p class="page-lede">For the launch month, Pro is free. Every fresh install of the desktop app already runs 31 days with everything unlocked — no card, no key. Installed earlier, or want a key you can keep in your inbox? Enter your email and a 30-day Pro key is on its way. It simply expires on its own; nothing to cancel. <span id="pv-until"></span></p>
   </header>
 
   <section class="section section--tight">
@@ -55,7 +55,7 @@
       <ul>
         <li><strong>Everything in Pro</strong> — unlimited canvases, automations, sub-agents, research mode — in the <a href="download.html">free desktop app</a></li>
         <li><strong>Your keys, your machine</strong> — runs against your own provider key or local Ollama; fully offline-capable</li>
-        <li><strong>One key per email</strong> · the key lands on this page and in your inbox · when we launch, your inbox gets the launch discount first</li>
+        <li><strong>One key per email</strong> · delivered to your inbox · when the month ends, your inbox gets the launch discount first</li>
       </ul>
 
       <form class="pv-form" id="pv-form">
@@ -75,6 +75,19 @@
     const form = document.getElementById('pv-form');
     const box = document.getElementById('pv-result');
     const btn = document.getElementById('pv-btn');
+    // The worker knows when the launch month ends; ask it so this page never
+    // needs a redeploy on the day. Any failure → the form simply stays.
+    fetch('https://license.forkscape.com/preview/status').then((r) => r.json()).then((st) => {
+      const until = st?.until ? new Date(st.until) : null;
+      const untilEl = document.getElementById('pv-until');
+      if (st?.open === false) {
+        form.hidden = true;
+        box.textContent = 'The launch-month giveaway has ended — thank you! Pro is available on the pricing page.';
+        box.style.display = 'block';
+      } else if (until && untilEl) {
+        untilEl.textContent = `Offer ends ${until.toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' })}.`;
+      }
+    }).catch(() => {});
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const email = document.getElementById('pv-email').value.trim();
@@ -88,21 +101,17 @@
         });
         const data = await res.json().catch(() => ({}));
         if (!res.ok) throw new Error(data.error || 'Something went wrong — try again in a minute.');
+        // The key travels ONLY by email (that is what makes "one free month
+        // per person" hold) — the page confirms the send, never shows the key.
+        const when = data.exp ? new Date(data.exp).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' }) : '';
         box.innerHTML = `
-          <b>${data.repeat ? 'Welcome back — here’s your key again.' : 'Done! Your Pro key:'}</b>
-          <code id="pv-key">${String(data.key).replace(/[<>&]/g, '')}</code>
-          <button id="pv-copy" type="button">Copy key</button>
+          <b>${data.repeat ? 'Welcome back — your key was already sent to this address.' : 'Done! Check your inbox.'}</b>
           <p style="margin:10px 0 0;font-size:13.5px;opacity:.8">
-            Paste it in ForkScape → Settings → Plan.
-            ${data.emailed ? 'A copy is on its way to your inbox (check spam the first time).' : 'Save it now — the email could not be sent.'}
+            Your 30-day Pro key is in the email${data.repeat ? ' we sent earlier' : ''} (check spam the first time).
+            Paste it in ForkScape → Settings → Plan.${when ? ` It runs until ${when}.` : ''}
             No app yet? <a href="download.html">Download free</a>.
           </p>`;
         box.style.display = 'block';
-        document.getElementById('pv-copy').addEventListener('click', () => {
-          navigator.clipboard.writeText(data.key).then(() => {
-            document.getElementById('pv-copy').textContent = '✓ Copied';
-          });
-        });
       } catch (err) {
         box.classList.add('err');
         box.textContent = err.message;

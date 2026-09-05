@@ -218,6 +218,8 @@ body.page {
 .plan .price { font-size: 42px; font-weight: 800; margin: 12px 0 4px; }
 .plan .price small { font-size: 14px; color: var(--dim); font-weight: 600; }
 .plan .blurb { color: var(--dim); font-size: 14px; line-height: 1.6; margin-bottom: 18px; }
+.plan .launch-gift { margin: 2px 0 12px; padding: 8px 10px; border: 1px solid rgba(45,212,191,.35); border-radius: 8px; background: rgba(45,212,191,.08); color: #e8ecf4; font-size: 13px; line-height: 1.45; }
+.plan .launch-gift a { color: #2dd4bf; }
 .plan ul { list-style: none; display: grid; gap: 10px; margin-bottom: 26px; }
 .plan li { font-size: 14px; color: var(--ink); display: flex; gap: 10px; }
 .plan li::before { content: '✓'; color: var(--green); font-weight: 800; }
