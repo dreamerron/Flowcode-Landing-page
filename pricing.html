@@ -308,8 +308,16 @@
           ? window.Paddle.PricePreview({ items: [item(PRICES.yearly)], discountId: LAUNCH_DISCOUNTS[PRICES.yearly] })
           : null,
       ]);
+      // Tax display follows the visitor's market convention: the US and Canada
+      // quote prices before sales tax (a US visitor seeing "$12.84" for a $12
+      // plan reads it as a mistake), while most other markets expect the
+      // tax-inclusive figure. Paddle returns both; checkout charges the same
+      // either way — only the number on the card changes, plus a tax hint.
+      const country = list?.data?.address?.countryCode ?? '';
+      const inclusive = !['US', 'CA'].includes(country);
+      const taxHint = inclusive ? ' incl. tax' : ' + tax';
       const total = (res, priceId) =>
-        res?.data?.details?.lineItems?.find((li) => li.price?.id === priceId)?.formattedTotals?.total ?? null;
+        res?.data?.details?.lineItems?.find((li) => li.price?.id === priceId)?.formattedTotals?.[inclusive ? 'total' : 'subtotal'] ?? null;
       const listMo = total(list, PRICES.monthly);
       const listYr = total(list, PRICES.yearly);
       const listLife = total(list, PRICES.lifetime);
@@ -319,16 +327,16 @@
 
       const strike = (was, now) => `<s style="opacity:.45;font-size:.55em">${esc(was)}</s> ${esc(now)}`;
       PERIOD_COPY.monthly = offMo
-        ? { price: strike(listMo, offMo), unit: '/first month',
+        ? { price: strike(listMo, offMo), unit: `/first month${taxHint}`,
             blurb: `Launch offer: 30% off your first month, applied automatically at checkout — renews at ${listMo}/mo, cancel anytime.` }
-        : { price: esc(listMo), unit: '/month', blurb: 'Renews monthly, cancel anytime.' };
+        : { price: esc(listMo), unit: `/month${taxHint}`, blurb: 'Renews monthly, cancel anytime.' };
       PERIOD_COPY.yearly = offYr
-        ? { price: strike(listYr, offYr), unit: '/first year',
+        ? { price: strike(listYr, offYr), unit: `/first year${taxHint}`,
             blurb: `Launch offer: 50% off your first year, applied automatically at checkout — renews at ${listYr}/yr (still two months free vs. monthly).` }
-        : { price: esc(listYr), unit: '/year', blurb: 'Renews yearly — two months free vs. monthly.' };
+        : { price: esc(listYr), unit: `/year${taxHint}`, blurb: 'Renews yearly — two months free vs. monthly.' };
       renderPro(proToggle?.querySelector('.plan__toggle-btn.is-active')?.dataset.period ?? 'monthly');
       const lifePriceEl = document.querySelector('.plan--lifetime .price');
-      if (lifePriceEl) lifePriceEl.innerHTML = `${esc(listLife)}<small>/once</small>`;
+      if (lifePriceEl) lifePriceEl.innerHTML = `${esc(listLife)}<small>/once${taxHint}</small>`;
     }
     localizePrices().catch(() => { /* preview down → the static US$ copy stands */ });
   </script>
