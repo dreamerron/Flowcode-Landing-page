@@ -321,8 +321,21 @@
       const country = list?.data?.address?.countryCode ?? '';
       const inclusive = !['US', 'CA'].includes(country);
       const taxHint = inclusive ? ' incl. tax' : ' + tax';
-      const total = (res, priceId) =>
-        res?.data?.details?.lineItems?.find((li) => li.price?.id === priceId)?.formattedTotals?.[inclusive ? 'total' : 'subtotal'] ?? null;
+      // Tax-inclusive markets: Paddle's own formatted `total` string, untouched.
+      // Pre-tax markets: Paddle's `subtotal` is BEFORE the discount as well as
+      // before tax, so a discounted price would show the list price. Pre-tax
+      // after discount = subtotal − discount, from Paddle's integer minor-unit
+      // totals, formatted in the response's currency — no rounding of our own.
+      const currency = list?.data?.currencyCode ?? 'USD';
+      const fmt = new Intl.NumberFormat(undefined, { style: 'currency', currency });
+      const total = (res, priceId) => {
+        const li = res?.data?.details?.lineItems?.find((x) => x.price?.id === priceId);
+        if (!li) return null;
+        if (inclusive) return li.formattedTotals?.total ?? null;
+        const sub = Number(li.totals?.subtotal), disc = Number(li.totals?.discount ?? 0);
+        if (!Number.isFinite(sub)) return li.formattedTotals?.subtotal ?? null;
+        return fmt.format((sub - disc) / 100);
+      };
       const listMo = total(list, PRICES.monthly);
       const listYr = total(list, PRICES.yearly);
       const listLife = total(list, PRICES.lifetime);
