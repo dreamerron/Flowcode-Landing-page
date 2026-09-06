@@ -1,0 +1,9 @@
+# forkscape.com redirects (Cloudflare Workers static assets). One rule per line: from  to  status.
+# Search Console showed 404s for URLs the app links to before their pages exist; send them somewhere useful.
+/free-month      /pricing   301
+/free-month/*    /pricing   301
+/invite          /download  301
+/invite/*        /download  301
+/science         /research  301
+/science.html    /research  301
+/index           /          301

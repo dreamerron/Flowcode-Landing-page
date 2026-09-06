@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Extensionless URLs: the host 307s .html to these, so these are canonical. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://forkscape.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://forkscape.com/get-started</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://forkscape.com/features</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://forkscape.com/download</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://forkscape.com/pricing</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://forkscape.com/help</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://forkscape.com/blog</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://forkscape.com/graph-engineering</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://forkscape.com/preview</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://forkscape.com/research</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://forkscape.com/network</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
-  <url><loc>https://forkscape.com/licenses</loc><changefreq>monthly</changefreq><priority>0.2</priority></url>
-  <url><loc>https://forkscape.com/terms</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
-  <url><loc>https://forkscape.com/privacy</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
-  <url><loc>https://forkscape.com/refunds</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://forkscape.com/</loc><lastmod>2026-09-06</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://forkscape.com/get-started</loc><lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://forkscape.com/features</loc><lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://forkscape.com/download</loc><lastmod>2026-09-06</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://forkscape.com/pricing</loc><lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://forkscape.com/help</loc><lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://forkscape.com/blog</loc><lastmod>2026-09-06</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://forkscape.com/graph-engineering</loc><lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://forkscape.com/preview</loc><lastmod>2026-09-06</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://forkscape.com/research</loc><lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://forkscape.com/network</loc><lastmod>2026-09-06</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://forkscape.com/licenses</loc><lastmod>2026-09-06</lastmod><changefreq>monthly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://forkscape.com/terms</loc><lastmod>2026-09-06</lastmod><changefreq>yearly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://forkscape.com/privacy</loc><lastmod>2026-09-06</lastmod><changefreq>yearly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://forkscape.com/refunds</loc><lastmod>2026-09-06</lastmod><changefreq>yearly</changefreq><priority>0.2</priority></url>
 </urlset>
