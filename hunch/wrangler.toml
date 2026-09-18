@@ -1,0 +1,24 @@
+# Hunch — personal AI assistant on WhatsApp (invite-only, worldwide).
+# Deploy: npx wrangler deploy   (from this directory)
+#
+# Before first deploy:
+#   npx wrangler kv namespace create HUNCH_KV     → paste the id below
+#   npx wrangler secret put ANTHROPIC_API_KEY     (console.anthropic.com)
+#   npx wrangler secret put WHATSAPP_TOKEN        (Meta system-user token)
+#   npx wrangler secret put WHATSAPP_APP_SECRET   (Meta app secret — webhook signatures)
+#   npx wrangler secret put WEBHOOK_VERIFY_TOKEN  (any random string; reuse in Meta webhook setup)
+#   npx wrangler secret put ADMIN_SECRET          (any random string; guards /admin/*)
+
+name = "hunch-whatsapp"
+main = "src/index.js"
+compatibility_date = "2026-07-01"
+
+[vars]
+# Meta → WhatsApp → API Setup → "Phone number ID" (not the phone number itself)
+WHATSAPP_PHONE_NUMBER_ID = "REPLACE_ME"
+# Invites granted to each newly activated member
+INVITES_PER_USER = "3"
+
+[[kv_namespaces]]
+binding = "HUNCH_KV"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"

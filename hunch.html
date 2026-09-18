@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hunch — Your personal AI on WhatsApp</title>
+  <meta name="description" content="Hunch is an invite-only personal AI assistant that lives in WhatsApp. It plans, researches, compares, drafts and remembers — in your language, your currency, your timezone. Worldwide." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Hunch — Your personal AI on WhatsApp" />
+  <meta property="og:description" content="Text it like a friend. It gets things done. Invite-only, worldwide." />
+  <meta name="twitter:card" content="summary" />
+  <meta name="robots" content="noindex" /><!-- remove when launching -->
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="%2325D366"/><text x="16" y="22" font-size="16" text-anchor="middle" fill="white" font-family="sans-serif" font-weight="bold">H</text></svg>' />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* Hunch page — own layout on the site's tokens. Accent = WhatsApp green. */
+    :root { --wa: #25d366; --wa-deep: #128c7e; }
+    body { overflow-x: hidden; }
+    .hp-wrap { max-width: 1020px; margin: 0 auto; padding: 0 22px; }
+
+    .hp-nav { position: sticky; top: 0; z-index: 50; display: flex; align-items: center;
+      justify-content: space-between; padding: 16px 26px;
+      background: rgba(5,7,13,.82); backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(232,236,244,.07); }
+    .hp-logo { font-family: var(--font-display); font-weight: 700; font-size: 20px;
+      color: var(--ink); text-decoration: none; display: inline-flex; align-items: center; gap: 9px; }
+    .hp-logo i { width: 12px; height: 12px; border-radius: 50%; background: var(--wa);
+      box-shadow: 0 0 12px var(--wa); display: inline-block; }
+    .hp-nav a.link { color: var(--dim); text-decoration: none; font-size: 14px; margin-left: 20px; }
+    .hp-nav a.link:hover { color: var(--ink); }
+
+    .hp-hero { padding: 76px 0 40px; text-align: center; }
+    .hp-kicker { color: var(--wa); letter-spacing: .32em; font-size: 12px;
+      font-family: var(--font-display); text-transform: uppercase; }
+    .hp-h1 { font-family: var(--font-display); font-weight: 800; letter-spacing: -.015em;
+      font-size: clamp(34px, 6.4vw, 62px); line-height: 1.06; margin: 18px auto 16px; max-width: 17ch;
+      background: linear-gradient(120deg, #fff 30%, var(--wa) 75%, var(--teal) 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent; text-wrap: balance; }
+    .hp-sub { color: var(--dim); font-size: clamp(15px, 1.8vw, 18px); line-height: 1.6;
+      max-width: 56ch; margin: 0 auto 30px; text-wrap: pretty; }
+    .hp-cta { display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+    .btn { display: inline-flex; align-items: center; gap: 9px; padding: 13px 26px; border-radius: 999px;
+      font-size: 15px; font-weight: 600; text-decoration: none; transition: transform .15s, box-shadow .15s; }
+    .btn:hover { transform: translateY(-1px); }
+    .btn--wa { background: linear-gradient(120deg, var(--wa), var(--wa-deep)); color: #04140b;
+      box-shadow: 0 6px 26px rgba(37,211,102,.28); }
+    .btn--ghost { border: 1px solid rgba(232,236,244,.22); color: var(--ink); background: rgba(232,236,244,.04); }
+
+    /* chat mockup */
+    .hp-phone { max-width: 400px; margin: 52px auto 0; border-radius: 26px;
+      border: 1px solid rgba(232,236,244,.1); background: #0b141a; overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,.5); text-align: left; }
+    .hp-phone__bar { display: flex; align-items: center; gap: 10px; padding: 12px 16px;
+      background: #1f2c34; font-size: 14px; }
+    .hp-phone__bar .avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--wa);
+      display: grid; place-items: center; font-weight: 800; color: #04140b; font-family: var(--font-display); }
+    .hp-phone__bar .status { color: #8696a0; font-size: 12px; }
+    .hp-chat { padding: 16px 12px 20px; display: flex; flex-direction: column; gap: 8px;
+      background: radial-gradient(circle at 30% 10%, rgba(37,211,102,.05), transparent 60%), #0b141a; }
+    .msg { max-width: 84%; padding: 9px 12px; border-radius: 10px; font-size: 13.5px; line-height: 1.45; }
+    .msg--me { align-self: flex-end; background: #005c4b; color: #e9edef; border-top-right-radius: 3px; }
+    .msg--ai { align-self: flex-start; background: #1f2c34; color: #e9edef; border-top-left-radius: 3px; }
+    .msg b { color: #fff; } .msg .t { display: block; text-align: right; font-size: 10px; color: #8696a0; margin-top: 3px; }
+
+    section.hp { padding: 64px 0 8px; }
+    .hp-h2 { font-family: var(--font-display); font-size: clamp(22px, 3.4vw, 32px); font-weight: 700;
+      text-align: center; margin-bottom: 10px; letter-spacing: -.01em; }
+    .hp-lead { color: var(--dim); text-align: center; max-width: 58ch; margin: 0 auto 36px; line-height: 1.6; font-size: 15px; }
+
+    .hp-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+    .hp-step { border: 1px solid rgba(232,236,244,.09); border-radius: 16px; padding: 22px;
+      background: rgba(10,14,24,.8); }
+    .hp-step em { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 50%;
+      background: rgba(37,211,102,.14); color: var(--wa); font-style: normal; font-weight: 700; margin-bottom: 12px; }
+    .hp-step h3 { font-size: 16px; margin-bottom: 6px; font-family: var(--font-display); }
+    .hp-step p { color: var(--dim); font-size: 14px; line-height: 1.55; }
+
+    .hp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+    .hp-card { border: 1px solid rgba(232,236,244,.09); border-radius: 16px; padding: 20px;
+      background: rgba(10,14,24,.8); }
+    .hp-card .ico { font-size: 22px; }
+    .hp-card h3 { font-size: 15px; margin: 10px 0 5px; font-family: var(--font-display); }
+    .hp-card p { color: var(--dim); font-size: 13.5px; line-height: 1.5; }
+
+    .hp-invite { border: 1px solid rgba(37,211,102,.25); background: rgba(37,211,102,.05);
+      border-radius: 18px; padding: 28px; text-align: center; }
+    .hp-invite code { background: rgba(232,236,244,.08); padding: 2px 9px; border-radius: 7px;
+      font-size: 14px; color: var(--wa); }
+
+    .hp-form { display: flex; gap: 10px; max-width: 520px; margin: 0 auto; flex-wrap: wrap; justify-content: center; }
+    .hp-form input, .hp-form select { flex: 1 1 180px; padding: 12px 16px; border-radius: 999px;
+      border: 1px solid rgba(232,236,244,.16); background: rgba(10,14,24,.9); color: var(--ink);
+      font-size: 14px; outline: none; }
+    .hp-form input:focus { border-color: var(--wa); }
+    .hp-form button { cursor: pointer; border: none; }
+    #wl-note { text-align: center; color: var(--dim); font-size: 13px; margin-top: 12px; min-height: 18px; }
+    #wl-note.ok { color: var(--wa); }
+
+    details.hp-faq { border-bottom: 1px solid rgba(232,236,244,.08); padding: 15px 4px; max-width: 680px; margin: 0 auto; }
+    details.hp-faq summary { cursor: pointer; font-size: 15px; font-weight: 600; list-style: none; }
+    details.hp-faq summary::after { content: "+"; float: right; color: var(--wa); }
+    details.hp-faq[open] summary::after { content: "–"; }
+    details.hp-faq p { color: var(--dim); font-size: 14px; line-height: 1.6; margin-top: 10px; }
+
+    .hp-footer { text-align: center; color: var(--dim); font-size: 12.5px; padding: 56px 20px 36px; line-height: 1.7; }
+    @media (max-width: 560px) { .hp-nav { padding: 14px 18px; } .hp-nav a.link { margin-left: 12px; } }
+  </style>
+</head>
+<body>
+  <nav class="hp-nav">
+    <a class="hp-logo" href="#"><i></i>Hunch</a>
+    <span>
+      <a class="link" href="#how">How it works</a>
+      <a class="link" href="#faq">FAQ</a>
+      <a class="link" href="#waitlist" style="color:var(--wa)">Get access</a>
+    </span>
+  </nav>
+
+  <header class="hp-hero hp-wrap">
+    <div class="hp-kicker">Invite only · Worldwide · On WhatsApp</div>
+    <h1 class="hp-h1">Your personal AI that gets things done.</h1>
+    <p class="hp-sub">Hunch lives in WhatsApp. Text it like a friend — it plans your trips, hunts down the best price, researches anything, drafts the awkward email and remembers what matters. In <b>your</b> language, currency and timezone.</p>
+    <div class="hp-cta">
+      <a class="btn btn--wa" id="wa-cta" href="#waitlist">💬 I have an invite</a>
+      <a class="btn btn--ghost" href="#waitlist">Join the waitlist</a>
+    </div>
+
+    <div class="hp-phone" aria-hidden="true">
+      <div class="hp-phone__bar">
+        <span class="avatar">H</span>
+        <span>Hunch<br /><span class="status">online</span></span>
+      </div>
+      <div class="hp-chat">
+        <div class="msg msg--me">Find me a train Berlin → Prague on Friday morning, cheap but not 6am 😅<span class="t">09:12</span></div>
+        <div class="msg msg--ai">Best option: <b>EC 177 at 10:28</b> from Berlin Hbf, direct, arrives 14:32. <b>€23.90</b> if you book today (goes up Thursday). Window seats left in coach 256.<br />Booking link: bahn.de/… — want me to plan the Prague weekend too?<span class="t">09:12</span></div>
+        <div class="msg msg--me">yes! we're vegetarian btw<span class="t">09:13</span></div>
+        <div class="msg msg--ai">Noted 🌱 I'll build Friday–Sunday around Old Town with the three best-rated veggie spots and a castle slot before the crowds. Give me a minute…<span class="t">09:13</span></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="hp hp-wrap" id="how">
+    <h2 class="hp-h2">No app. No account. Just a chat.</h2>
+    <p class="hp-lead">If you can use WhatsApp, you already know how to use Hunch.</p>
+    <div class="hp-steps">
+      <div class="hp-step"><em>1</em><h3>Get an invite</h3><p>A friend sends you a code, or a spot opens from the waitlist. Every member gets 3 invites to share.</p></div>
+      <div class="hp-step"><em>2</em><h3>Send the code on WhatsApp</h3><p>Message Hunch once with your code and you're in. No signup form, no password, no new app.</p></div>
+      <div class="hp-step"><em>3</em><h3>Ask for anything</h3><p>Travel, prices, research, plans, drafts, reminders. Hunch searches the live web, does the legwork and comes back with an answer — not a list of links.</p></div>
+    </div>
+  </section>
+
+  <section class="hp hp-wrap">
+    <h2 class="hp-h2">Built for the whole world</h2>
+    <p class="hp-lead">Most assistants are built for the US and translated later. Hunch starts everywhere else.</p>
+    <div class="hp-grid">
+      <div class="hp-card"><span class="ico">🌍</span><h3>Any language</h3><p>Write in Bahasa, Hindi, Arabic, Portuguese, Tagalog, German — Hunch answers natively in yours, even mid-conversation.</p></div>
+      <div class="hp-card"><span class="ico">💱</span><h3>Your money, your units</h3><p>Local currency, metric, 24-hour time, your date format. It never quotes you in dollars unless you ask.</p></div>
+      <div class="hp-card"><span class="ico">🔎</span><h3>Live web research</h3><p>Prices, schedules, availability, news and weather — checked at the moment you ask, with sources.</p></div>
+      <div class="hp-card"><span class="ico">🧠</span><h3>It remembers you</h3><p>Your city, your preferences, your ongoing plans. Say it once. Send /forget any time to wipe it.</p></div>
+      <div class="hp-card"><span class="ico">✈️</span><h3>Trips &amp; bookings legwork</h3><p>It finds the exact flight, train, table or ticket with a direct link — you just tap pay.</p></div>
+      <div class="hp-card"><span class="ico">🔒</span><h3>Private by default</h3><p>Invite-only. Your chats are yours; memory is per-person and deletable with one command.</p></div>
+    </div>
+  </section>
+
+  <section class="hp hp-wrap">
+    <div class="hp-invite">
+      <h2 class="hp-h2">Already a member?</h2>
+      <p class="hp-lead" style="margin-bottom:18px">Send <code>/invite</code> to Hunch and you'll get a code like <code>HUNCH-K4T7RQ</code> to share. Your friend just texts it as their first message.</p>
+    </div>
+  </section>
+
+  <section class="hp hp-wrap" id="waitlist">
+    <h2 class="hp-h2">Get on the waitlist</h2>
+    <p class="hp-lead">We open spots country by country as we scale up. Tell us where you are and we'll email you an invite when it's your turn.</p>
+    <form class="hp-form" id="wl-form">
+      <input type="email" id="wl-email" placeholder="you@example.com" required />
+      <input type="text" id="wl-country" placeholder="Country" maxlength="60" />
+      <button class="btn btn--wa" type="submit">Request invite</button>
+    </form>
+    <div id="wl-note"></div>
+  </section>
+
+  <section class="hp hp-wrap" id="faq">
+    <h2 class="hp-h2">Questions</h2>
+    <details class="hp-faq"><summary>Is it really free?</summary><p>During the invite-only beta, yes. When we introduce paid plans, early members keep a generous free tier.</p></details>
+    <details class="hp-faq"><summary>Which countries does it work in?</summary><p>Anywhere WhatsApp works. Hunch is built for a global audience first — the US isn't the default, it's just one more country.</p></details>
+    <details class="hp-faq"><summary>Can it actually buy things for me?</summary><p>Not yet. It does everything up to the payment: finds the exact option, checks the price is real and current, and hands you the direct link. Payments are on the roadmap.</p></details>
+    <details class="hp-faq"><summary>What about my privacy?</summary><p>Conversations are used only to answer you. The things Hunch remembers about you are stored per-person and erased instantly with <b>/forget</b>.</p></details>
+    <details class="hp-faq"><summary>Why invite-only?</summary><p>Quality. Each assistant conversation uses serious AI compute, so we grow member by member instead of degrading for everyone.</p></details>
+  </section>
+
+  <footer class="hp-footer">
+    Hunch — a personal AI assistant on WhatsApp.<br />
+    Hunch is an independent product and is not affiliated with, endorsed by, or sponsored by WhatsApp&nbsp;LLC or Meta.
+  </footer>
+
+  <script>
+    // Configure after deploying the worker (hunch/README.md):
+    const WAITLIST_ENDPOINT = ""; // e.g. "https://hunch-whatsapp.<you>.workers.dev/waitlist"
+    const WHATSAPP_NUMBER = "";   // e.g. "15550001234" → wa.me deep link for members
+
+    if (WHATSAPP_NUMBER) {
+      document.getElementById("wa-cta").href =
+        "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent("Hi Hunch! My invite code is: ");
+    }
+
+    document.getElementById("wl-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const note = document.getElementById("wl-note");
+      const email = document.getElementById("wl-email").value.trim();
+      const country = document.getElementById("wl-country").value.trim();
+      if (!WAITLIST_ENDPOINT) {
+        note.className = "ok";
+        note.textContent = "Waitlist backend not configured yet — set WAITLIST_ENDPOINT in hunch.html.";
+        return;
+      }
+      note.className = ""; note.textContent = "Adding you…";
+      try {
+        const r = await fetch(WAITLIST_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, country }),
+        });
+        if (r.ok) { note.className = "ok"; note.textContent = "You're on the list! We'll email your invite. 🎟️"; e.target.reset(); }
+        else { note.textContent = "That email doesn't look right — try again?"; }
+      } catch { note.textContent = "Network hiccup — please try again."; }
+    });
+  </script>
+</body>
+</html>

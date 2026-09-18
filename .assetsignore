@@ -1,1 +1,2 @@
-workers/
+# Excluded from the static-assets deploy (wrangler.toml [assets])
+hunch/
