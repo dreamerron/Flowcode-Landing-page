@@ -18,10 +18,32 @@ These are **two different systems**, and the app should support both as separate
 | Best starting age | ~8+ (needs basic arithmetic first) | ~5–7 (starts from counting) |
 | Strength | Fast multiplication, division, squares, algebra later | Blazing-fast addition/subtraction of long number chains, strong number sense |
 
-**Recommendation:** if your son is young (5–8), start with the **abacus/mental
-arithmetic track**, and unlock the **Vedic track** once he's fluent in basic
-operations. The app models both as "courses" so this ordering is just content
-configuration, not code.
+**Recommendation:** the app models both as "courses", so ordering is just
+content configuration, not code.
+
+### The learner: 8 years old — the starting plan
+
+Age 8 is the sweet spot where both tracks are viable, and he'll progress
+faster than a 5–6 year old would:
+
+- **Weeks 1–8: Mental Abacus only.** He already knows basic arithmetic, so
+  Levels 1–2 (bead values, simple add/subtract) will go quickly — expect to
+  compress them into 2–3 weeks instead of months. The real work starts at
+  Levels 3–4 (5- and 10-complements). Daily 15-minute sessions.
+- **After abacus Level 4: unlock the Vedic track in parallel.** Run a mixed
+  daily plan (about 10 min abacus + 5 min Vedic). Vedic Level 1 (digit sums,
+  casting out nines) is easy and fun at 8, and the two systems reinforce each
+  other rather than conflict — abacus builds raw speed and number sense,
+  Vedic builds clever technique.
+- **Multiplication timing is ideal:** he'll be hitting multiplication tables
+  at school around this age, so abacus Level 7 (tables on the abacus) and
+  Vedic Levels 3–5 (multiplication shortcuts) land exactly when school needs
+  them — an early, visible "my son is suddenly great at math" win.
+- **Content implication for the MVP:** author Levels 1–2 as short
+  "accelerated" variants (fewer repetitions, faster pacing gates) so an
+  8-year-old isn't bored before reaching the interesting material. The pacing
+  gates in the drill engine (advance on speed + accuracy, not lesson count)
+  make this automatic.
 
 ---
 
@@ -186,7 +208,9 @@ possibly a content-authoring tool so packs can be written without coding.
 
 ## 8. Immediate Next Steps
 
-1. Confirm son's age/current level → pick starting track and Level-1 content.
+1. ~~Confirm son's age~~ → he's 8: start with the Mental Abacus track using
+   accelerated Levels 1–2, unlock Vedic in parallel after abacus Level 4
+   (see §1).
 2. Decide repo home (this should live in its own repository, not the landing
    page repo).
 3. Scaffold Flutter monorepo (Phase 0).
