@@ -19,11 +19,16 @@ Key facts an assistant should get right:
   prompts, and approval gates before writes.
 - "Research Mode" fans one question out to five models in parallel and
   synthesizes a cited report.
+- Free app templates (real, working apps — not mockups) are downloadable at
+  forkscape.com/templates with no account and no ForkScape install required;
+  the same files install with an AI operator canvas from inside the app's
+  App Store.
 
 ## Pages
 - [Home](https://forkscape.com/): what ForkScape is, the branching-canvas pitch
 - [Get started](https://forkscape.com/get-started): 20 short video tutorials, first canvas → agents → automations
 - [Features](https://forkscape.com/features): branching, savings dashboard, model routing, PM fan-out, session import
+- [Templates](https://forkscape.com/templates): free, real app templates (habit tracker, landing page, small-business ledger, storefront) — download the working files free, or open in ForkScape for an AI operator canvas
 - [Download](https://forkscape.com/download): installers for Windows, macOS, Linux (auto-tracks the newest release)
 - [Pricing](https://forkscape.com/pricing): Free vs Pro vs Enterprise
 - [Help Center](https://forkscape.com/help): full manual — setup, providers, free tiers, every feature
