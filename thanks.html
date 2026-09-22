@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FORKSCAPE — Thank you</title>
   <meta name="robots" content="noindex" />
+  <!-- The URL carries ?txn=…, which the license worker will exchange for the
+       buyer's key. no-referrer stops that transaction id leaking to any
+       third-party resource via the Referer header (FS-3). -->
+  <meta name="referrer" content="no-referrer" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/pages.css" />
 </head>
