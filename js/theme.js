@@ -24,17 +24,19 @@ const THEMES = {
   // Daylight: a blue sky, the tunnel drawn in mist, smoky white clouds along
   // the walls. Node colours are deep and saturated so they hold on a light ground.
   sky: {
-    id: 'sky', light: true,
+    id: 'sky', light: true, glass: true, // Apple Liquid Glass chrome — this theme only
     bg: 0xbcd8f2, transparentBg: true,
     fog: { color: 0xd9e8f7, density: 0.05 },
     blending: 'normal',
-    ring: { base: 0xffffff, accent: 0x1f4fd6, baseOpacity: 0.42, accentOpacity: 0.55 },
-    dust: { colors: [0xffffff, 0xffffff, 0x1f4fd6], opacity: 0.55, size: 0.045, count: 1200 },
+    ring: { base: 0xffffff, accent: 0x0071e3, baseOpacity: 0.42, accentOpacity: 0.55 },
+    dust: { colors: [0xffffff, 0xffffff, 0x0071e3], opacity: 0.55, size: 0.045, count: 1200 },
     clouds: { color: 0xffffff, tint: 0xeaf3fc, count: 380, opacity: 0.34 },
     glow: 0.45,
-    accent: '#1f4fd6',
-    card: { fill: 'rgba(255,255,255,0.94)', text: '#0f2340', line: 'rgba(15,35,64,0.18)', btn: 'rgba(15,35,64,0.10)' },
-    colors: { purple: '#6c4ab6', amber: '#d98c07', green: '#1f8a5b', teal: '#0e8f9e', blue: '#1f4fd6', red: '#d9483b', cyan: '#1a8ab8', white: '#0f2340' },
+    accent: '#0071e3',
+    // translucent, not near-opaque: node cards are real glass in the 3D
+    // scene (the sprite's alpha channel lets the tunnel show through)
+    card: { fill: 'rgba(255,255,255,0.46)', text: '#0f2340', line: 'rgba(15,35,64,0.26)', btn: 'rgba(15,35,64,0.14)' },
+    colors: { purple: '#6c4ab6', amber: '#d98c07', green: '#1f8a5b', teal: '#0e8f9e', blue: '#0071e3', red: '#d9483b', cyan: '#1a8ab8', white: '#0f2340' },
   },
 
   // Golden hour: the same cloud tunnel at dusk. Indigo overhead, peach at the

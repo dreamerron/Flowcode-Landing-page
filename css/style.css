@@ -177,6 +177,9 @@ body {
 }
 .caption h2 em { font-style: normal; color: var(--c, var(--accent)); }
 .caption p { margin-top: 10px; color: var(--dim); font-size: 15px; line-height: 1.55; }
+/* neutral wrapper everywhere except sky, which turns it into a glass plate
+   (see the Apple Liquid Glass block at the end of this file) */
+.caption__panel { display: inline-block; }
 
 /* --------------------------------------------------- flat 2D canvas ------ */
 #flat-canvas {
@@ -444,14 +447,33 @@ h1, h2, h3, .price { font-family: var(--font-display); }
   --sky: linear-gradient(180deg, #7fb3e3 0%, #b6d4f0 45%, #e6f0fa 100%);
   --canvas-bg: linear-gradient(180deg, #d4e5f6, #eaf2fa);
   --ink: #0f2340; --dim: #4a5f7d;
-  --accent: #1f4fd6; --on-accent: #ffffff; --accent-2: #d98c07; --title: #0f2340; --logo: #1f4fd6;
-  --teal: #0e8f9e; --blue: #1f4fd6; --amber: #d98c07; --green: #1f8a5b; --purple: #6c4ab6; --red: #d9483b;
+  /* Apple system blue / green, in place of the brand blue used elsewhere */
+  --accent: #0071e3; --on-accent: #ffffff; --accent-2: #248a3d; --title: #0f2340; --logo: #0071e3;
+  --teal: #0e8f9e; --blue: #0071e3; --amber: #d98c07; --green: #1f8a5b; --purple: #6c4ab6; --red: #d9483b;
   --grid-line: rgba(15,35,64,0.06);
   --nav-bg: rgba(200,222,243,0.9); --bar-bg: rgba(226,238,250,0.88); --bar-border: rgba(15,35,64,0.12);
   --card-bg: rgba(255,255,255,0.94); --line: rgba(15,35,64,0.18); --btn-bg: rgba(15,35,64,0.08);
   --chip-bg: rgba(255,255,255,0.85); --chip-border: rgba(15,35,64,0.15);
   --stage-bg: rgba(226,238,250,0.72); --stage-glow: rgba(31,79,214,0.10);
-  --c1: #0f2340; --c2: #1f4fd6; --c3: #6c4ab6; --c4: #1f8a5b; --c5: #0e8f9e; --c6: #d98c07;
+  --c1: #0f2340; --c2: #0071e3; --c3: #6c4ab6; --c4: #1f8a5b; --c5: #0e8f9e; --c6: #d98c07;
+
+  /* Apple system font stack: resolves to San Francisco on Apple devices,
+     the platform UI font elsewhere. No web font is embedded — Apple does
+     not license SF Pro for general redistribution, and this is the same
+     stack apple.com itself serves. */
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  /* Liquid Glass material tokens — sky is the only theme that uses these */
+  --glass-fill: rgba(255,255,255,0.40);
+  --glass-fill-strong: rgba(255,255,255,0.62);
+  --glass-border-soft: rgba(255,255,255,0.55);
+  --glass-blur: 26px;
+  --glass-sat: 190%;
+  --glass-shadow:
+    inset 0 1px 1px rgba(255,255,255,.8),
+    inset 0 -10px 18px -16px rgba(15,35,64,.3),
+    0 16px 40px -16px rgba(15,35,64,.35);
 }
 
 /* ---- dusk: the same cloud tunnel at golden hour ---- */
@@ -502,3 +524,108 @@ h1, h2, h3, .price { font-family: var(--font-display); }
   --stage-bg: rgba(11,13,16,0.62); --stage-glow: rgba(0,209,178,0.10);
   --c1: #f2f4f7; --c2: #00d1b2; --c3: #c8d0dc; --c4: #7ee8d6; --c5: #00d1b2; --c6: #f2f4f7;
 }
+
+/* ============================================================ liquid glass ==
+   Apple-style frosted glass chrome, sky theme only. Real translucency via
+   backdrop-filter (blur + saturate over whatever scrolls behind it), a
+   specular sheen across the top of each panel, and — on the bigger panels —
+   a conic-gradient rim masked down to a 1.5px ring, so the edge itself
+   looks like it's catching light the way a curved glass plate does.
+   Two mixins by hand (no preprocessor here): `%sheen` and `%rim` below are
+   duplicated per selector list rather than shared, since plain CSS has no
+   @mixin — keep any visual tweak in sync across both. */
+
+/* top nav → an edge-to-edge glass bar, the way apple.com's own nav is built */
+[data-theme="sky"] .nav {
+  background: var(--glass-fill);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+  border-bottom: 1px solid var(--glass-border-soft);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.55);
+}
+[data-theme="sky"] .nav__links a {
+  padding: 7px 12px; border-radius: 8px;
+  transition: background .2s, color .2s;
+}
+[data-theme="sky"] .nav__links a:hover,
+[data-theme="sky"] .nav__links a.is-active {
+  background: rgba(15,35,64,.07); color: var(--ink);
+}
+
+/* the "launch month" chip already reads as a tinted glass pill — just add
+   real blur and a top highlight so it catches light like the rest */
+[data-theme="sky"] .hero__launch a {
+  backdrop-filter: blur(16px) saturate(170%);
+  -webkit-backdrop-filter: blur(16px) saturate(170%);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,.7), 0 6px 18px -10px rgba(15,35,64,.3);
+}
+
+/* floating circular action button — a classic Liquid Glass control */
+[data-theme="sky"] #play-btn {
+  background: var(--glass-fill-strong);
+  backdrop-filter: blur(18px) saturate(var(--glass-sat));
+  -webkit-backdrop-filter: blur(18px) saturate(var(--glass-sat));
+  color: var(--accent) !important;
+  box-shadow: var(--glass-shadow);
+  border: 1px solid var(--glass-border-soft);
+}
+[data-theme="sky"] #play-btn::after { border-color: rgba(255,255,255,.6); }
+
+/* the flat-canvas toolbar chips and agent/worker cards */
+[data-theme="sky"] .fc-chip {
+  background: var(--glass-fill);
+  backdrop-filter: blur(18px) saturate(var(--glass-sat));
+  -webkit-backdrop-filter: blur(18px) saturate(var(--glass-sat));
+  border-color: var(--glass-border-soft);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,.7), 0 6px 16px -10px rgba(15,35,64,.2);
+}
+[data-theme="sky"] .fc-card {
+  background: var(--glass-fill-strong);
+  backdrop-filter: blur(24px) saturate(var(--glass-sat));
+  -webkit-backdrop-filter: blur(24px) saturate(var(--glass-sat));
+  box-shadow: var(--glass-shadow);
+}
+[data-theme="sky"] .fc-card--master {
+  box-shadow: var(--glass-shadow), 0 0 0 2px color-mix(in srgb, var(--c) 45%, transparent);
+}
+
+/* secondary CTA — primary stays a solid Apple-blue pill (see the shared
+   [data-theme] rule above); glass is for the supporting action */
+[data-theme="sky"] .savings__cta--try {
+  backdrop-filter: blur(18px) saturate(var(--glass-sat));
+  -webkit-backdrop-filter: blur(18px) saturate(var(--glass-sat));
+  background: var(--glass-fill);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,.7), 0 6px 16px -12px rgba(15,35,64,.25);
+}
+
+/* the curved glass plate behind each scroll caption — the main ask */
+[data-theme="sky"] .caption__panel {
+  position: relative;
+  padding: 30px 42px;
+  border-radius: 30px;
+  background: var(--glass-fill);
+  backdrop-filter: blur(28px) saturate(var(--glass-sat));
+  -webkit-backdrop-filter: blur(28px) saturate(var(--glass-sat));
+  box-shadow: var(--glass-shadow);
+  overflow: hidden;
+}
+/* specular sheen sweeping up from the lower-left, as if the plate curves */
+[data-theme="sky"] .caption__panel::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(120% 65% at 26% -15%, rgba(255,255,255,.95), transparent 58%);
+  mix-blend-mode: screen;
+}
+/* bright rim traveling around the edge — refraction highlight, masked down
+   to a thin ring so only the border of the plate catches it */
+[data-theme="sky"] .caption__panel::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  border-radius: inherit; padding: 1.5px;
+  background: conic-gradient(from 205deg,
+    rgba(255,255,255,.05), rgba(255,255,255,.95) 10%, rgba(255,255,255,.05) 28%,
+    rgba(255,255,255,.05) 62%, rgba(255,255,255,.75) 80%, rgba(255,255,255,.05) 96%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+}
+[data-theme="sky"] .caption h2,
+[data-theme="sky"] .hero__title { font-weight: 600; letter-spacing: -0.02em; }
+[data-theme="sky"] .hero__eyebrow { letter-spacing: 0.02em; font-weight: 590; }

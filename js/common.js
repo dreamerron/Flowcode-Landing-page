@@ -8,6 +8,12 @@ import { THEME } from './theme.js';
 export { THEME };
 export const PALETTE = { bg: THEME.bg, ...THEME.colors };
 export const BLENDING = THEME.blending === 'additive' ? THREE.AdditiveBlending : THREE.NormalBlending;
+// Apple Liquid Glass node cards (sky theme only): drawn with real
+// translucency (the canvas fill uses alpha < 1, so the sprite's texture
+// alpha lets the tunnel show through) plus a baked-in specular sheen and a
+// bright rim on top of the colour stroke, to read as curved glass rather
+// than a flat card.
+const GLASS = !!THEME.glass;
 
 export const CARD_COLORS = [
   PALETTE.purple, PALETTE.amber, PALETTE.green,
@@ -64,11 +70,36 @@ export function cardTexture({ title, color, badge = 'Agent', lines = 3, w = 512,
   rr(6, 6, w - 12, h - 12, r);
   g.fillStyle = THEME.card.fill;
   g.fill();
-  g.lineWidth = 5;
+
+  if (GLASS) {
+    // specular sheen, as if light were passing through a curved pane
+    g.save();
+    rr(6, 6, w - 12, h - 12, r);
+    g.clip();
+    const sheen = g.createRadialGradient(w * 0.32, -h * 0.3, 0, w * 0.32, -h * 0.3, w * 0.95);
+    sheen.addColorStop(0, 'rgba(255,255,255,0.9)');
+    sheen.addColorStop(1, 'rgba(255,255,255,0)');
+    g.fillStyle = sheen;
+    g.fillRect(0, 0, w, h);
+    g.restore();
+  }
+
+  g.lineWidth = GLASS ? 2 : 5;
   g.strokeStyle = color;
-  g.globalAlpha = 0.95;
+  g.globalAlpha = GLASS ? 0.5 : 0.95;
   g.stroke();
   g.globalAlpha = 1;
+
+  if (GLASS) {
+    // thin bright rim on top of the colour stroke — the edge of the glass
+    // catching light, the way a curved plate does
+    rr(6, 6, w - 12, h - 12, r);
+    g.lineWidth = 1.5;
+    g.strokeStyle = 'rgba(255,255,255,0.9)';
+    g.globalAlpha = 0.65;
+    g.stroke();
+    g.globalAlpha = 1;
+  }
 
   // header strip
   rr(6, 6, w - 12, 64, [r, r, 0, 0]);
