@@ -472,6 +472,11 @@ h1, h2, h3, .price { font-family: var(--font-display); }
   --glass-fill-strong: rgba(255,255,255,0.24);
   --glass-border-soft: rgba(255,255,255,0.65);
   --glass-blur: 6px; /* a light frost — soft, but the rim and refraction still read clearly */
+  /* real frosted glass is grainy, not smoothly blurred — it's a surface of
+     tiny random facets scattering light unevenly. This tiles a fine
+     feTurbulence noise texture over every glass surface, blended with
+     "overlay" so it reads as texture rather than a visible pattern. */
+  --glass-noise: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxNDAnIGhlaWdodD0nMTQwJz4KPGZpbHRlciBpZD0nbic+CjxmZVR1cmJ1bGVuY2UgdHlwZT0nZnJhY3RhbE5vaXNlJyBiYXNlRnJlcXVlbmN5PScwLjknIG51bU9jdGF2ZXM9JzInIHN0aXRjaFRpbGVzPSdzdGl0Y2gnIHJlc3VsdD0ndCcvPgo8ZmVDb2xvck1hdHJpeCBpbj0ndCcgdHlwZT0nbWF0cml4JyB2YWx1ZXM9JzAuMzMgMC4zMyAwLjMzIDAgMCAgMC4zMyAwLjMzIDAuMzMgMCAwICAwLjMzIDAuMzMgMC4zMyAwIDAgIDAgMCAwIDAgMScgcmVzdWx0PSdncmF5Jy8+CjxmZUNvbXBvbmVudFRyYW5zZmVyIGluPSdncmF5Jz4KPGZlRnVuY1IgdHlwZT0nbGluZWFyJyBzbG9wZT0nMS4zNScgaW50ZXJjZXB0PSctMC4xOCcvPgo8ZmVGdW5jRyB0eXBlPSdsaW5lYXInIHNsb3BlPScxLjM1JyBpbnRlcmNlcHQ9Jy0wLjE4Jy8+CjxmZUZ1bmNCIHR5cGU9J2xpbmVhcicgc2xvcGU9JzEuMzUnIGludGVyY2VwdD0nLTAuMTgnLz4KPGZlRnVuY0EgdHlwZT0nbGluZWFyJyBzbG9wZT0nMCcgaW50ZXJjZXB0PScwLjM4Jy8+CjwvZmVDb21wb25lbnRUcmFuc2Zlcj4KPC9maWx0ZXI+CjxyZWN0IHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnIGZpbHRlcj0ndXJsKCNuKScvPgo8L3N2Zz4=");
   --glass-sat: 190%;
   /* a crisp, full-perimeter bright edge (the rim a curved plate catches
      light on) plus a soft ambient drop shadow for lift off the page */
@@ -543,7 +548,10 @@ h1, h2, h3, .price { font-family: var(--font-display); }
 
 /* top nav → an edge-to-edge glass bar, the way apple.com's own nav is built */
 [data-theme="sky"] .nav {
-  background: var(--glass-fill);
+  background-color: var(--glass-fill);
+  background-image: var(--glass-noise);
+  background-size: 130px 130px;
+  background-blend-mode: overlay;
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
   border-bottom: 1px solid var(--glass-border-soft);
@@ -572,7 +580,10 @@ h1, h2, h3, .price { font-family: var(--font-display); }
    reference filter inside backdrop-filter drop the second declaration
    entirely and keep the first. */
 [data-theme="sky"] #play-btn {
-  background: var(--glass-fill-strong);
+  background-color: var(--glass-fill-strong);
+  background-image: var(--glass-noise);
+  background-size: 130px 130px;
+  background-blend-mode: overlay;
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
   backdrop-filter: url(#lg-lens-button) blur(var(--glass-blur)) saturate(var(--glass-sat));
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
@@ -584,14 +595,20 @@ h1, h2, h3, .price { font-family: var(--font-display); }
 
 /* the flat-canvas toolbar chips and agent/worker cards */
 [data-theme="sky"] .fc-chip {
-  background: var(--glass-fill);
+  background-color: var(--glass-fill);
+  background-image: var(--glass-noise);
+  background-size: 130px 130px;
+  background-blend-mode: overlay;
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
   border-color: var(--glass-border-soft);
   box-shadow: inset 0 1px 1px rgba(255,255,255,.7), 0 6px 16px -10px rgba(15,35,64,.2);
 }
 [data-theme="sky"] .fc-card {
-  background: var(--glass-fill-strong);
+  background-color: var(--glass-fill-strong);
+  background-image: var(--glass-noise);
+  background-size: 130px 130px;
+  background-blend-mode: overlay;
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
   box-shadow: var(--glass-shadow);
@@ -605,7 +622,10 @@ h1, h2, h3, .price { font-family: var(--font-display); }
 [data-theme="sky"] .savings__cta--try {
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
-  background: var(--glass-fill);
+  background-color: var(--glass-fill);
+  background-image: var(--glass-noise);
+  background-size: 130px 130px;
+  background-blend-mode: overlay;
   box-shadow: inset 0 1px 1px rgba(255,255,255,.7), 0 6px 16px -12px rgba(15,35,64,.25);
 }
 
@@ -618,7 +638,10 @@ h1, h2, h3, .price { font-family: var(--font-display); }
   position: relative;
   padding: 30px 42px;
   border-radius: 30px;
-  background: var(--glass-fill);
+  background-color: var(--glass-fill);
+  background-image: var(--glass-noise);
+  background-size: 130px 130px;
+  background-blend-mode: overlay;
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
   backdrop-filter: url(#lg-lens-panel) blur(var(--glass-blur)) saturate(var(--glass-sat));
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));

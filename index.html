@@ -99,6 +99,13 @@
         <feBlend in="dispR" in2="dispG" mode="screen" result="rg"/>
         <feBlend in="rg" in2="dispB" mode="screen" result="refracted"/>
 
+        <!-- grain: real frosted glass is a surface of tiny random
+             facets, not a smooth blur — this scatters the already-
+             refracted image with fine, static turbulence, the way
+             ground/etched glass breaks up light unevenly. -->
+        <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="2" seed="4" stitchTiles="stitch" result="grain"/>
+        <feDisplacementMap in="refracted" in2="grain" scale="7" xChannelSelector="R" yChannelSelector="G" result="scattered"/>
+
         <!-- specular reflection: a tight, bright hot-spot rather than a
              wash — high specularExponent narrows the highlight -->
         <feSpecularLighting in="bump" surfaceScale="10" specularConstant="1.1" specularExponent="42" lighting-color="#ffffff" result="spec">
@@ -106,7 +113,7 @@
         </feSpecularLighting>
 
         <feMerge>
-          <feMergeNode in="refracted"/>
+          <feMergeNode in="scattered"/>
           <feMergeNode in="spec"/>
         </feMerge>
       </filter>
@@ -137,6 +144,13 @@
         <feBlend in="dispR" in2="dispG" mode="screen" result="rg"/>
         <feBlend in="rg" in2="dispB" mode="screen" result="refracted"/>
 
+        <!-- grain: real frosted glass is a surface of tiny random
+             facets, not a smooth blur — this scatters the already-
+             refracted image with fine, static turbulence, the way
+             ground/etched glass breaks up light unevenly. -->
+        <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="4" stitchTiles="stitch" result="grain"/>
+        <feDisplacementMap in="refracted" in2="grain" scale="2.5" xChannelSelector="R" yChannelSelector="G" result="scattered"/>
+
         <!-- specular reflection: a tight, bright hot-spot rather than a
              wash — high specularExponent narrows the highlight -->
         <feSpecularLighting in="bump" surfaceScale="3.5" specularConstant="1.15" specularExponent="32" lighting-color="#ffffff" result="spec">
@@ -144,7 +158,7 @@
         </feSpecularLighting>
 
         <feMerge>
-          <feMergeNode in="refracted"/>
+          <feMergeNode in="scattered"/>
           <feMergeNode in="spec"/>
         </feMerge>
       </filter>
