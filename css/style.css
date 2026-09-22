@@ -471,7 +471,7 @@ h1, h2, h3, .price { font-family: var(--font-display); }
   --glass-fill: rgba(255,255,255,0.14);
   --glass-fill-strong: rgba(255,255,255,0.24);
   --glass-border-soft: rgba(255,255,255,0.65);
-  --glass-blur: 1.3px; /* barely-there frost — clear glass, not milky */
+  --glass-blur: 6px; /* a light frost — soft, but the rim and refraction still read clearly */
   --glass-sat: 190%;
   /* a crisp, full-perimeter bright edge (the rim a curved plate catches
      light on) plus a soft ambient drop shadow for lift off the page */
