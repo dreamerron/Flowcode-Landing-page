@@ -2,16 +2,15 @@
 // DOM node cards + an SVG layer of glowing bezier wires with flowing pulses,
 // converging on the central "Project Scaffold Software Engineer" master card.
 
-const COLORS = {
-  purple: '#a78bfa', amber: '#fbbf24', green: '#4ade80',
-  teal: '#2dd4bf', blue: '#60a5fa', red: '#f87171', cyan: '#22d3ee',
-};
+import { THEME } from './theme.js';
+
+const COLORS = THEME.colors;
 
 // A parent → child tree, like the real FORKSCAPE canvas: the Project Manager
 // spawns specialist agents, and every agent spawns its own workers.
 // x/y as % of the canvas; `parent` is the id the wire connects up to.
 const CARDS = [
-  { id: 'prompt', title: 'Master Prompt', badge: 'You', color: '#cbd5e1', x: 50, y: 9, w: 180, parent: null },
+  { id: 'prompt', title: 'Master Prompt', badge: 'You', color: THEME.id === 'current' ? '#cbd5e1' : COLORS.white, x: 50, y: 9, w: 180, parent: null },
   { id: 'master', title: 'Project Manager — AI orchestrator', badge: 'AI', color: COLORS.blue,
     x: 50, y: 32, w: 240, master: true, parent: 'prompt' },
 

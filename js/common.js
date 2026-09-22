@@ -3,18 +3,11 @@
 // dark canvas, colored agent cards, glowing bezier wires.
 
 import * as THREE from '../vendor/three.module.js';
+import { THEME } from './theme.js';
 
-export const PALETTE = {
-  bg: 0x05070d,
-  purple: '#a78bfa',
-  amber: '#fbbf24',
-  green: '#4ade80',
-  teal: '#2dd4bf',
-  blue: '#60a5fa',
-  red: '#f87171',
-  cyan: '#22d3ee',
-  white: '#e8ecf4',
-};
+export { THEME };
+export const PALETTE = { bg: THEME.bg, ...THEME.colors };
+export const BLENDING = THEME.blending === 'additive' ? THREE.AdditiveBlending : THREE.NormalBlending;
 
 export const CARD_COLORS = [
   PALETTE.purple, PALETTE.amber, PALETTE.green,
@@ -45,7 +38,7 @@ export function makeGlowSprite(color, scale = 1) {
     map: glowTexture(),
     color: new THREE.Color(color),
     transparent: true,
-    blending: THREE.AdditiveBlending,
+    blending: BLENDING,
     depthWrite: false,
   });
   const s = new THREE.Sprite(mat);
@@ -69,7 +62,7 @@ export function cardTexture({ title, color, badge = 'Agent', lines = 3, w = 512,
 
   // card body
   rr(6, 6, w - 12, h - 12, r);
-  g.fillStyle = 'rgba(10,14,24,0.92)';
+  g.fillStyle = THEME.card.fill;
   g.fill();
   g.lineWidth = 5;
   g.strokeStyle = color;
@@ -86,18 +79,18 @@ export function cardTexture({ title, color, badge = 'Agent', lines = 3, w = 512,
   rr(26, 20, 108, 36, 10);
   g.fillStyle = hexToRgba(color, 0.35);
   g.fill();
-  g.fillStyle = '#eef2ff';
+  g.fillStyle = THEME.card.text;
   g.font = '600 22px "Segoe UI", system-ui, sans-serif';
   g.textBaseline = 'middle';
   g.fillText(badge, 42, 39);
 
   // title
-  g.fillStyle = '#f1f5fd';
+  g.fillStyle = THEME.card.text;
   g.font = '700 26px "Segoe UI", system-ui, sans-serif';
   g.fillText(truncate(g, title, w - 190), 150, 39);
 
   // body placeholder lines
-  g.fillStyle = 'rgba(200,212,235,0.32)';
+  g.fillStyle = THEME.card.line;
   for (let i = 0; i < lines; i++) {
     const ly = 100 + i * 34;
     const lw = (w - 60) * (i === lines - 1 ? 0.55 : 0.88);
@@ -110,9 +103,9 @@ export function cardTexture({ title, color, badge = 'Agent', lines = 3, w = 512,
   g.fillStyle = hexToRgba(color, 0.5);
   g.fill();
   rr(160, h - 66, 118, 40, 10);
-  g.fillStyle = 'rgba(120,140,180,0.22)';
+  g.fillStyle = THEME.card.btn;
   g.fill();
-  g.fillStyle = '#eef2ff';
+  g.fillStyle = THEME.card.text;
   g.font = '600 20px "Segoe UI", system-ui, sans-serif';
   g.fillText('Run', 72, h - 45);
   g.fillText('Adjust', 188, h - 45);

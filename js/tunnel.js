@@ -6,19 +6,22 @@
 
 import * as THREE from '../vendor/three.module.js';
 import {
-  PALETTE, CARD_COLORS, makeGlowSprite, makeCardSprite,
+  THEME, PALETTE, CARD_COLORS, BLENDING, makeGlowSprite, makeCardSprite,
   lerp, clamp01, smoothstep,
 } from './common.js';
 
 // ------------------------------------------------------------------ scene ---
 const canvas = document.getElementById('webgl');
-const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
+// Sky themes paint a CSS gradient behind a transparent canvas; the others
+// clear to a flat colour.
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: THEME.transparentBg });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.setSize(innerWidth, innerHeight);
+if (THEME.transparentBg) renderer.setClearColor(0x000000, 0);
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(PALETTE.bg);
-scene.fog = new THREE.FogExp2(PALETTE.bg, 0.038);
+if (!THEME.transparentBg) scene.background = new THREE.Color(PALETTE.bg);
+scene.fog = new THREE.FogExp2(THEME.fog.color, THEME.fog.density);
 
 const camera = new THREE.PerspectiveCamera(62, innerWidth / innerHeight, 0.1, 200);
 
@@ -44,9 +47,9 @@ scene.add(ringGroup);
   for (let i = 0; i < 140; i++) {
     const t = i / 139;
     const mat = new THREE.MeshBasicMaterial({
-      color: i % 7 === 0 ? 0x2dd4bf : 0x1b2b4a,
+      color: i % 7 === 0 ? THEME.ring.accent : THEME.ring.base,
       transparent: true,
-      opacity: i % 7 === 0 ? 0.9 : 0.55,
+      opacity: i % 7 === 0 ? THEME.ring.accentOpacity : THEME.ring.baseOpacity,
     });
     const ring = new THREE.Mesh(ringGeo, mat);
     ring.position.copy(path.getPointAt(t));
@@ -57,10 +60,10 @@ scene.add(ringGroup);
 
 // tunnel dust — points swirling around the path
 {
-  const N = 2600;
+  const N = THEME.dust.count;
   const pos = new Float32Array(N * 3);
   const col = new Float32Array(N * 3);
-  const cA = new THREE.Color(0x2dd4bf), cB = new THREE.Color(0x60a5fa), cC = new THREE.Color(0xfbbf24);
+  const [cA, cB, cC] = THEME.dust.colors.map((c) => new THREE.Color(c));
   for (let i = 0; i < N; i++) {
     const t = Math.random();
     const p = path.getPointAt(t);
@@ -76,10 +79,54 @@ scene.add(ringGroup);
   geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
   geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
   const mat = new THREE.PointsMaterial({
-    size: 0.05, vertexColors: true, transparent: true, opacity: 0.75,
-    blending: THREE.AdditiveBlending, depthWrite: false,
+    size: THEME.dust.size, vertexColors: true, transparent: true, opacity: THEME.dust.opacity,
+    blending: BLENDING, depthWrite: false,
   });
   scene.add(new THREE.Points(geo, mat));
+}
+
+// smoky clouds (sky themes) — soft puff sprites hugging the tunnel wall,
+// each turning slowly so the wall looks like drifting mist rather than
+// pasted billboards
+const cloudSprites = [];
+if (THEME.clouds) {
+  const c = document.createElement('canvas');
+  c.width = c.height = 256;
+  const g = c.getContext('2d');
+  let seed = 7;
+  const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  for (let i = 0; i < 46; i++) {
+    const a = rnd() * Math.PI * 2, d = rnd() * 78;
+    const x = 128 + Math.cos(a) * d, y = 128 + Math.sin(a) * d, r = 26 + rnd() * 48;
+    const grad = g.createRadialGradient(x, y, 0, x, y, r);
+    grad.addColorStop(0, 'rgba(255,255,255,0.16)');
+    grad.addColorStop(1, 'rgba(255,255,255,0)');
+    g.fillStyle = grad;
+    g.fillRect(0, 0, 256, 256);
+  }
+  const tex = new THREE.CanvasTexture(c);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  const tintA = new THREE.Color(THEME.clouds.color), tintB = new THREE.Color(THEME.clouds.tint);
+  for (let i = 0; i < THEME.clouds.count; i++) {
+    const t = Math.random();
+    const p = path.getPointAt(t);
+    const a = Math.random() * Math.PI * 2;
+    const inner = Math.random() < 0.22;
+    const r = inner ? 2.4 + Math.random() * 1.6 : 4.6 + Math.random() * 3.6;
+    const mat = new THREE.SpriteMaterial({
+      map: tex, transparent: true, depthWrite: false,
+      color: tintA.clone().lerp(tintB, Math.random() * 0.8),
+      opacity: THEME.clouds.opacity * (inner ? 0.55 : 0.8 + Math.random() * 0.4),
+      rotation: Math.random() * Math.PI * 2,
+    });
+    const s = new THREE.Sprite(mat);
+    s.position.set(p.x + Math.cos(a) * r, p.y + Math.sin(a) * r, p.z + (Math.random() - 0.5) * 3);
+    const size = inner ? 1.6 + Math.random() * 1.8 : 3 + Math.random() * 4.5;
+    s.scale.setScalar(size);
+    s.userData.spin = (Math.random() - 0.5) * 0.08;
+    scene.add(s);
+    cloudSprites.push(s);
+  }
 }
 
 // --------------------------------------------------------------- the nodes --
@@ -87,7 +134,7 @@ scene.add(ringGroup);
 // agents, and every agent spawns its own worker nodes (parent → children).
 // `parent` is an index into this list; workers render smaller.
 const NODE_DEFS = [
-  { title: 'Master Prompt', badge: 'You', color: '#e8ecf4', t: 0.06, parent: null },
+  { title: 'Master Prompt', badge: 'You', color: PALETTE.white, t: 0.06, parent: null },
   { title: 'Project Manager', badge: 'AI', color: CARD_COLORS[4], t: 0.16, parent: 0 },
 
   { title: 'Scaffold Software Engineer', badge: 'Agent', color: CARD_COLORS[0], t: 0.28, parent: 1 },
@@ -136,7 +183,7 @@ function openBranch(parentIdx) {
   for (let i = 1; i <= 16; i++) {
     const bt = i / 16;
     const mat = new THREE.MeshBasicMaterial({
-      color: i % 4 === 0 ? def.color : 0x1b2b4a,
+      color: i % 4 === 0 ? def.color : THEME.ring.base,
       transparent: true, opacity: 0,
     });
     const ring = new THREE.Mesh(geo, mat);
@@ -144,7 +191,7 @@ function openBranch(parentIdx) {
     ring.lookAt(ring.position.clone().add(bFrames.tangents[i - 1]));
     // branch mouth is wide, tapers toward its end
     ring.scale.setScalar(2.4 - bt * 1.1);
-    ring.userData.base = i % 4 === 0 ? 0.85 : 0.5;
+    ring.userData.base = i % 4 === 0 ? 0.85 : THEME.ring.baseOpacity;
     scene.add(ring);
     rings.push(ring);
   }
@@ -207,7 +254,7 @@ function makeLink(a, b, color, midT) {
   const geo = new THREE.TubeGeometry(curve, SEG, 0.022, 6, false);
   const mat = new THREE.MeshBasicMaterial({
     color, transparent: true, opacity: 0.85,
-    blending: THREE.AdditiveBlending, depthWrite: false,
+    blending: BLENDING, depthWrite: false,
   });
   const mesh = new THREE.Mesh(geo, mat);
   const totalIndex = geo.index.count;
@@ -220,7 +267,7 @@ function makeLink(a, b, color, midT) {
   fGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(FN * 3), 3));
   const fMat = new THREE.PointsMaterial({
     color, size: 0.14, transparent: true, opacity: 0,
-    blending: THREE.AdditiveBlending, depthWrite: false, map: null,
+    blending: BLENDING, depthWrite: false, map: null,
   });
   const flow = new THREE.Points(fGeo, fMat);
   scene.add(flow);
@@ -243,9 +290,9 @@ NODE_DEFS.forEach((def, i) => {
 });
 
 // ambient master glow at tunnel entrance
-const masterHalo = makeGlowSprite(PALETTE.teal, 14);
+const masterHalo = makeGlowSprite(THEME.accent, 14);
 masterHalo.position.copy(nodes[0].group.position);
-masterHalo.material.opacity = 0.28;
+masterHalo.material.opacity = 0.28 * THEME.glow;
 scene.add(masterHalo);
 
 // ------------------------------------------------------------- scroll state -
@@ -384,8 +431,8 @@ function tick() {
     n.born = born;
     const pulse = 1 + Math.sin(et * 3 + i) * 0.08;
     n.group.scale.setScalar(Math.max(0.001, born) * pulse);
-    n.glow.material.opacity = born * (0.75 + Math.sin(et * 2.5 + i * 1.3) * 0.2);
-    n.halo.material.opacity = born * 0.3;
+    n.glow.material.opacity = born * (0.75 + Math.sin(et * 2.5 + i * 1.3) * 0.2) * THEME.glow;
+    n.halo.material.opacity = born * 0.3 * THEME.glow;
     n.card.material.opacity = smoothstep(s - 0.11, s - 0.06, t);
   });
 
@@ -411,7 +458,8 @@ function tick() {
     attr.needsUpdate = true;
   });
 
-  masterHalo.material.opacity = 0.28 * (1 - smoothstep(0.05, 0.2, t));
+  masterHalo.material.opacity = 0.28 * THEME.glow * (1 - smoothstep(0.05, 0.2, t));
+  for (const s of cloudSprites) s.material.rotation += s.userData.spin * dt;
 
   // hero + captions
   hero.style.opacity = 1 - smoothstep(0.02, 0.09, t);
