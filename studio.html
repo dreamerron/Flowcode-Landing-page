@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FORKSCAPE Studio — AI-first graphics and video, as layers you own</title>
+  <meta name="description" content="Describe a poster, cover, logo or social set and get real layers — text stays text, shapes stay vector. Edit by hand or by asking. Compare three variants side by side. PSD, PDF and SVG in and out. Video from script to render." />
+  <link rel="canonical" href="https://forkscape.com/studio" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="ForkScape Studio — prompt it, get layers, keep control" />
+  <meta property="og:description" content="AI-first graphics and video for designers and creators. Every element is a layer you can edit by hand or by asking. Nothing paid runs until you approve it." />
+  <meta property="og:url" content="https://forkscape.com/studio" />
+  <meta property="og:site_name" content="ForkScape" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "ForkScape Studio",
+  "operatingSystem": "Windows, macOS, Linux",
+  "applicationCategory": "DesignApplication",
+  "description": "AI-first graphics and video: describe a design and get editable layers, edit them by hand or by asking, compare variants, round-trip PSD, PDF and SVG. Part of the free ForkScape desktop app.",
+  "url": "https://forkscape.com/studio",
+  "downloadUrl": "https://forkscape.com/download",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "publisher": { "@type": "Organization", "name": "Illusion Media LLC", "email": "support@forkscape.com" }
+}
+  </script>
+  <style>
+    /* Studio page: same tokens as the rest of the site, purple-leaning accent
+       so it reads as its own door without leaving the brand. */
+    :root { --studio: #a78bfa; }
+    .studio-hero { padding-bottom: 8px; }
+    .studio-hero .eyebrow { color: var(--studio); }
+    .studio-hero .page-title { max-width: 900px; }
+    .studio-hero .page-lede { max-width: 720px; }
+    .studio-hero .row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+
+    /* The poster mock: a tiny layered document drawn in CSS so the page shows
+       the idea (layers, not a flat picture) without a screenshot to keep fresh. */
+    .poster-demo {
+      margin: 36px auto 0; max-width: 980px;
+      display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 22px; align-items: stretch;
+    }
+    .poster {
+      position: relative; aspect-ratio: 210 / 297; max-height: 560px; margin: 0 auto;
+      background: #f4ead8; border-radius: 6px; overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
+      font-family: var(--font-display); color: #1c2f4a;
+    }
+    .poster .layer { position: absolute; transition: outline-color .2s; outline: 1px dashed transparent; outline-offset: 3px; }
+    .poster .grain { inset: 0; opacity: .18; background-image: radial-gradient(rgba(0,0,0,.35) .6px, transparent .7px); background-size: 3px 3px; }
+    .poster .hills { left: -4%; right: -4%; bottom: 0; height: 32%; background: #1c2f4a; border-radius: 50% 50% 0 0 / 70% 70% 0 0; }
+    .poster .hills2 { left: -10%; right: 30%; bottom: 0; height: 24%; background: #24406a; border-radius: 50% 50% 0 0 / 60% 60% 0 0; }
+    .poster .sun { left: 56%; top: 9%; width: 34%; aspect-ratio: 1; border-radius: 50%; background: #d84a35; }
+    .poster .head { left: 7%; top: 7%; width: 80%; font-weight: 900; font-size: clamp(34px, 6.2cqw, 84px); line-height: .92; letter-spacing: -.03em; }
+    .poster .details { left: 7%; bottom: 7%; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: clamp(9px, 1.4cqw, 15px); color: #f4ead8; opacity: .95; }
+    .poster .badge { right: 7%; bottom: 6%; width: 19%; aspect-ratio: 1; background: #f2b134; color: #1c2f4a; display: grid; place-items: center; font-weight: 800; font-size: clamp(8px, 1.3cqw, 14px); text-align: center; line-height: 1.05; clip-path: polygon(50% 0%, 61% 12%, 76% 5%, 79% 21%, 95% 25%, 87% 39%, 100% 50%, 87% 61%, 95% 75%, 79% 79%, 76% 95%, 61% 88%, 50% 100%, 39% 88%, 24% 95%, 21% 79%, 5% 75%, 13% 61%, 0% 50%, 13% 39%, 5% 25%, 21% 21%, 24% 5%, 39% 12%); transform: rotate(-12deg); }
+    .poster-wrap { container-type: inline-size; }
+    .poster-demo:hover .poster .layer { outline-color: rgba(96,165,250,.55); }
+
+    .layers-panel {
+      background: rgba(10, 14, 24, .92); border: 1px solid rgba(120,140,180,.16); border-radius: 12px; padding: 16px 16px 12px;
+      display: flex; flex-direction: column; gap: 6px; font-size: 13.5px;
+    }
+    .layers-panel .lp-title { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--dim); margin-bottom: 4px; display: flex; justify-content: space-between; }
+    .layers-panel .row { display: flex; align-items: center; gap: 10px; padding: 7px 9px; border-radius: 8px; border: 1px solid transparent; }
+    .layers-panel .row:hover { background: rgba(255,255,255,.04); border-color: rgba(120,140,180,.18); }
+    .layers-panel .sw { width: 14px; height: 14px; border-radius: 4px; flex: 0 0 auto; }
+    .layers-panel .nm { color: var(--ink); font-weight: 600; }
+    .layers-panel .kd { color: var(--dim); font-size: 11.5px; margin-left: auto; font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+    .layers-panel .chat { margin-top: 10px; padding: 10px 12px; border-radius: 10px; background: rgba(167,139,250,.10); border: 1px solid rgba(167,139,250,.35); color: var(--ink); font-size: 13px; line-height: 1.45; }
+    .layers-panel .chat b { color: var(--studio); }
+    .layers-panel .ops { margin: 8px 0 0; padding-left: 18px; color: var(--dim); font-size: 12.5px; }
+    .layers-panel .ops li { margin: 2px 0; }
+
+    .steps { counter-reset: step; }
+    .steps .feature-card { position: relative; padding-left: 58px; }
+    .steps .feature-card::before {
+      counter-increment: step; content: counter(step);
+      position: absolute; left: 18px; top: 22px; width: 26px; height: 26px; border-radius: 50%;
+      display: grid; place-items: center; font-weight: 800; font-size: 13px; color: #05070d; background: var(--c, var(--studio));
+    }
+    .compare { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 22px; }
+    .variant { border-radius: 10px; overflow: hidden; border: 1px solid rgba(120,140,180,.16); background: rgba(10,14,24,.92); }
+    .variant .art { aspect-ratio: 4 / 5; position: relative; overflow: hidden; }
+    .variant .art b { position: absolute; left: 8%; font-family: var(--font-display); font-weight: 900; letter-spacing: -.03em; line-height: .9; }
+    .variant .cap { padding: 9px 12px; font-size: 12.5px; color: var(--dim); display: flex; justify-content: space-between; gap: 8px; }
+    .variant .cap strong { color: var(--ink); }
+    .v1 .art { background: #111; } .v1 .art b { top: 10%; color: #fff; font-size: clamp(26px, 5vw, 44px); }
+    .v2 .art { background: #f4ead8; } .v2 .art b { bottom: 10%; color: #1c2f4a; font-size: clamp(18px, 3.4vw, 30px); }
+    .v2 .art i { position: absolute; left: 12%; top: 10%; width: 76%; height: 46%; border: 2px dashed rgba(28,47,74,.35); border-radius: 6px; display: grid; place-items: center; color: rgba(28,47,74,.6); font-size: 11px; font-style: normal; }
+    .v3 .art { background: #e8f0ff; } .v3 .art b { bottom: 10%; color: #1c2f4a; font-size: clamp(18px, 3.4vw, 30px); }
+    .v3 .art s { position: absolute; left: 0; right: 0; top: 60%; height: 4%; background: #d84a35; text-decoration: none; }
+
+    .open-studio code { background: rgba(255,255,255,.07); border: 1px solid rgba(120,140,180,.2); border-radius: 6px; padding: 2px 7px; font-size: 12.5px; }
+    .open-studio .feature-card p { margin-bottom: 6px; }
+    .honest { max-width: 760px; margin: 26px auto 0; }
+
+    @media (max-width: 820px) {
+      .poster-demo { grid-template-columns: 1fr; }
+      .compare { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body class="page">
+
+  <header class="section studio-hero">
+    <div class="eyebrow">ForkScape Studio</div>
+    <h1 class="page-title">Describe the design. Get layers, not a picture.</h1>
+    <p class="page-lede">
+      AI-first graphics and video for designers and creators. Ask for a poster, a cover, a logo, a social set — Studio plans every element as its own layer, shows you the plan and the cost, and builds only what you approve. Then edit any layer by hand, or just ask.
+    </p>
+    <div class="row">
+      <a class="btn" href="download.html">⬇ Download Studio — free</a>
+      <a class="btn btn--ghost" href="#open">How to open Studio</a>
+    </div>
+
+    <div class="poster-demo" aria-hidden="true">
+      <div class="poster-wrap">
+        <div class="poster">
+          <div class="layer grain"></div>
+          <div class="layer sun"></div>
+          <div class="layer hills"></div>
+          <div class="layer hills2"></div>
+          <div class="layer head">NORTHERN<br>NIGHTS</div>
+          <div class="layer details">Live · 14 Nov · Aurora Hall<br>Doors 19:00 · Tickets at the door</div>
+          <div class="layer badge">EARLY<br>BIRD</div>
+        </div>
+      </div>
+      <div class="layers-panel">
+        <div class="lp-title"><span>Layers · 7</span><span>A4 · 300 dpi</span></div>
+        <div class="row"><span class="sw" style="background:#f2b134"></span><span class="nm">Early-bird badge</span><span class="kd">shape · star</span></div>
+        <div class="row"><span class="sw" style="background:#f4ead8;border:1px solid #666"></span><span class="nm">Details</span><span class="kd">text · IBM Plex Mono</span></div>
+        <div class="row"><span class="sw" style="background:#1c2f4a"></span><span class="nm">NORTHERN NIGHTS</span><span class="kd">text · Archivo 900</span></div>
+        <div class="row"><span class="sw" style="background:#24406a"></span><span class="nm">Hills front</span><span class="kd">path</span></div>
+        <div class="row"><span class="sw" style="background:#1c2f4a"></span><span class="nm">Hills</span><span class="kd">path</span></div>
+        <div class="row"><span class="sw" style="background:#d84a35"></span><span class="nm">Sun</span><span class="kd">shape · ellipse</span></div>
+        <div class="row"><span class="sw" style="background:#f4ead8;border:1px solid #666"></span><span class="nm">Paper + grain</span><span class="kd">fill · texture</span></div>
+        <div class="chat"><b>You:</b> make the headline bigger, the sun blue, and add a badge that says EARLY BIRD</div>
+        <ul class="ops">
+          <li>“NORTHERN NIGHTS”: font size 160 → 200</li>
+          <li>“Sun”: fill #d84a35 → #3355ff</li>
+          <li>added shape “Early-bird badge”</li>
+          <li>one undo step · <u>Undo these</u></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <section class="section section--tight steps" id="how">
+    <div class="eyebrow">How it works</div>
+    <h2 class="section-title">Plan first. Render second. You approve in between.</h2>
+    <p class="section-sub">Most AI design tools paint a picture and then try to cut it into layers. Studio does it the other way round, so nothing is a pixel that should have been a word.</p>
+    <div class="grid">
+      <div class="feature-card" style="--c:var(--studio)">
+        <h3>Say what it is for</h3>
+        <p>“Poster for Northern Nights, 14 Nov, Aurora Hall, every element on its own layer.” Drop a reference to borrow its style; Studio extracts type pairing, palette, grid, texture and mood as editable rules. The reference's pixels are never reused.</p>
+      </div>
+      <div class="feature-card" style="--c:var(--blue)">
+        <h3>Read the plan, see the price</h3>
+        <p>A plan card lists every layer, how it will be made, and what it costs. Text and shapes are free and instant. Only pictures use an image model, and each one is confirmed before it runs. Untick anything.</p>
+      </div>
+      <div class="feature-card" style="--c:var(--teal)">
+        <h3>Build it, then keep going</h3>
+        <p>Layers land on the artboard. Move, resize, retype, recolour by hand, or ask: “headline bigger, sun blue, add a badge.” Every request applies as one undo step with an Undo button right on the message.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight" id="variants">
+    <div class="eyebrow">Variants</div>
+    <h2 class="section-title">Three directions, side by side, as pictures.</h2>
+    <p class="section-sub">Variants ×3 drafts a type-led, an illustrative and an editorial take on the same brief and renders each as a preview on the ForkScape canvas. Click the one you like and its layers come back into Studio ready to build.</p>
+    <div class="compare" aria-hidden="true">
+      <div class="variant v1"><div class="art"><b>NORTHERN<br>NIGHTS</b></div><div class="cap"><strong>Bold · type-led</strong><span>2 layers · free</span></div></div>
+      <div class="variant v2"><div class="art"><i>Hero illustration</i><b>NORTHERN NIGHTS</b></div><div class="cap"><strong>Illustrative · scene</strong><span>4 layers · 1 image</span></div></div>
+      <div class="variant v3"><div class="art"><s></s><b>NORTHERN NIGHTS</b></div><div class="cap"><strong>Editorial · layered</strong><span>3 layers · free</span></div></div>
+    </div>
+  </section>
+
+  <section class="section section--tight" id="files">
+    <div class="eyebrow">Your files, your tools</div>
+    <h2 class="section-title">In and out of the software you already use.</h2>
+    <div class="grid">
+      <div class="feature-card" style="--c:var(--teal)">
+        <h3>PSD with editable text</h3>
+        <p>Groups, opacity, blend modes and live text carry over. Opens in Photoshop, Affinity Photo, GIMP, Krita and Photopea. Import a PSD and get its layers back, with a fidelity report on anything that had to flatten.</p>
+      </div>
+      <div class="feature-card" style="--c:var(--blue)">
+        <h3>Vector PDF and SVG</h3>
+        <p>Screen PDF with embedded fonts, print PDF with bleed and crop marks, SVG that keeps text as text. Illustrator, Inkscape, Affinity Designer, Figma. Preflight checks resolution, minimum text size, bleed, safe zone and ink coverage before you send.</p>
+      </div>
+      <div class="feature-card" style="--c:var(--amber)">
+        <h3>Vector tools and take-apart</h3>
+        <p>Pen, node editing, booleans, text on path, local vectorising with no model call. A flat image splits into colour layers you can restyle. One artboard becomes a whole social series, text pulled inside each platform's safe zone.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight" id="video">
+    <div class="eyebrow">Create</div>
+    <h2 class="section-title">Video, the same way: script → storyboard → timeline → render.</h2>
+    <p class="section-sub">Write or generate a script, storyboard it into shots, cut a real timeline with slip, slide and ripple, lay three audio tracks, and render one pass for YouTube, Shorts, Reels and TikTok, each in its own safe zones. One approval covers the whole render, with the cost shown first.</p>
+  </section>
+
+  <section class="section section--tight open-studio" id="open">
+    <div class="eyebrow">Open Studio</div>
+    <h2 class="section-title">Same download. Two front doors.</h2>
+    <p class="section-sub">Studio is a workspace inside the free ForkScape desktop app: Graphics, Create and Design up front, developer tools tucked away. Your files and settings are shared, and one click brings everything back.</p>
+    <div class="grid">
+      <div class="feature-card" style="--c:var(--studio)">
+        <h3>In the app</h3>
+        <p>Settings → Preferences → Appearance → <strong>Workspace → Studio</strong>. Or tell Om: “studio mode”.</p>
+      </div>
+      <div class="feature-card" style="--c:var(--blue)">
+        <h3>Launch straight into it</h3>
+        <p>Windows: add <code>--studio</code> to the shortcut's Target.</p>
+        <p>macOS: <code>open -a ForkScape --args --studio</code></p>
+        <p>Linux: <code>forkscape --studio</code></p>
+        <p>The flag sticks until you pick Full again.</p>
+      </div>
+      <div class="feature-card" style="--c:var(--teal)">
+        <h3>Bring your own model</h3>
+        <p>Studio plans with the chat model you already use and renders pictures through the image provider you pick in Media settings, with list prices shown before every render. Local models work for planning; text and vector layers cost nothing.</p>
+      </div>
+    </div>
+    <p class="honest-note honest">Honest note: text, shapes, vectors and layouts are Studio's strength. The pictures themselves come from whichever image model you connect, so their quality is that model's quality. Studio's job is that you never lose control of the rest.</p>
+  </section>
+
+  <section class="section section--tight">
+    <div class="cta-strip">
+      <h2>Free desktop app. Studio is inside.</h2>
+      <p class="section-sub">Windows, macOS and Linux. Open it in Studio with the flag above, or switch in Settings.</p>
+      <p style="margin-top:18px">
+        <a class="btn" href="download.html">⬇ Download for desktop</a>
+        <a class="btn btn--ghost" href="help.html#studio-workspace" style="margin-left:10px">Read the Studio guide</a>
+      </p>
+    </div>
+  </section>
+
+  <script type="module">
+    import { mountChrome } from './js/site.js';
+    mountChrome({ active: 'Studio' });
+  </script>
+</body>
+</html>
