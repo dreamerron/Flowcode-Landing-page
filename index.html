@@ -44,6 +44,86 @@
   </script>
 </head>
 <body>
+  <!-- Liquid Glass optics (sky theme only): a reusable SVG filter that gives
+       .caption__panel / .fc-card / #play-btn real curved-glass behaviour —
+       genuine refraction of whatever's behind them (not a painted gradient)
+       plus a computed specular highlight, the way an actual lens bends light
+       and catches it. Referenced from css/style.css as backdrop-filter:
+       url(#lg-lens); a plain blur+saturate declaration is kept before it in
+       every rule, so a browser that can't parse url() in backdrop-filter
+       (older Safari) silently falls back to that instead of losing the glass
+       look entirely.
+
+       How it works, in order:
+       1. feImage draws a soft rounded "bump" shape (bright plateau, dark
+          rim) — this is the lens' height field, scaled to fit whatever
+          element the filter is applied to (objectBoundingBox).
+       2. feGaussianBlur softens it into a dome instead of a flat plateau.
+       3. Two feConvolveMatrix passes (Sobel X / Sobel Y) turn that dome into
+          a genuine 2D gradient field — brighter where the surface tilts
+          right/down, darker where it tilts left/up.
+       4. Those two channels are combined into one displacement map and fed
+          to feDisplacementMap, which physically pushes the backdrop's
+          pixels outward at the edges and leaves the centre nearly
+          untouched — the actual optical behaviour of a curved plate, not a
+          drawn illusion of one.
+       5. feSpecularLighting lights that same dome from a point light, which
+          is how you get a real specular highlight (bright where the
+          surface's normal points at the light, falling off elsewhere)
+          rather than a static painted gradient. It's merged on top. -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <filter id="lg-lens-panel" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
+        <feImage href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iYmxhY2siLz48cmVjdCB4PSIxNCIgeT0iMTQiIHdpZHRoPSIxNzIiIGhlaWdodD0iMTcyIiByeD0iNDYiIGZpbGw9IndoaXRlIi8+PC9zdmc+" x="0" y="0" width="100%" height="100%" preserveAspectRatio="none" result="shape"/>
+        <feGaussianBlur in="shape" stdDeviation="14" result="bump"/>
+
+        <feConvolveMatrix in="bump" order="3 3" kernelMatrix="-1 0 1 -2 0 2 -1 0 1" divisor="1" bias="0.5" preserveAlpha="true" result="gx"/>
+        <feConvolveMatrix in="bump" order="3 3" kernelMatrix="-1 -2 -1 0 0 0 1 2 1" divisor="1" bias="0.5" preserveAlpha="true" result="gy"/>
+        <feColorMatrix in="gx" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="gxR"/>
+        <feColorMatrix in="gy" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="gyG"/>
+        <feComposite in="gxR" in2="gyG" operator="arithmetic" k2="1" k3="1" k4="0" result="dispMap"/>
+
+        <!-- the actual optics: bend the backdrop outward at the rim, leave
+             the centre almost untouched -->
+        <feDisplacementMap in="SourceGraphic" in2="dispMap" scale="34" xChannelSelector="R" yChannelSelector="G" result="refracted"/>
+
+        <!-- the actual reflection: a point light catching the same dome -->
+        <feSpecularLighting in="bump" surfaceScale="9" specularConstant="0.75" specularExponent="24" lighting-color="#ffffff" result="spec">
+          <fePointLight x="120" y="-180" z="200"/>
+        </feSpecularLighting>
+
+        <feMerge>
+          <feMergeNode in="refracted"/>
+          <feMergeNode in="spec"/>
+        </feMerge>
+      </filter>
+
+      <filter id="lg-lens-button" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
+        <feImage href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iYmxhY2siLz48cmVjdCB4PSIxNCIgeT0iMTQiIHdpZHRoPSIxNzIiIGhlaWdodD0iMTcyIiByeD0iNDYiIGZpbGw9IndoaXRlIi8+PC9zdmc+" x="0" y="0" width="100%" height="100%" preserveAspectRatio="none" result="shape"/>
+        <feGaussianBlur in="shape" stdDeviation="3.5" result="bump"/>
+
+        <feConvolveMatrix in="bump" order="3 3" kernelMatrix="-1 0 1 -2 0 2 -1 0 1" divisor="1" bias="0.5" preserveAlpha="true" result="gx"/>
+        <feConvolveMatrix in="bump" order="3 3" kernelMatrix="-1 -2 -1 0 0 0 1 2 1" divisor="1" bias="0.5" preserveAlpha="true" result="gy"/>
+        <feColorMatrix in="gx" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="gxR"/>
+        <feColorMatrix in="gy" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="gyG"/>
+        <feComposite in="gxR" in2="gyG" operator="arithmetic" k2="1" k3="1" k4="0" result="dispMap"/>
+
+        <!-- the actual optics: bend the backdrop outward at the rim, leave
+             the centre almost untouched -->
+        <feDisplacementMap in="SourceGraphic" in2="dispMap" scale="9" xChannelSelector="R" yChannelSelector="G" result="refracted"/>
+
+        <!-- the actual reflection: a point light catching the same dome -->
+        <feSpecularLighting in="bump" surfaceScale="3" specularConstant="0.9" specularExponent="18" lighting-color="#ffffff" result="spec">
+          <fePointLight x="-10" y="-30" z="40"/>
+        </feSpecularLighting>
+
+        <feMerge>
+          <feMergeNode in="refracted"/>
+          <feMergeNode in="spec"/>
+        </feMerge>
+      </filter>
+    </defs>
+  </svg>
   <div class="progress-track"><div id="journey-progress"></div></div>
 
   <canvas id="webgl"></canvas>

@@ -560,10 +560,15 @@ h1, h2, h3, .price { font-family: var(--font-display); }
   box-shadow: inset 0 1px 1px rgba(255,255,255,.7), 0 6px 18px -10px rgba(15,35,64,.3);
 }
 
-/* floating circular action button — a classic Liquid Glass control */
+/* floating circular action button — a classic Liquid Glass control, and a
+   round shape is the clearest place to show a real lens bulge. The plain
+   blur+saturate line is the fallback; browsers that can't parse a url()
+   reference filter inside backdrop-filter drop the second declaration
+   entirely and keep the first. */
 [data-theme="sky"] #play-btn {
   background: var(--glass-fill-strong);
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+  backdrop-filter: url(#lg-lens-button) blur(var(--glass-blur)) saturate(var(--glass-sat));
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
   color: var(--accent) !important;
   box-shadow: var(--glass-shadow);
@@ -598,13 +603,18 @@ h1, h2, h3, .price { font-family: var(--font-display); }
   box-shadow: inset 0 1px 1px rgba(255,255,255,.7), 0 6px 16px -12px rgba(15,35,64,.25);
 }
 
-/* the curved glass plate behind each scroll caption — the main ask */
+/* the curved glass plate behind each scroll caption — the main ask. The
+   real optics (edge refraction + a computed specular highlight) come from
+   url(#lg-lens-panel), defined once near the top of index.html; the plain
+   blur+saturate line right before it is the fallback for browsers that
+   can't parse a url() reference filter inside backdrop-filter. */
 [data-theme="sky"] .caption__panel {
   position: relative;
   padding: 30px 42px;
   border-radius: 30px;
   background: var(--glass-fill);
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+  backdrop-filter: url(#lg-lens-panel) blur(var(--glass-blur)) saturate(var(--glass-sat));
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
   box-shadow: var(--glass-shadow);
   overflow: hidden;
