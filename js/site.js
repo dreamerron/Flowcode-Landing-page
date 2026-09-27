@@ -7,6 +7,7 @@ const LINKS = [
   { href: 'get-started.html', label: 'Get started' },
   { href: 'features.html', label: 'Features' },
   { href: 'templates.html', label: 'Templates' },
+  { href: 'apps.html', label: 'Apps' },
   { href: 'studio.html', label: 'Studio' },
   { href: 'research.html', label: 'Research' },
   { href: 'pricing.html', label: 'Pricing' },
@@ -47,6 +48,7 @@ export function mountChrome({ active = '', immersive = false } = {}) {
         <a href="/get-started">Get started</a>
         <a href="/features">Features</a>
         <a href="/templates">Templates</a>
+        <a href="/apps">Apps — free, installable</a>
         <a href="/studio">Studio — graphics &amp; video</a>
         <a href="/pricing">Pricing</a>
         <a href="/download">Download</a>
