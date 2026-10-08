@@ -1,4 +1,4 @@
-# Hunch — personal AI assistant on WhatsApp (invite-only, worldwide).
+# Hunch — the AI teammate inside your WhatsApp Business inbox.
 # Deploy: npx wrangler deploy   (from this directory)
 #
 # Before first deploy:
@@ -7,7 +7,7 @@
 #   npx wrangler secret put WHATSAPP_TOKEN        (Meta system-user token)
 #   npx wrangler secret put WHATSAPP_APP_SECRET   (Meta app secret — webhook signatures)
 #   npx wrangler secret put WEBHOOK_VERIFY_TOKEN  (any random string; reuse in Meta webhook setup)
-#   npx wrangler secret put ADMIN_SECRET          (any random string; guards /admin/*)
+#   npx wrangler secret put ADMIN_SECRET          (random string; guards dashboard/invoices/admin)
 
 name = "hunch-whatsapp"
 main = "src/index.js"
@@ -16,8 +16,14 @@ compatibility_date = "2026-07-01"
 [vars]
 # Meta → WhatsApp → API Setup → "Phone number ID" (not the phone number itself)
 WHATSAPP_PHONE_NUMBER_ID = "REPLACE_ME"
-# Invites granted to each newly activated member
-INVITES_PER_USER = "3"
+# The owner(s): their personal WhatsApp numbers in international format, no '+',
+# comma-separated. Messages from these numbers reach the copilot; everyone else
+# is treated as a customer.
+OWNER_NUMBERS = "REPLACE_ME"
+# Shown on the dashboard, invoices and in the assistant's replies.
+BUSINESS_NAME = "My Business"
+# Default currency for extracted amounts and invoices (ISO code).
+CURRENCY = "USD"
 
 [[kv_namespaces]]
 binding = "HUNCH_KV"

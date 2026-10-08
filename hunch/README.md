@@ -1,99 +1,108 @@
-# Hunch — your personal AI on WhatsApp
+# Hunch — the AI teammate in your WhatsApp Business inbox
 
-An invite-only personal AI assistant (in the spirit of Instinct, but built
-WhatsApp-first for a worldwide, non-US audience). Members text it like a
-friend; it plans trips, researches live prices and schedules, drafts
-messages, and remembers each user — replying in whatever language the user
-writes in.
+Hunch sits on a business's WhatsApp number like a third person in the
+chat. Customers keep chatting exactly like before; Hunch extracts every
+order, payment, appointment, lead, task and expense into structured
+records as they happen — and the owner texts the **same number** to get
+reports, lists and print-ready invoices, or opens the live dashboard.
+Nothing ever has to be copied out of WhatsApp.
 
 **Stack:** one Cloudflare Worker (`src/index.js`) + Workers KV +
-WhatsApp Cloud API + Claude (`claude-opus-5` with live web search).
-The landing page is `../hunch.html`, served by the existing static site.
+WhatsApp Cloud API + Claude (`claude-opus-5`, strict-schema extraction +
+an owner copilot with tools). The landing page is `../hunch.html`.
 
-> "Hunch" is a placeholder brand — search-and-replace it freely. Do **not**
-> ship it under the name "Instinct": that's an existing company
-> (instinct.co) and impersonating it invites legal trouble.
+> "Hunch" is a placeholder brand — search-and-replace it freely.
 
-## How the product works
+## What it does
 
-- **Invite-only.** A non-member's first message must be an invite code
-  (`HUNCH-XXXXXX`). Valid code → activated, welcomed, granted 3 invites.
-  No code → polite "invite only" message pointing at the waitlist.
-- **Member commands:** `/invite` mints a code for a friend (decrements
-  their allowance) · `/forget` (or `/reset`) wipes their conversation history.
-- **Everything else** goes to Claude with: the user's stored memory + last
-  40 turns of history, a live `web_search` server tool, and a `save_memory`
-  tool. Replies are chunked to WhatsApp's 4096-char limit.
-- **Global-first:** the system prompt mandates replying in the user's
-  language, metric units, 24h time, local currency — never assuming the US.
+**Customer messages** (anyone not listed as an owner):
+- Logged per conversation (last 30 messages kept for context).
+- Run through a forced, strict-schema extraction call → zero or more
+  records: `order · payment · appointment · task · lead · expense · note`,
+  each with summary, amount, currency, due date, status, customer.
+- Orders and payments trigger an instant WhatsApp heads-up to the owner.
+- **Silent mode** (default): customers get no reply — they never know
+  Hunch is there. **Assist mode**: Hunch also answers customers politely
+  in their language, using the business profile you give it.
+
+**Owner messages** (numbers in `OWNER_NUMBERS`) go to the copilot, which
+answers in the owner's language and can:
+- `query_records` — "sales this week", "who hasn't paid", "what's due
+  tomorrow" → totals first, then the list.
+- `create_invoice` — numbered, taxed, print-ready A4 invoice; the link
+  comes back in chat (`/invoice/INV-2026-0001?key=…`).
+- `add_record` — dictate expenses/tasks/notes: "add expense 50 packaging".
+- `update_record_status` — "mark Jonas' order paid".
+- `set_mode` — switch silent/assist.
+- `web_search` — genuinely external questions (suppliers, market prices).
+
+**Dashboard** (`/dashboard?key=<ADMIN_SECRET>`): payments this month,
+open orders, unpaid invoices, upcoming dates, open tasks, a 14-day
+payments chart, invoice list and the full activity table — rendered live
+from KV, nothing to export.
 
 ## Setup (≈30 minutes)
 
 ### 1. WhatsApp Cloud API (Meta)
-
 1. [developers.facebook.com](https://developers.facebook.com) → Create App →
    type **Business** → add the **WhatsApp** product.
-2. Note the **Phone number ID** (API Setup page). The free test number works
-   for development; for launch, register a real business number there.
+2. Note the **Phone number ID** (API Setup page). The free test number is
+   fine for development; register your real business number for launch.
 3. Business Settings → System Users → create one, generate a **permanent
    token** with `whatsapp_business_messaging` + `whatsapp_business_management`.
 4. App Settings → Basic → copy the **App Secret**.
 
 ### 2. Anthropic
-
 Create an API key at [console.anthropic.com](https://console.anthropic.com).
 
-### 3. Deploy the worker
-
+### 3. Deploy
 ```bash
 cd hunch
 npm install
 npx wrangler kv namespace create HUNCH_KV   # paste id into wrangler.toml
-# edit wrangler.toml: WHATSAPP_PHONE_NUMBER_ID
+# edit wrangler.toml: WHATSAPP_PHONE_NUMBER_ID, OWNER_NUMBERS, BUSINESS_NAME, CURRENCY
 npx wrangler secret put ANTHROPIC_API_KEY
 npx wrangler secret put WHATSAPP_TOKEN
 npx wrangler secret put WHATSAPP_APP_SECRET
 npx wrangler secret put WEBHOOK_VERIFY_TOKEN   # any random string
-npx wrangler secret put ADMIN_SECRET           # any random string
+npx wrangler secret put ADMIN_SECRET           # random string; guards dashboard & invoices
 npx wrangler deploy
 ```
 
 ### 4. Point Meta at the worker
-
 WhatsApp → Configuration → Webhook:
 - Callback URL: `https://hunch-whatsapp.<your-subdomain>.workers.dev/webhook`
-- Verify token: the `WEBHOOK_VERIFY_TOKEN` you set
+- Verify token: your `WEBHOOK_VERIFY_TOKEN`
 - Subscribe to the **messages** field.
 
-### 5. Mint your first invite codes
+### 5. Try it
+- From an owner number: "what can you do?" — then have a friend text the
+  business number with a fake order and watch the heads-up arrive.
+- Optional: store a business profile for assist mode —
+  `npx wrangler kv key put --binding HUNCH_KV settings:profile "We sell …, prices …, hours …"`.
+- Wire the landing page: set `WAITLIST_ENDPOINT` in `../hunch.html` to
+  `https://<worker-url>/waitlist`; read signups via `GET /admin/waitlist`
+  with `Authorization: Bearer <ADMIN_SECRET>`.
 
-```bash
-curl -X POST https://<worker-url>/admin/invites \
-  -H "Authorization: Bearer $ADMIN_SECRET" \
-  -H "Content-Type: application/json" -d '{"count": 5}'
-```
+## Design notes & limits
 
-Send one code to your own WhatsApp → you're member #1. From there growth is
-viral: members send `/invite`.
-
-### 6. Wire up the landing page
-
-In `../hunch.html` set `WAITLIST_ENDPOINT` to `https://<worker-url>/waitlist`
-and `WHATSAPP_NUMBER` to your bot's number. Read signups back with
-`GET /admin/waitlist` (same Bearer auth).
-
-## Notes
-
-- The webhook ACKs Meta instantly and does the Claude work in
-  `ctx.waitUntil`, so slow answers never cause webhook retries.
-- Webhook payloads are HMAC-verified (`X-Hub-Signature-256`) — requests not
-  signed with your App Secret are rejected.
-- The Claude call opts into server-side refusal fallbacks
-  (`fallbacks: "default"`), so a safety decline on the primary model
-  automatically retries on a fallback model in the same request.
-- Costs scale with usage; each answer is one `claude-opus-5` call (with
-  prompt caching on the system prompt). Swap `MODEL` in `src/index.js` to
-  `claude-sonnet-5` for a cheaper tier if needed.
-- WhatsApp requires 24-hour customer-service windows: the bot only ever
-  replies to inbound messages, which is always within policy. Proactive
-  outbound (reminders) would need approved template messages — future work.
+- **Groups:** the WhatsApp Cloud API does not let a bot join arbitrary
+  group chats as a third member. Hunch therefore lives on the business
+  number itself, which is where customer conversations already are. If
+  Meta opens group access, the same extraction pipeline applies.
+- **Outbound replies** only ever happen inside WhatsApp's 24-hour
+  customer-service window (we only reply to inbound messages), which is
+  always within policy. Proactive reminders would need approved template
+  messages — future work.
+- The webhook ACKs Meta instantly and does Claude work in `ctx.waitUntil`,
+  so slow answers never cause webhook retries. Payload signatures are
+  HMAC-verified against your App Secret.
+- Extraction uses a **forced strict-schema tool call**, so records always
+  parse; the copilot opts into server-side refusal fallbacks.
+- Every customer message costs one `claude-opus-5` extraction call. For a
+  high-volume shop, change `MODEL` in `src/index.js` (e.g.
+  `claude-sonnet-5`) to cut cost.
+- Storage is Workers KV — perfect up to thousands of records. Past that,
+  the natural upgrade is Cloudflare D1 behind the same tool interface.
+- Invoices/reports are print-ready HTML (one tap → PDF). PPTX/deck export
+  is a roadmap item (Anthropic's code-execution skills can generate them).

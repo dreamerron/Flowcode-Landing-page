@@ -3,17 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hunch — Your personal AI on WhatsApp</title>
-  <meta name="description" content="Hunch is an invite-only personal AI assistant that lives in WhatsApp. It plans, researches, compares, drafts and remembers — in your language, your currency, your timezone. Worldwide." />
+  <title>Hunch — The AI teammate in your WhatsApp Business chat</title>
+  <meta name="description" content="Hunch sits inside your WhatsApp Business inbox like a third person: it turns customer chats into orders, payments, invoices, reports and a live dashboard — so nothing ever has to leave WhatsApp." />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Hunch — Your personal AI on WhatsApp" />
-  <meta property="og:description" content="Text it like a friend. It gets things done. Invite-only, worldwide." />
+  <meta property="og:title" content="Hunch — The AI teammate in your WhatsApp Business chat" />
+  <meta property="og:description" content="Your chats become your database: orders, invoices, reports and a live dashboard, extracted automatically from WhatsApp." />
   <meta name="twitter:card" content="summary" />
   <meta name="robots" content="noindex" /><!-- remove when launching -->
   <link rel="icon" type="image/svg+xml" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="%2325D366"/><text x="16" y="22" font-size="16" text-anchor="middle" fill="white" font-family="sans-serif" font-weight="bold">H</text></svg>' />
   <link rel="stylesheet" href="css/style.css" />
   <style>
-    /* Hunch page — own layout on the site's tokens. Accent = WhatsApp green. */
     :root { --wa: #25d366; --wa-deep: #128c7e; }
     body { overflow-x: hidden; }
     .hp-wrap { max-width: 1020px; margin: 0 auto; padding: 0 22px; }
@@ -29,25 +28,25 @@
     .hp-nav a.link { color: var(--dim); text-decoration: none; font-size: 14px; margin-left: 20px; }
     .hp-nav a.link:hover { color: var(--ink); }
 
-    .hp-hero { padding: 76px 0 40px; text-align: center; }
+    .hp-hero { padding: 72px 0 40px; text-align: center; }
     .hp-kicker { color: var(--wa); letter-spacing: .32em; font-size: 12px;
       font-family: var(--font-display); text-transform: uppercase; }
     .hp-h1 { font-family: var(--font-display); font-weight: 800; letter-spacing: -.015em;
-      font-size: clamp(34px, 6.4vw, 62px); line-height: 1.06; margin: 18px auto 16px; max-width: 17ch;
+      font-size: clamp(32px, 6vw, 58px); line-height: 1.07; margin: 18px auto 16px; max-width: 20ch;
       background: linear-gradient(120deg, #fff 30%, var(--wa) 75%, var(--teal) 100%);
       -webkit-background-clip: text; background-clip: text; color: transparent; text-wrap: balance; }
     .hp-sub { color: var(--dim); font-size: clamp(15px, 1.8vw, 18px); line-height: 1.6;
-      max-width: 56ch; margin: 0 auto 30px; text-wrap: pretty; }
+      max-width: 58ch; margin: 0 auto 30px; text-wrap: pretty; }
     .hp-cta { display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
     .btn { display: inline-flex; align-items: center; gap: 9px; padding: 13px 26px; border-radius: 999px;
-      font-size: 15px; font-weight: 600; text-decoration: none; transition: transform .15s, box-shadow .15s; }
+      font-size: 15px; font-weight: 600; text-decoration: none; transition: transform .15s; }
     .btn:hover { transform: translateY(-1px); }
     .btn--wa { background: linear-gradient(120deg, var(--wa), var(--wa-deep)); color: #04140b;
       box-shadow: 0 6px 26px rgba(37,211,102,.28); }
     .btn--ghost { border: 1px solid rgba(232,236,244,.22); color: var(--ink); background: rgba(232,236,244,.04); }
 
     /* chat mockup */
-    .hp-phone { max-width: 400px; margin: 52px auto 0; border-radius: 26px;
+    .hp-phone { max-width: 420px; margin: 52px auto 0; border-radius: 26px;
       border: 1px solid rgba(232,236,244,.1); background: #0b141a; overflow: hidden;
       box-shadow: 0 30px 80px rgba(0,0,0,.5); text-align: left; }
     .hp-phone__bar { display: flex; align-items: center; gap: 10px; padding: 12px 16px;
@@ -57,15 +56,20 @@
     .hp-phone__bar .status { color: #8696a0; font-size: 12px; }
     .hp-chat { padding: 16px 12px 20px; display: flex; flex-direction: column; gap: 8px;
       background: radial-gradient(circle at 30% 10%, rgba(37,211,102,.05), transparent 60%), #0b141a; }
-    .msg { max-width: 84%; padding: 9px 12px; border-radius: 10px; font-size: 13.5px; line-height: 1.45; }
+    .msg { max-width: 86%; padding: 9px 12px; border-radius: 10px; font-size: 13.5px; line-height: 1.45; }
     .msg--me { align-self: flex-end; background: #005c4b; color: #e9edef; border-top-right-radius: 3px; }
     .msg--ai { align-self: flex-start; background: #1f2c34; color: #e9edef; border-top-left-radius: 3px; }
     .msg b { color: #fff; } .msg .t { display: block; text-align: right; font-size: 10px; color: #8696a0; margin-top: 3px; }
+    .msg a { color: #53bdeb; text-decoration: none; }
 
     section.hp { padding: 64px 0 8px; }
     .hp-h2 { font-family: var(--font-display); font-size: clamp(22px, 3.4vw, 32px); font-weight: 700;
       text-align: center; margin-bottom: 10px; letter-spacing: -.01em; }
-    .hp-lead { color: var(--dim); text-align: center; max-width: 58ch; margin: 0 auto 36px; line-height: 1.6; font-size: 15px; }
+    .hp-lead { color: var(--dim); text-align: center; max-width: 60ch; margin: 0 auto 36px; line-height: 1.6; font-size: 15px; }
+
+    .hp-shot { max-width: 920px; margin: 0 auto; border-radius: 18px; overflow: hidden;
+      border: 1px solid rgba(37,211,102,.22); box-shadow: 0 30px 90px rgba(0,0,0,.55); }
+    .hp-shot img { width: 100%; display: block; }
 
     .hp-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
     .hp-step { border: 1px solid rgba(232,236,244,.09); border-radius: 16px; padding: 22px;
@@ -82,13 +86,8 @@
     .hp-card h3 { font-size: 15px; margin: 10px 0 5px; font-family: var(--font-display); }
     .hp-card p { color: var(--dim); font-size: 13.5px; line-height: 1.5; }
 
-    .hp-invite { border: 1px solid rgba(37,211,102,.25); background: rgba(37,211,102,.05);
-      border-radius: 18px; padding: 28px; text-align: center; }
-    .hp-invite code { background: rgba(232,236,244,.08); padding: 2px 9px; border-radius: 7px;
-      font-size: 14px; color: var(--wa); }
-
     .hp-form { display: flex; gap: 10px; max-width: 520px; margin: 0 auto; flex-wrap: wrap; justify-content: center; }
-    .hp-form input, .hp-form select { flex: 1 1 180px; padding: 12px 16px; border-radius: 999px;
+    .hp-form input { flex: 1 1 180px; padding: 12px 16px; border-radius: 999px;
       border: 1px solid rgba(232,236,244,.16); background: rgba(10,14,24,.9); color: var(--ink);
       font-size: 14px; outline: none; }
     .hp-form input:focus { border-color: var(--wa); }
@@ -111,98 +110,93 @@
     <a class="hp-logo" href="#"><i></i>Hunch</a>
     <span>
       <a class="link" href="#how">How it works</a>
+      <a class="link" href="#dashboard">Dashboard</a>
       <a class="link" href="#faq">FAQ</a>
-      <a class="link" href="#waitlist" style="color:var(--wa)">Get access</a>
+      <a class="link" href="#waitlist" style="color:var(--wa)">Early access</a>
     </span>
   </nav>
 
   <header class="hp-hero hp-wrap">
-    <div class="hp-kicker">Invite only · Worldwide · On WhatsApp</div>
-    <h1 class="hp-h1">Your personal AI that gets things done.</h1>
-    <p class="hp-sub">Hunch lives in WhatsApp. Text it like a friend — it plans your trips, hunts down the best price, researches anything, drafts the awkward email and remembers what matters. In <b>your</b> language, currency and timezone.</p>
+    <div class="hp-kicker">For WhatsApp Business · Worldwide</div>
+    <h1 class="hp-h1">The AI teammate inside your WhatsApp chats.</h1>
+    <p class="hp-sub">Your whole business already happens in WhatsApp — orders, payments, appointments, promises. Hunch sits in the chat like a third person: it captures every one of them automatically and turns them into <b>invoices, reports, lists and a live dashboard</b>. Nobody has to copy anything out of WhatsApp, ever again.</p>
     <div class="hp-cta">
-      <a class="btn btn--wa" id="wa-cta" href="#waitlist">💬 I have an invite</a>
-      <a class="btn btn--ghost" href="#waitlist">Join the waitlist</a>
+      <a class="btn btn--wa" href="#waitlist">Get early access</a>
+      <a class="btn btn--ghost" href="#dashboard">See the dashboard</a>
     </div>
 
     <div class="hp-phone" aria-hidden="true">
       <div class="hp-phone__bar">
         <span class="avatar">H</span>
-        <span>Hunch<br /><span class="status">online</span></span>
+        <span>Hunch · your business<br /><span class="status">online</span></span>
       </div>
       <div class="hp-chat">
-        <div class="msg msg--me">Find me a train Berlin → Prague on Friday morning, cheap but not 6am 😅<span class="t">09:12</span></div>
-        <div class="msg msg--ai">Best option: <b>EC 177 at 10:28</b> from Berlin Hbf, direct, arrives 14:32. <b>€23.90</b> if you book today (goes up Thursday). Window seats left in coach 256.<br />Booking link: bahn.de/… — want me to plan the Prague weekend too?<span class="t">09:12</span></div>
-        <div class="msg msg--me">yes! we're vegetarian btw<span class="t">09:13</span></div>
-        <div class="msg msg--ai">Noted 🌱 I'll build Friday–Sunday around Old Town with the three best-rated veggie spots and a castle slot before the crowds. Give me a minute…<span class="t">09:13</span></div>
+        <div class="msg msg--ai">📥 New from *Jonas Weber*:<br />• ORDER: Wedding cake, 3 tiers, vanilla — <b>€320.00</b>, delivery Sat 18/10<span class="t">14:02</span></div>
+        <div class="msg msg--me">make an invoice for that, add €25 delivery<span class="t">14:04</span></div>
+        <div class="msg msg--ai">Done ✅ <b>INV-2026-0013</b> — total <b>€410.55</b> incl. 19% tax.<br />Print-ready: <a>hunch…/invoice/INV-2026-0013</a><br />His €160 deposit from Tuesday is already on file.<span class="t">14:04</span></div>
+        <div class="msg msg--me">who still owes me money this week?<span class="t">14:05</span></div>
+        <div class="msg msg--ai">3 customers, <b>€585.55</b> total:<br />- Jonas — €410.55 (INV-0013)<br />- Putri — €135.00 (order, pickup Sat)<br />- Marco — €40.00 (balance)<br />Full picture: <a>hunch…/dashboard</a><span class="t">14:05</span></div>
       </div>
     </div>
   </header>
 
   <section class="hp hp-wrap" id="how">
-    <h2 class="hp-h2">No app. No account. Just a chat.</h2>
-    <p class="hp-lead">If you can use WhatsApp, you already know how to use Hunch.</p>
+    <h2 class="hp-h2">Your chats become your database.</h2>
+    <p class="hp-lead">Hunch lives on your WhatsApp Business number. Customers keep chatting exactly like before — Hunch quietly does the bookkeeping.</p>
     <div class="hp-steps">
-      <div class="hp-step"><em>1</em><h3>Get an invite</h3><p>A friend sends you a code, or a spot opens from the waitlist. Every member gets 3 invites to share.</p></div>
-      <div class="hp-step"><em>2</em><h3>Send the code on WhatsApp</h3><p>Message Hunch once with your code and you're in. No signup form, no password, no new app.</p></div>
-      <div class="hp-step"><em>3</em><h3>Ask for anything</h3><p>Travel, prices, research, plans, drafts, reminders. Hunch searches the live web, does the legwork and comes back with an answer — not a list of links.</p></div>
+      <div class="hp-step"><em>1</em><h3>Connect your number</h3><p>Hunch joins your WhatsApp Business line. Silent by default: customers never notice it's there — or switch on assist mode and it answers them too.</p></div>
+      <div class="hp-step"><em>2</em><h3>It extracts everything</h3><p>Every order, payment, appointment, lead, task and expense mentioned in any chat is captured as structured data, in real time, in any language.</p></div>
+      <div class="hp-step"><em>3</em><h3>You just ask</h3><p>"Sales this week?" "Who hasn't paid?" "Invoice for Maria." "What's due tomorrow?" — text your own number and get the answer, the list, the invoice link. Or open the live dashboard.</p></div>
     </div>
   </section>
 
+  <section class="hp hp-wrap" id="dashboard">
+    <h2 class="hp-h2">The whole dashboard, built from chats.</h2>
+    <p class="hp-lead">Revenue, open orders, unpaid invoices, upcoming dates, leads and tasks — assembled automatically from your conversations. One link, always current, nothing to export.</p>
+    <div class="hp-shot"><img src="assets/hunch/dashboard.png" alt="Hunch live dashboard: payments this month, open orders, unpaid invoices, a 14-day payments chart, invoices and upcoming appointments — all extracted from WhatsApp chats" loading="lazy" /></div>
+  </section>
+
   <section class="hp hp-wrap">
-    <h2 class="hp-h2">Built for the whole world</h2>
-    <p class="hp-lead">Most assistants are built for the US and translated later. Hunch starts everywhere else.</p>
+    <h2 class="hp-h2">Everything stays in WhatsApp</h2>
+    <p class="hp-lead">Built for how small businesses actually run — on a phone, in chat, everywhere in the world.</p>
     <div class="hp-grid">
-      <div class="hp-card"><span class="ico">🌍</span><h3>Any language</h3><p>Write in Bahasa, Hindi, Arabic, Portuguese, Tagalog, German — Hunch answers natively in yours, even mid-conversation.</p></div>
-      <div class="hp-card"><span class="ico">💱</span><h3>Your money, your units</h3><p>Local currency, metric, 24-hour time, your date format. It never quotes you in dollars unless you ask.</p></div>
-      <div class="hp-card"><span class="ico">🔎</span><h3>Live web research</h3><p>Prices, schedules, availability, news and weather — checked at the moment you ask, with sources.</p></div>
-      <div class="hp-card"><span class="ico">🧠</span><h3>It remembers you</h3><p>Your city, your preferences, your ongoing plans. Say it once. Send /forget any time to wipe it.</p></div>
-      <div class="hp-card"><span class="ico">✈️</span><h3>Trips &amp; bookings legwork</h3><p>It finds the exact flight, train, table or ticket with a direct link — you just tap pay.</p></div>
-      <div class="hp-card"><span class="ico">🔒</span><h3>Private by default</h3><p>Invite-only. Your chats are yours; memory is per-person and deletable with one command.</p></div>
-    </div>
-  </section>
-
-  <section class="hp hp-wrap">
-    <div class="hp-invite">
-      <h2 class="hp-h2">Already a member?</h2>
-      <p class="hp-lead" style="margin-bottom:18px">Send <code>/invite</code> to Hunch and you'll get a code like <code>HUNCH-K4T7RQ</code> to share. Your friend just texts it as their first message.</p>
+      <div class="hp-card"><span class="ico">🧾</span><h3>Invoices in one message</h3><p>"Make an invoice for Jonas" → numbered, taxed, print-ready A4 invoice with a shareable link. Sent back in chat.</p></div>
+      <div class="hp-card"><span class="ico">📊</span><h3>Reports on demand</h3><p>Daily, weekly, monthly — totals first, details after. Ask in words; no spreadsheet, no export, no laptop.</p></div>
+      <div class="hp-card"><span class="ico">📥</span><h3>Never miss an order</h3><p>Hunch pings you the moment a chat contains an order or a payment — with the amount already extracted.</p></div>
+      <div class="hp-card"><span class="ico">🌍</span><h3>Any language, any currency</h3><p>Your customers write in theirs, you ask in yours. Amounts are kept in real currencies — rupiah, naira, reais, euros.</p></div>
+      <div class="hp-card"><span class="ico">🤝</span><h3>Silent or assist</h3><p>Observe-only by default. Flip to assist mode and Hunch also answers customers — confirming orders and appointments politely in their language.</p></div>
+      <div class="hp-card"><span class="ico">🔒</span><h3>Yours alone</h3><p>Your records live in your own storage, behind your own keys. The dashboard link is private to you.</p></div>
     </div>
   </section>
 
   <section class="hp hp-wrap" id="waitlist">
-    <h2 class="hp-h2">Get on the waitlist</h2>
-    <p class="hp-lead">We open spots country by country as we scale up. Tell us where you are and we'll email you an invite when it's your turn.</p>
+    <h2 class="hp-h2">Get early access</h2>
+    <p class="hp-lead">We're onboarding businesses one by one, worldwide. Tell us where you are and we'll set you up.</p>
     <form class="hp-form" id="wl-form">
-      <input type="email" id="wl-email" placeholder="you@example.com" required />
+      <input type="email" id="wl-email" placeholder="you@business.com" required />
       <input type="text" id="wl-country" placeholder="Country" maxlength="60" />
-      <button class="btn btn--wa" type="submit">Request invite</button>
+      <button class="btn btn--wa" type="submit">Request access</button>
     </form>
     <div id="wl-note"></div>
   </section>
 
   <section class="hp hp-wrap" id="faq">
     <h2 class="hp-h2">Questions</h2>
-    <details class="hp-faq"><summary>Is it really free?</summary><p>During the invite-only beta, yes. When we introduce paid plans, early members keep a generous free tier.</p></details>
-    <details class="hp-faq"><summary>Which countries does it work in?</summary><p>Anywhere WhatsApp works. Hunch is built for a global audience first — the US isn't the default, it's just one more country.</p></details>
-    <details class="hp-faq"><summary>Can it actually buy things for me?</summary><p>Not yet. It does everything up to the payment: finds the exact option, checks the price is real and current, and hands you the direct link. Payments are on the roadmap.</p></details>
-    <details class="hp-faq"><summary>What about my privacy?</summary><p>Conversations are used only to answer you. The things Hunch remembers about you are stored per-person and erased instantly with <b>/forget</b>.</p></details>
-    <details class="hp-faq"><summary>Why invite-only?</summary><p>Quality. Each assistant conversation uses serious AI compute, so we grow member by member instead of degrading for everyone.</p></details>
+    <details class="hp-faq"><summary>Does it work in group chats?</summary><p>Hunch lives on your WhatsApp Business number, so it sees every customer conversation with your business — that's where the orders and payments are. WhatsApp's API doesn't let bots join private group chats as a third member yet; the moment it does, Hunch will be there.</p></details>
+    <details class="hp-faq"><summary>Will my customers notice it?</summary><p>Not unless you want them to. In silent mode Hunch only reads and records. In assist mode it also replies to customers — clearly, politely, in their language.</p></details>
+    <details class="hp-faq"><summary>What exactly does it extract?</summary><p>Orders, payments, appointments, leads, tasks, expenses and notes — each with customer, amount, currency, due date and status. You can also dictate records yourself: "add expense 50 for packaging".</p></details>
+    <details class="hp-faq"><summary>What about invoices and documents?</summary><p>Invoices are generated instantly as print-ready A4 pages (save as PDF with one tap). Reports arrive as chat summaries plus the live dashboard. Slide-deck exports are on the roadmap.</p></details>
+    <details class="hp-faq"><summary>Which countries does it support?</summary><p>Anywhere WhatsApp Business works. Hunch is global-first: every language, every currency, metric by default.</p></details>
   </section>
 
   <footer class="hp-footer">
-    Hunch — a personal AI assistant on WhatsApp.<br />
+    Hunch — the AI teammate inside your WhatsApp Business inbox.<br />
     Hunch is an independent product and is not affiliated with, endorsed by, or sponsored by WhatsApp&nbsp;LLC or Meta.
   </footer>
 
   <script>
     // Configure after deploying the worker (hunch/README.md):
     const WAITLIST_ENDPOINT = ""; // e.g. "https://hunch-whatsapp.<you>.workers.dev/waitlist"
-    const WHATSAPP_NUMBER = "";   // e.g. "15550001234" → wa.me deep link for members
-
-    if (WHATSAPP_NUMBER) {
-      document.getElementById("wa-cta").href =
-        "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent("Hi Hunch! My invite code is: ");
-    }
 
     document.getElementById("wl-form").addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -221,7 +215,7 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, country }),
         });
-        if (r.ok) { note.className = "ok"; note.textContent = "You're on the list! We'll email your invite. 🎟️"; e.target.reset(); }
+        if (r.ok) { note.className = "ok"; note.textContent = "You're on the list! We'll be in touch. ✅"; e.target.reset(); }
         else { note.textContent = "That email doesn't look right — try again?"; }
       } catch { note.textContent = "Network hiccup — please try again."; }
     });
