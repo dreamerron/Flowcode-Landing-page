@@ -25,6 +25,14 @@ const CHAT_LIMIT = 30; // stored messages per conversation
 const WA_CHUNK = 3800; // WhatsApp caps text messages at 4096 chars
 const RECORD_SCAN = 1000; // max records scanned for queries/dashboard
 
+// Shared by the extractor, the owner copilot and customer assist mode.
+const LANGUAGE_GUIDE = `Language rules (India-first, but work for every language):
+- People freely mix languages and scripts inside one message: Hinglish (Hindi in Roman letters mixed with English), Devanagari, Tanglish, Benglish, plus Marathi, Gujarati, Punjabi, Tamil, Telugu, Kannada, Malayalam, Bengali, Odia, Urdu, often with English nouns and SMS-style spelling ("kal", "bhej do", "paisa mil gaya", "advance de diya"). Understand all of it, including spelling variants.
+- Reply in the same language AND script the person used most recently: Hinglish in -> Hinglish (Roman letters) out; Devanagari in -> Devanagari out; English in -> English out. Mirror their register and never switch to formal Hindi or pure English on your own. If they ask for a language ("Hindi mein batao", "Tamil-la sollu"), switch to it.
+- Indian money and numbers: Rs, rupees, INR; lakh = 1,00,000 and crore = 1,00,00,000; "k" = thousand, "hazaar" = 1000, "sau" = 100, "paanch sau" = 500; "dedh" = 1.5, "dhai" = 2.5, "sava" = 1.25, "sadhe" = plus a half. Write INR amounts with Indian digit grouping (1,23,456).
+- Dates: aaj = today; kal = tomorrow OR yesterday, decided by tense ("kal bhej dunga" = tomorrow, "kal aaya tha" = yesterday); parso = day after tomorrow or day before yesterday by tense; agle hafte = next week; somvar, mangalvar, budhvar, guruvar, shukravar, shanivar, ravivar = Monday..Sunday; "15 tarikh" = the 15th; "mahine ke end" = end of month.
+- Business words: udhaar / baaki = owed on credit; advance / bayana = deposit; pakka / confirm = confirmed; COD = cash on delivery; "GPay / PhonePe / Paytm / UPI kar diya" = a payment was made; "screenshot bhej diya" = payment proof sent; GST slabs are 5, 12, 18 and 28 percent.`;
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
@@ -201,8 +209,9 @@ const EXTRACT_TOOL = {
             currency: { type: "string", description: "ISO code like EUR, IDR, NGN; '' if none" },
             due: { type: "string", description: "ISO date YYYY-MM-DD if a date/deadline applies, else ''" },
             status: { type: "string", enum: ["open", "confirmed", "paid", "done", "cancelled"] },
+            language: { type: "string", description: "Language/script of the customer's message, e.g. 'Hinglish'" },
           },
-          required: ["type", "summary", "amount", "currency", "due", "status"],
+          required: ["type", "summary", "amount", "currency", "due", "status", "language"],
           additionalProperties: false,
         },
       },
@@ -227,7 +236,9 @@ async function extractRecords(env, waId, name, chat, newText) {
       cache_control: { type: "ephemeral" },
       text: `You extract business records from WhatsApp messages received by "${env.BUSINESS_NAME || "a small business"}". Today is ${today}. Default currency: ${env.CURRENCY || "USD"}.
 
-Extract ONLY what the NEW message adds — never re-record things already covered by earlier context. An order is a concrete purchase intent (items/quantity). A payment is money sent or confirmed. An appointment is an agreed date/time. A lead is a new prospect showing interest with no order yet. A task is something the business must do. Record nothing for greetings and small talk — an empty records list is the normal case. Resolve relative dates ("Friday", "tomorrow") to ISO dates. Write summaries in English.`,
+Extract ONLY what the NEW message adds — never re-record things already covered by earlier context. An order is a concrete purchase intent (items/quantity). A payment is money sent or confirmed. An appointment is an agreed date/time. A lead is a new prospect showing interest with no order yet. A task is something the business must do. Record nothing for greetings and small talk — an empty records list is the normal case. Resolve relative dates ("Friday", "tomorrow", "kal", "agle somvar") to ISO dates. Write each summary in plain English but keep customer names, product names and local item words (e.g. "kaju katli") exactly as the customer wrote them. Set "language" to the language/script mix of the message, e.g. "Hinglish", "Hindi (Devanagari)", "Tamil", "English".
+
+${LANGUAGE_GUIDE}`,
     }],
     messages: [{
       role: "user",
@@ -249,6 +260,7 @@ Extract ONLY what the NEW message adds — never re-record things already covere
       currency: r.currency || env.CURRENCY || "USD",
       due: r.due || "",
       status: r.status || "open",
+      language: String(r.language || "").slice(0, 40),
       customer: { waId, name: name || "" },
       source: "auto",
     };
@@ -451,7 +463,8 @@ Dashboard link: ${dashboardLink(env, origin)}
 Current customer-chat mode: ${mode} (silent = observe & extract only; assist = also auto-reply to customers; change with set_mode when asked).
 
 Rules:
-- ALWAYS reply in the language the owner writes in.
+- ${LANGUAGE_GUIDE.replaceAll("\n", "\n  ")}
+- Amounts you read back must follow the record's currency; INR uses Indian grouping (lakh/crore style).
 - This is WhatsApp: short, scannable answers. Formatting: *bold*, _italic_, "- " lists; never Markdown headers or tables; paste links bare.
 - For report-style asks ("sales this week", "who hasn't paid", "what's due tomorrow"): query the records, then give totals first, then the list. State the date range you used.
 - For invoices: pull the details from records when they exist (query first), confirm nothing — just build it sensibly — and send back the number, total and link.
@@ -523,7 +536,9 @@ async function assistCustomer(env, waId, name, chat, text) {
     system: [{
       type: "text",
       cache_control: { type: "ephemeral" },
-      text: `You are the WhatsApp assistant of "${env.BUSINESS_NAME || "this business"}". Reply to the customer briefly, warmly and helpfully, in the customer's language. WhatsApp formatting only (*bold*, _italic_). Confirm orders and appointments clearly; if you don't know something (price, stock), say the team will confirm shortly — never invent facts.${profile ? `\n\nBusiness info:\n${profile}` : ""}`,
+      text: `You are the WhatsApp assistant of "${env.BUSINESS_NAME || "this business"}". Reply to the customer briefly, warmly and helpfully, mirroring exactly how they write. WhatsApp formatting only (*bold*, _italic_). Confirm orders and appointments clearly; if you don't know something (price, stock), say the team will confirm shortly — never invent facts.
+
+${LANGUAGE_GUIDE}${profile ? `\n\nBusiness info:\n${profile}` : ""}`,
     }],
     messages: [...history, { role: "user", content: text }],
   });
@@ -629,7 +644,7 @@ export function renderDashboard({ business, currency, records, invoices, days })
 <title>${esc(business)} — Hunch Dashboard</title><meta name="robots" content="noindex">
 <style>
 :root{--bg:#05070d;--panel:#0c111c;--line:rgba(232,236,244,.09);--ink:#e8ecf4;--dim:#8b96ad;--acc:#25d366;--amber:#fbbf24;--blue:#60a5fa;--purple:#a78bfa;--red:#f87171}
-*{margin:0;padding:0;box-sizing:border-box}body{background:var(--bg);color:var(--ink);font:14px/1.5 "Segoe UI",system-ui,sans-serif;padding:26px 16px 60px}
+*{margin:0;padding:0;box-sizing:border-box}body{background:var(--bg);color:var(--ink);font:14px/1.5 "Segoe UI","Nirmala UI","Noto Sans","Noto Sans Devanagari","Noto Sans Tamil","Noto Sans Bengali",system-ui,sans-serif;padding:26px 16px 60px}
 .wrap{max-width:1060px;margin:0 auto}h1{font-size:21px;display:flex;align-items:center;gap:10px}h1 i{width:11px;height:11px;border-radius:50%;background:var(--acc);box-shadow:0 0 10px var(--acc)}
 .sub{color:var(--dim);font-size:13px;margin:4px 0 24px}
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:22px}
@@ -698,7 +713,7 @@ export function renderInvoice(inv, business) {
   return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(inv.number)} — ${esc(business)}</title><meta name="robots" content="noindex">
 <style>
-body{font:14px/1.55 "Segoe UI",system-ui,sans-serif;color:#15181e;background:#f3f4f7;margin:0;padding:30px 12px}
+body{font:14px/1.55 "Segoe UI","Nirmala UI","Noto Sans","Noto Sans Devanagari","Noto Sans Tamil","Noto Sans Bengali",system-ui,sans-serif;color:#15181e;background:#f3f4f7;margin:0;padding:30px 12px}
 .sheet{max-width:760px;margin:0 auto;background:#fff;border-radius:10px;padding:48px 52px;box-shadow:0 10px 40px rgba(0,0,0,.08)}
 .top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:38px}
 .brand{font-size:22px;font-weight:700}.brand i{display:inline-block;width:10px;height:10px;border-radius:50%;background:#25d366;margin-right:8px}
@@ -826,7 +841,8 @@ function lastNDays(n) {
 
 export function fmtMoney(n, currency) {
   try {
-    return new Intl.NumberFormat("en", { style: "currency", currency: currency || "USD", maximumFractionDigits: 2 }).format(n);
+    const locale = currency === "INR" ? "en-IN" : "en"; // en-IN groups as 1,23,456
+    return new Intl.NumberFormat(locale, { style: "currency", currency: currency || "USD", maximumFractionDigits: 2 }).format(n);
   } catch {
     return `${currency || ""} ${Math.round(n * 100) / 100}`.trim();
   }

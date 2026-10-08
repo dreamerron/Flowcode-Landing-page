@@ -13,6 +13,32 @@ an owner copilot with tools). The landing page is `../hunch.html`.
 
 > "Hunch" is a placeholder brand — search-and-replace it freely.
 
+## Languages (India-first, code-mixed)
+
+All three Claude calls (extraction, owner copilot, customer assist) share
+one `LANGUAGE_GUIDE` in `src/index.js`:
+
+- Understands Hinglish, Devanagari Hindi and mixes with Tamil, Telugu,
+  Bengali, Marathi, Gujarati, Kannada, Malayalam, Punjabi, Odia, Urdu and
+  English, including spelling variants and SMS shorthand.
+- Replies in the same language **and script** the person used last
+  (Roman-letter Hinglish in → Hinglish out; Devanagari in → Devanagari out)
+  and switches only when asked ("Hindi mein batao").
+- Indian numerals and money: lakh/crore, "k", hazaar, sau, dedh, dhai,
+  sava; INR amounts are displayed with Indian grouping (₹12,34,567).
+- Hindi date words resolve to ISO dates (kal and parso by tense, agle
+  somvar, "15 tarikh"); business terms (udhaar, baaki, advance, COD,
+  "GPay kar diya") map to the right record types and statuses; GST slabs
+  are known for invoices (`tax_percent`).
+- Each extracted record stores a `language` tag; summaries are normalised
+  to English while customer names and local item words stay as written.
+
+Caveats: quality is strongest for Hindi/Hinglish and the largest
+languages and will be lower for smaller ones — test with real chat
+samples from your target businesses before promising a language. Voice
+notes (very common in India) are not transcribed yet; non-text messages
+are only logged as `[audio message]`. That is the obvious next feature.
+
 ## Market positioning
 
 WhatsApp tooling today falls into two camps, and Hunch is a third:

@@ -62,6 +62,12 @@
     .msg b { color: #fff; } .msg .t { display: block; text-align: right; font-size: 10px; color: #8696a0; margin-top: 3px; }
     .msg a { color: #53bdeb; text-decoration: none; }
 
+    .hp-duo { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; justify-items: center; }
+    .hp-duo .hp-phone { margin: 0; width: 100%; }
+    .hp-chips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 30px; }
+    .hp-chips span { padding: 6px 14px; border-radius: 999px; font-size: 13px;
+      border: 1px solid rgba(37,211,102,.28); background: rgba(37,211,102,.06); color: var(--ink); }
+
     section.hp { padding: 64px 0 8px; }
     .hp-h2 { font-family: var(--font-display); font-size: clamp(22px, 3.4vw, 32px); font-weight: 700;
       text-align: center; margin-bottom: 10px; letter-spacing: -.01em; }
@@ -111,6 +117,7 @@
     <span>
       <a class="link" href="#how">How it works</a>
       <a class="link" href="#dashboard">Dashboard</a>
+      <a class="link" href="#languages">Languages</a>
       <a class="link" href="#why">Why Hunch</a>
       <a class="link" href="#faq">FAQ</a>
       <a class="link" href="#waitlist" style="color:var(--wa)">Early access</a>
@@ -155,6 +162,33 @@
     <h2 class="hp-h2">The whole dashboard, built from chats.</h2>
     <p class="hp-lead">Revenue, open orders, unpaid invoices, upcoming dates, leads and tasks — assembled automatically from your conversations. One link, always current, nothing to export.</p>
     <div class="hp-shot"><img src="assets/hunch/dashboard.png" alt="Hunch live dashboard: payments this month, open orders, unpaid invoices, a 14-day payments chart, invoices and upcoming appointments — all extracted from WhatsApp chats" loading="lazy" /></div>
+  </section>
+
+  <section class="hp hp-wrap" id="languages">
+    <h2 class="hp-h2">Speaks the way India actually texts.</h2>
+    <p class="hp-lead">Hinglish, Hindi in Devanagari, Tamil, Telugu, Bengali — often all in one message. Hunch understands the mix, replies in the same language and script you used, and counts money in lakh and crore.</p>
+    <div class="hp-duo">
+      <div class="hp-phone" aria-hidden="true">
+        <div class="hp-phone__bar"><span class="avatar">H</span><span>Hunch · Mithai Ghar<br /><span class="status">Hinglish</span></span></div>
+        <div class="hp-chat">
+          <div class="msg msg--ai">📥 *Rohit* se naya:<br />• ORDER: 2 kg kaju katli, kal tak — <b>₹2,400</b><br />• PAYMENT: advance via GPay — <b>₹1,000</b><span class="t">11:20</span></div>
+          <div class="msg msg--me">is hafte ka udhaar kitna baaki hai?<span class="t">11:22</span></div>
+          <div class="msg msg--ai">Is hafte <b>₹18,500</b> baaki hai, 4 customers se:<br />- Rohit — ₹1,400<br />- Sharma ji — ₹9,000<br />- Priya — ₹5,100<br />- Imran — ₹3,000<br />Sharma ji ka invoice bhej doon?<span class="t">11:22</span></div>
+        </div>
+      </div>
+      <div class="hp-phone" aria-hidden="true">
+        <div class="hp-phone__bar"><span class="avatar">H</span><span>Hunch · मिठाई घर<br /><span class="status">हिन्दी</span></span></div>
+        <div class="hp-chat">
+          <div class="msg msg--me">आज की बिक्री बताओ<span class="t">20:05</span></div>
+          <div class="msg msg--ai">आज <b>₹32,400</b> की बिक्री हुई 🎉<br />- 11 ऑर्डर<br />- 3 पेमेंट बाकी (₹4,800)<br />कल की डिलीवरी: 5 ऑर्डर<span class="t">20:05</span></div>
+          <div class="msg msg--me">Sharma ji ke liye GST वाला invoice बनाओ, 18%<span class="t">20:06</span></div>
+          <div class="msg msg--ai">बन गया ✅ <b>INV-2026-0021</b> — कुल <b>₹10,620</b> (GST 18% सहित)<br />Link: <a>hunch…/invoice/INV-2026-0021</a><span class="t">20:06</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="hp-chips" aria-label="Supported languages">
+      <span>Hinglish</span><span>हिन्दी</span><span>தமிழ்</span><span>తెలుగు</span><span>বাংলা</span><span>मराठी</span><span>ગુજરાતી</span><span>ಕನ್ನಡ</span><span>മലയാളം</span><span>ਪੰਜਾਬੀ</span><span>اردو</span><span>English</span>
+    </div>
   </section>
 
   <section class="hp hp-wrap">
