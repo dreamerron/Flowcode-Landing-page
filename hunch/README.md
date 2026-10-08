@@ -13,6 +13,26 @@ an owner copilot with tools). The landing page is `../hunch.html`.
 
 > "Hunch" is a placeholder brand — search-and-replace it freely.
 
+## Market positioning
+
+WhatsApp tooling today falls into two camps, and Hunch is a third:
+
+| Camp | Examples | Job | Gap |
+|---|---|---|---|
+| Chat / CRM / marketing platforms | WATI, Interakt, SleekFlow, Zoko, AiSensy, respond.io | *Send* — broadcasts, shared inbox, catalogs, support bots | Orders and payments stay trapped in the chat |
+| Customer-facing AI agents | Meta's AI agent for WhatsApp Business (global since June 2026) | *Answer* — product Q&A, appointment booking, lead qualification | No ledger, invoices or dashboard |
+| **Hunch** | — | *Record* — passive extraction → invoices, reports, live dashboard | — |
+
+Manual ledger apps (Khatabook, OkCredit, BukuWarung, Kippa) proved the
+pain is real but required typing every sale by hand; here the chat is the
+data entry. Target corridors with the strongest WhatsApp-commerce usage:
+India, Indonesia, Pakistan, Brazil, Nigeria.
+
+Caveats: this comes from vendor marketing pages and secondary sources,
+not independent tests; verify before relying on it. Extraction itself is
+replicable (including by Meta), so the durable moat is distribution and
+becoming the system of record, not the model call.
+
 ## What it does
 
 **Customer messages** (anyone not listed as an owner):
