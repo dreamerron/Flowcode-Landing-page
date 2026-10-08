@@ -35,9 +35,41 @@ one `LANGUAGE_GUIDE` in `src/index.js`:
 
 Caveats: quality is strongest for Hindi/Hinglish and the largest
 languages and will be lower for smaller ones — test with real chat
-samples from your target businesses before promising a language. Voice
-notes (very common in India) are not transcribed yet; non-text messages
-are only logged as `[audio message]`. That is the obvious next feature.
+samples from your target businesses before promising a language.
+
+## Voice notes
+
+Claude's API doesn't accept audio, so voice notes are transcribed first
+with Whisper on Workers AI (`@cf/openai/whisper-large-v3-turbo`, via the
+`[ai]` binding in `wrangler.toml`: no extra API key, billed to the same
+Cloudflare account at about $0.0005 per audio minute). The transcript is
+tagged `[voice note]` and then follows exactly the same path as a typed
+message:
+
+- **Customer voice note** → extracted into records, owner pinged
+  ("New from *Rohit (voice note)*"), replied to only in assist mode.
+- **Owner voice note** → answered by the copilot, with the reply starting
+  `🎙️ Heard: "…"` so the owner can spot a mis-hearing before trusting a
+  number.
+- **Failures** (download error, file over 5 MB, empty transcript, binding
+  missing) → the owner is asked to resend or type; a customer's message is
+  logged as `[voice note: could not transcribe]` and nothing is sent.
+
+The prompts warn Claude that transcripts contain errors (especially in
+names and numbers) and that Hindi speech may come back in Devanagari or
+Urdu script even from someone who types Hinglish; it replies in the
+script the person normally types in. Tuning: set `TRANSCRIBE_LANGUAGE`
+(e.g. `"hi"`, `"ta"`) to force one language, or `TRANSCRIBE_PROMPT` to
+change the vocabulary hint. Leave the language unset if customers speak
+different languages.
+
+Caveats: Whisper is weaker on heavily code-mixed speech and on smaller
+Indian languages than on Hindi or English. If accuracy on real voice
+notes isn't good enough, an India-specialised speech API (Sarvam AI,
+Google Chirp, or similar) can replace `transcribeVoice()` without
+touching the rest of the pipeline. Images (e.g. UPI payment screenshots)
+are still only logged as `[image message]`; reading them with Claude's
+vision is the natural next step.
 
 ## Market positioning
 

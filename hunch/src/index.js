@@ -24,6 +24,12 @@ const GRAPH = "https://graph.facebook.com/v21.0";
 const CHAT_LIMIT = 30; // stored messages per conversation
 const WA_CHUNK = 3800; // WhatsApp caps text messages at 4096 chars
 const RECORD_SCAN = 1000; // max records scanned for queries/dashboard
+const WHISPER_MODEL = "@cf/openai/whisper-large-v3-turbo";
+const MAX_AUDIO_BYTES = 5 * 1024 * 1024; // WhatsApp Opus voice ≈ 1–2 KB/s, so ~40+ minutes
+const VOICE_TAG = "[voice note]";
+const DEFAULT_TRANSCRIBE_PROMPT =
+  "WhatsApp voice note to a small business about orders, payments, delivery and prices. " +
+  "Words like advance, udhaar, baaki, GPay, UPI, PhonePe, COD, kal, parso, rupees, lakh, kilo may appear.";
 
 // Shared by the extractor, the owner copilot and customer assist mode.
 const LANGUAGE_GUIDE = `Language rules (India-first, but work for every language):
@@ -31,7 +37,8 @@ const LANGUAGE_GUIDE = `Language rules (India-first, but work for every language
 - Reply in the same language AND script the person used most recently: Hinglish in -> Hinglish (Roman letters) out; Devanagari in -> Devanagari out; English in -> English out. Mirror their register and never switch to formal Hindi or pure English on your own. If they ask for a language ("Hindi mein batao", "Tamil-la sollu"), switch to it.
 - Indian money and numbers: Rs, rupees, INR; lakh = 1,00,000 and crore = 1,00,00,000; "k" = thousand, "hazaar" = 1000, "sau" = 100, "paanch sau" = 500; "dedh" = 1.5, "dhai" = 2.5, "sava" = 1.25, "sadhe" = plus a half. Write INR amounts with Indian digit grouping (1,23,456).
 - Dates: aaj = today; kal = tomorrow OR yesterday, decided by tense ("kal bhej dunga" = tomorrow, "kal aaya tha" = yesterday); parso = day after tomorrow or day before yesterday by tense; agle hafte = next week; somvar, mangalvar, budhvar, guruvar, shukravar, shanivar, ravivar = Monday..Sunday; "15 tarikh" = the 15th; "mahine ke end" = end of month.
-- Business words: udhaar / baaki = owed on credit; advance / bayana = deposit; pakka / confirm = confirmed; COD = cash on delivery; "GPay / PhonePe / Paytm / UPI kar diya" = a payment was made; "screenshot bhej diya" = payment proof sent; GST slabs are 5, 12, 18 and 28 percent.`;
+- Business words: udhaar / baaki = owed on credit; advance / bayana = deposit; pakka / confirm = confirmed; COD = cash on delivery; "GPay / PhonePe / Paytm / UPI kar diya" = a payment was made; "screenshot bhej diya" = payment proof sent; GST slabs are 5, 12, 18 and 28 percent.
+- Messages starting with "[voice note]" are automatic transcripts of spoken audio. Expect recognition errors, especially in names and numbers, and the script may differ from how the person types (Hindi speech can come out in Devanagari or Urdu letters even from someone who types Hinglish). Reply in the spoken language, in the script the person uses in their typed messages; if they have none, use the transcript's script. When an amount, quantity or name in a voice note is unclear, record your best reading and say what you understood rather than silently guessing.`;
 
 export default {
   async fetch(request, env, ctx) {
@@ -130,23 +137,44 @@ function isOwner(waId, env) {
 
 async function handleMessage(message, profileName, env, origin) {
   const from = message.from;
-  if (message.type !== "text") {
-    // Log non-text customer messages so the transcript stays coherent.
-    if (!isOwner(from, env)) await appendChat(env, from, profileName, "customer", `[${message.type} message]`);
+  const owner = isOwner(from, env);
+
+  let text = "";
+  let heard = ""; // voice-note transcript, when the message was audio
+  if (message.type === "text") {
+    text = (message.text?.body ?? "").trim();
+    if (!text) return;
+    await markRead(env, message.id, owner);
+  } else if (message.type === "audio" && message.audio?.id) {
+    await markRead(env, message.id, owner); // owner sees "typing…" while we transcribe
+    try {
+      heard = await transcribeVoice(env, message.audio.id);
+    } catch (err) {
+      console.error("transcription failed", err);
+    }
+    if (!heard) {
+      if (owner) {
+        await sendText(env, from, "🎙️ I couldn't make out that voice note. Could you send it again or type it?");
+      } else {
+        await appendChat(env, from, profileName, "customer", "[voice note: could not transcribe]");
+      }
+      return;
+    }
+    text = `${VOICE_TAG} ${heard}`;
+  } else {
+    // Log other non-text customer messages so the transcript stays coherent.
+    if (!owner) await appendChat(env, from, profileName, "customer", `[${message.type} message]`);
     return;
   }
-  const text = (message.text?.body ?? "").trim();
-  if (!text) return;
 
-  if (isOwner(from, env)) {
-    await markRead(env, message.id, true);
+  if (owner) {
     const reply = await ownerCopilot(env, from, text, origin);
-    for (const chunk of chunkText(reply, WA_CHUNK)) await sendText(env, from, chunk);
+    const shown = heard ? `🎙️ Heard: "${truncate(heard, 300)}"\n\n${reply}` : reply;
+    for (const chunk of chunkText(shown, WA_CHUNK)) await sendText(env, from, chunk);
     return;
   }
 
   // Customer message: always log + extract; reply only in assist mode.
-  await markRead(env, message.id, false);
   const history = await appendChat(env, from, profileName, "customer", text);
   const extracted = await extractRecords(env, from, profileName, history, text);
 
@@ -163,12 +191,53 @@ async function handleMessage(message, profileName, env, origin) {
   // Heads-up to owners for high-signal records (orders & payments).
   const notable = extracted.filter((r) => r.type === "order" || r.type === "payment");
   if (notable.length) {
-    const who = profileName || from;
+    const who = (profileName || from) + (heard ? " (voice note)" : "");
     const lines = notable.map((r) => `• ${r.type.toUpperCase()}: ${r.summary}${r.amount ? ` — ${fmtMoney(r.amount, r.currency)}` : ""}`);
     for (const owner of ownerList(env)) {
       await sendText(env, owner, `📥 New from *${who}*:\n${lines.join("\n")}`).catch(() => {});
     }
   }
+}
+
+/* ------------------------------------------------- voice transcription -- */
+
+// Claude's API takes no audio, so voice notes go through Whisper on
+// Workers AI first; the transcript then follows the normal text path.
+async function transcribeVoice(env, mediaId) {
+  if (!env.AI) throw new Error("Workers AI binding 'AI' is not configured");
+  const auth = { headers: { Authorization: `Bearer ${env.WHATSAPP_TOKEN}` } };
+
+  const metaRes = await fetch(`${GRAPH}/${mediaId}`, auth);
+  if (!metaRes.ok) throw new Error(`media lookup failed: ${metaRes.status}`);
+  const meta = await metaRes.json();
+  if (meta.file_size > MAX_AUDIO_BYTES) throw new Error(`voice note too large: ${meta.file_size} bytes`);
+
+  // The media URL is short-lived and requires the same bearer token.
+  const audioRes = await fetch(meta.url, auth);
+  if (!audioRes.ok) throw new Error(`media download failed: ${audioRes.status}`);
+  const bytes = new Uint8Array(await audioRes.arrayBuffer());
+  if (bytes.length > MAX_AUDIO_BYTES) throw new Error(`voice note too large: ${bytes.length} bytes`);
+
+  const input = {
+    audio: toBase64(bytes),
+    vad_filter: true,
+    initial_prompt: env.TRANSCRIBE_PROMPT || DEFAULT_TRANSCRIBE_PROMPT,
+  };
+  if (env.TRANSCRIBE_LANGUAGE) input.language = env.TRANSCRIBE_LANGUAGE;
+  const out = await env.AI.run(WHISPER_MODEL, input);
+  return String(out?.text ?? "").trim();
+}
+
+export function toBase64(bytes) {
+  let binary = "";
+  for (let i = 0; i < bytes.length; i += 0x8000) {
+    binary += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+  }
+  return btoa(binary);
+}
+
+function truncate(s, n) {
+  return s.length > n ? s.slice(0, n - 1) + "…" : s;
 }
 
 function ownerList(env) {

@@ -25,6 +25,16 @@ BUSINESS_NAME = "My Business"
 # Default currency for extracted amounts and invoices (ISO code).
 CURRENCY = "USD"
 
+# Optional voice-note tuning. TRANSCRIBE_LANGUAGE forces one spoken language
+# (e.g. "hi", "ta"); leave unset to auto-detect, which suits mixed customers.
+# TRANSCRIBE_PROMPT overrides the vocabulary hint passed to Whisper.
+# TRANSCRIBE_LANGUAGE = "hi"
+
+# Workers AI (Whisper) transcribes WhatsApp voice notes. No extra API key:
+# it bills to the same Cloudflare account.
+[ai]
+binding = "AI"
+
 [[kv_namespaces]]
 binding = "HUNCH_KV"
 id = "REPLACE_WITH_KV_NAMESPACE_ID"
