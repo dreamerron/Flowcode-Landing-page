@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FORKSCAPE — Sign a contract</title>
+  <meta name="description" content="Review and sign a contract from ForkScape, or check that a signed PDF is unchanged." />
+  <!-- Personal sign links carry their token in the URL fragment. noindex keeps
+       this page out of search; no-referrer keeps the page URL out of requests. -->
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="referrer" content="no-referrer" />
+  <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+  <link rel="stylesheet" href="css/contracts.css" />
+</head>
+<body class="page">
+  <main class="cx cx--narrow" id="app">
+    <!-- loading -->
+    <section id="v-loading" class="cx-card"><span class="cx-spin" aria-hidden="true"></span> Opening the contract…</section>
+
+    <!-- a closed / invalid link -->
+    <section id="v-closed" hidden>
+      <div class="eyebrow">ForkScape Contracts</div>
+      <h1 id="closed-title">This link does not work</h1>
+      <p class="muted" id="closed-text" style="margin-top:10px"></p>
+      <p class="muted small" style="margin-top:18px">Questions? Write to <a href="mailto:support@forkscape.com">support@forkscape.com</a>.</p>
+    </section>
+
+    <!-- the contract -->
+    <section id="v-doc" hidden>
+      <div class="eyebrow" id="doc-from">ForkScape asks you to sign</div>
+      <h1 id="doc-title"></h1>
+      <p class="muted small" id="doc-meta" style="margin-top:8px"></p>
+      <div id="doc-banner" style="margin-top:16px"></div>
+
+      <div class="cx-card" style="margin-top:20px">
+        <div class="cx-row cx-row--between">
+          <h2 style="margin:0">Parties</h2>
+          <span class="muted small" id="doc-progress"></span>
+        </div>
+        <div id="doc-parties" class="cx-list" style="margin-top:12px"></div>
+      </div>
+
+      <article class="cx-paper" id="doc-body" style="margin-top:20px" aria-label="Contract text"></article>
+      <p class="muted small" style="margin-top:10px">Document fingerprint (SHA-256): <span class="mono" id="doc-hash"></span></p>
+
+      <!-- signing steps -->
+      <div class="cx-card" id="sign-box" style="margin-top:22px" hidden>
+        <h2>Sign this contract</h2>
+        <div class="cx-steps">
+          <div class="cx-step" id="step-email">
+            <b>Confirm your email</b>
+            <p class="muted small" style="margin:4px 0 10px">We send a one-time code to <b id="sign-email"></b>. This proves the link is in the right hands.</p>
+            <div class="cx-row" id="code-send-row">
+              <button class="btn" id="btn-code">Send me a code</button>
+            </div>
+            <form class="cx-row" id="code-form" hidden>
+              <input class="cx-input cx-code" id="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="••••••" aria-label="6-digit code" />
+              <button class="btn" type="submit">Confirm</button>
+              <button class="cx-link small" type="button" id="btn-code-again">Send a new code</button>
+            </form>
+          </div>
+
+          <div class="cx-step is-locked" id="step-sign">
+            <b>Sign</b>
+            <div class="cx-stack" style="margin-top:10px">
+              <label class="cx-check"><input type="checkbox" id="consent" /> <span id="consent-text"></span></label>
+              <div>
+                <label for="sig-name">Your full name</label>
+                <input class="cx-input" id="sig-name" autocomplete="name" maxlength="120" />
+              </div>
+              <div>
+                <div class="cx-row cx-row--between" style="margin-bottom:6px">
+                  <label style="margin:0">Your signature</label>
+                  <span class="cx-row small">
+                    <button class="cx-link" type="button" id="btn-type-sig">Use my typed name</button>
+                    <button class="cx-link" type="button" id="btn-clear-sig">Clear</button>
+                  </span>
+                </div>
+                <div class="cx-pad-wrap">
+                  <canvas class="cx-pad" id="pad" aria-label="Signature pad: draw your signature with a mouse, finger or pen"></canvas>
+                  <div class="cx-pad-line"></div>
+                  <div class="cx-pad-hint" id="pad-hint">Draw here with a mouse, finger or pen</div>
+                </div>
+              </div>
+              <div class="cx-row cx-row--between">
+                <button class="cx-link small" type="button" id="btn-decline">I do not want to sign</button>
+                <button class="btn" id="btn-sign">Sign the contract</button>
+              </div>
+              <form id="decline-form" class="cx-stack" hidden>
+                <label for="decline-reason">Why do you decline? (the sender sees this)</label>
+                <textarea id="decline-reason" maxlength="1000" rows="3"></textarea>
+                <div class="cx-row cx-row--end">
+                  <button class="btn btn--ghost" type="button" id="btn-decline-cancel">Cancel</button>
+                  <button class="btn btn--ghost cx-danger" type="submit">Decline to sign</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="done-box" class="cx-card" style="margin-top:22px" hidden></div>
+    </section>
+
+    <!-- verify a signed PDF -->
+    <section id="v-verify" style="margin-top:56px" hidden>
+      <div class="eyebrow">ForkScape Contracts</div>
+      <h1 style="font-size:26px">Check a signed PDF</h1>
+      <p class="muted" style="margin-top:8px">Choose a signed PDF from ForkScape. Your browser calculates its fingerprint. Only the fingerprint goes to our server, not the file.</p>
+      <div class="cx-drop" id="drop" tabindex="0" role="button" style="margin-top:16px">
+        <b>Drop the PDF here</b> or click to choose a file
+        <input type="file" id="file" accept="application/pdf,.pdf" hidden />
+      </div>
+      <div id="verify-result" style="margin-top:14px"></div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { mountChrome } from './js/site.js';
+    mountChrome({ active: '' });
+  </script>
+  <script type="module" src="js/contracts-sign.js"></script>
+
+  <nav id="legal-fallback" aria-label="Legal and contact"
+       style="max-width:1100px;margin:0 auto;padding:24px 20px;font:14px/1.7 system-ui,-apple-system,sans-serif;opacity:.85">
+    <a href="/terms">Terms of Service</a> &middot;
+    <a href="/privacy">Privacy Policy</a> &middot;
+    <a href="mailto:support@forkscape.com">Contact &mdash; support@forkscape.com</a>
+    <br />&copy; 2026 Illusion Media LLC, trading as ForkScape.
+  </nav>
+</body>
+</html>

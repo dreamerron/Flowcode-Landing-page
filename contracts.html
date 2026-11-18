@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FORKSCAPE — Contracts</title>
+  <!-- Private owner console: not linked from the site, not indexed. -->
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="referrer" content="no-referrer" />
+  <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+  <link rel="stylesheet" href="css/contracts.css" />
+</head>
+<body class="page">
+  <main class="cx" id="app">
+    <!-- sign in -->
+    <section id="v-login" class="cx--narrow" style="margin:40px auto 0;max-width:460px" hidden>
+      <div class="eyebrow">ForkScape Contracts</div>
+      <h1>Sign in</h1>
+      <p class="muted" style="margin:8px 0 20px">Only the owner email can sign in. We email a one-time code.</p>
+      <form id="login-form" class="cx-card cx-stack">
+        <div>
+          <label for="login-email">Owner email</label>
+          <input class="cx-input" id="login-email" type="email" autocomplete="email" required />
+        </div>
+        <button class="btn" type="submit">Email me a code</button>
+      </form>
+      <form id="code-form" class="cx-card cx-stack" hidden>
+        <div>
+          <label for="login-code">6-digit code</label>
+          <input class="cx-input cx-code" id="login-code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" required />
+        </div>
+        <div class="cx-row cx-row--between">
+          <button class="cx-link small" type="button" id="btn-login-back">Use another email</button>
+          <button class="btn" type="submit">Sign in</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- console -->
+    <section id="v-app" hidden>
+      <div class="cx-row cx-row--between">
+        <div>
+          <div class="eyebrow" style="margin-bottom:6px">ForkScape Contracts</div>
+          <h1 style="font-size:28px">Work contracts</h1>
+        </div>
+        <div class="cx-row">
+          <span class="muted small" id="who"></span>
+          <button class="btn btn--ghost cx-btn-sm" id="btn-logout">Sign out</button>
+        </div>
+      </div>
+      <div class="cx-tabs" role="tablist">
+        <button class="cx-tab" role="tab" data-tab="list">Contracts</button>
+        <button class="cx-tab" role="tab" data-tab="settings">Settings</button>
+      </div>
+      <div id="setup-notes"></div>
+      <div id="view"></div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { mountChrome } from './js/site.js';
+    mountChrome({ active: '' });
+  </script>
+  <script type="module" src="js/contracts-console.js"></script>
+
+  <nav id="legal-fallback" aria-label="Legal and contact"
+       style="max-width:1100px;margin:0 auto;padding:24px 20px;font:14px/1.7 system-ui,-apple-system,sans-serif;opacity:.85">
+    <a href="/terms">Terms of Service</a> &middot;
+    <a href="/privacy">Privacy Policy</a> &middot;
+    <a href="mailto:support@forkscape.com">Contact &mdash; support@forkscape.com</a>
+    <br />&copy; 2026 Illusion Media LLC, trading as ForkScape.
+  </nav>
+</body>
+</html>
