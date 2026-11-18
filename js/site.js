@@ -77,7 +77,7 @@ export function mountChrome({ active = '', immersive = false } = {}) {
       </div>
     </div>
     <div class="footer__legal">
-      © 2026 Illusion Media LLC, trading as ForkScape · Savings vary by workload —
+      © 2026 ForkScape, Inc. · Savings vary by workload —
       the in-app dashboard shows your real numbers, tokens and dollars, cache-aware.
     </div>`;
   document.body.append(footer);
